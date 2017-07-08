@@ -1,0 +1,303 @@
+CMAKE_MINIMUM_REQUIRED (VERSION 3.2.2)
+PROJECT (XCopilot)
+INCLUDE (ExternalProject)
+
+SET (VERSION_MAJOR 1)
+SET (VERSION_MINOR 0)
+SET (VERISON "${VERSION_MAJOR}.${VERSION_MINOR}")
+
+# Options
+OPTION (CMP_LIN "CMP_LIN" OFF)
+OPTION (CMP_WIN_64 "CMP_WIN_64" OFF)
+OPTION (CMP_WIN_32 "CMP_WIN_32" OFF)
+OPTION (CMP_MAC "CMP_MAC" OFF)
+
+# Set the libraries path: edit this line to specify your custom library path
+GET_FILENAME_COMPONENT (XPSDK_PATH "../XPSDK/" ABSOLUTE)
+MESSAGE ("-- Detecting X-Plane SDK path")
+IF (NOT EXISTS ${XPSDK_PATH})
+	  MESSAGE (FATAL_ERROR "Missing SDK folder: ${XPSDK_PATH}")
+ENDIF(NOT EXISTS ${XPSDK_PATH})
+
+###############################################################################
+# Portaudio
+###############################################################################
+ExternalProject_Add(
+  Portaudio
+
+  URL            	"http://www.portaudio.com/archives/pa_stable_v190600_20161030.tgz"
+
+  PREFIX 					"${CMAKE_SOURCE_DIR}/3rdparty/portaudio"
+	BINARY_DIR			"${CMAKE_SOURCE_DIR}/3rdparty/portaudio/lib"
+
+	INSTALL_COMMAND echo Skipping install step for Portaudio
+)
+
+ExternalProject_Get_Property (Portaudio BINARY_DIR)
+ExternalProject_Get_Property (Portaudio SOURCE_DIR)
+SET (Portaudio_LIBRARIES "${BINARY_DIR}")
+SET (Portaudio_INCLUDE_DIRS "${SOURCE_DIR}/include")
+
+ADD_LIBRARY (portaudio SHARED IMPORTED)
+# SET_PROPERTY (TARGET portaudio PROPERTY IMPORTED_LOCATION "${Portaudio_LIBRARIES}/libportaudio_static${CMAKE_STATIC_LIBRARY_SUFFIX}")
+SET_PROPERTY (TARGET portaudio PROPERTY IMPORTED_LOCATION "${Portaudio_LIBRARIES}/libportaudio${CMAKE_SHARED_LIBRARY_SUFFIX}")
+
+###############################################################################
+# Pocketsphinx
+###############################################################################
+ExternalProject_Add(
+  Pocketsphinx
+
+  URL 								"https://sourceforge.net/projects/cmusphinx/files/pocketsphinx/5prealpha/pocketsphinx-5prealpha.tar.gz/download"
+
+  PREFIX 							"${CMAKE_SOURCE_DIR}/3rdparty/pocketsphinx"
+	BINARY_DIR					"${CMAKE_SOURCE_DIR}/3rdparty/pocketsphinx/lib"
+
+	CONFIGURE_COMMAND   <SOURCE_DIR>/configure
+	BUILD_COMMAND       make
+	INSTALL_COMMAND 		make DESTDIR=<BINARY_DIR> install
+)
+
+ExternalProject_Add_Step(Pocketsphinx autogen
+   COMMAND            <SOURCE_DIR>/autogen.sh
+   DEPENDEES          update
+   DEPENDERS          configure
+)
+
+ExternalProject_Get_Property (Pocketsphinx BINARY_DIR)
+ExternalProject_Get_Property (Pocketsphinx SOURCE_DIR)
+SET (Pocketsphinx_LIBRARIES "${BINARY_DIR}/usr/local/lib")
+SET (Pocketsphinx_INCLUDE_DIRS "${BINARY_DIR}/usr/local/include/pocketsphinx")
+
+ADD_LIBRARY (pocketsphinx SHARED IMPORTED)
+SET_PROPERTY (TARGET pocketsphinx PROPERTY IMPORTED_LOCATION "${Pocketsphinx_LIBRARIES}/libpocketsphinx${CMAKE_SHARED_LIBRARY_SUFFIX}")
+
+###############################################################################
+# Sphinxbase
+###############################################################################
+ExternalProject_Add(
+  Sphinxbase
+
+  URL            			"https://sourceforge.net/projects/cmusphinx/files/sphinxbase/5prealpha/sphinxbase-5prealpha.tar.gz/download"
+
+  PREFIX 							"${CMAKE_SOURCE_DIR}/3rdparty/sphinxbase"
+	BINARY_DIR					"${CMAKE_SOURCE_DIR}/3rdparty/sphinxbase/lib"
+
+	CONFIGURE_COMMAND   <SOURCE_DIR>/configure
+	BUILD_COMMAND       make
+	INSTALL_COMMAND     make DESTDIR=<BINARY_DIR> install
+)
+
+ExternalProject_Add_Step(Sphinxbase autogen
+   COMMAND            <SOURCE_DIR>/autogen.sh
+   DEPENDEES          update
+   DEPENDERS          configure
+)
+
+ExternalProject_Get_Property (Sphinxbase BINARY_DIR)
+ExternalProject_Get_Property (Sphinxbase SOURCE_DIR)
+SET (Sphinxbase_LIBRARIES "${BINARY_DIR}/usr/local/lib")
+SET (Sphinxbase_INCLUDE_DIRS "${BINARY_DIR}/usr/local/include/sphinxbase")
+
+ADD_LIBRARY (sphinxbase SHARED IMPORTED)
+SET_PROPERTY (TARGET sphinxbase PROPERTY IMPORTED_LOCATION "${Sphinxbase_LIBRARIES}/libsphinxbase${CMAKE_SHARED_LIBRARY_SUFFIX}")
+
+ADD_DEPENDENCIES (Pocketsphinx Sphinxbase)
+
+###############################################################################
+# Include files
+###############################################################################
+INCLUDE_DIRECTORIES ("./src")
+INCLUDE_DIRECTORIES ("${XPSDK_PATH}")
+INCLUDE_DIRECTORIES ("${XPSDK_PATH}/CHeaders/XPLM")
+INCLUDE_DIRECTORIES ("${XPSDK_PATH}/CHeaders/Wrappers")
+INCLUDE_DIRECTORIES ("${XPSDK_PATH}/CHeaders/Widgets")
+INCLUDE_DIRECTORIES (${Portaudio_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES (${Sphinxbase_INCLUDE_DIRS})
+INCLUDE_DIRECTORIES (${Pocketsphinx_INCLUDE_DIRS})
+FILE (GLOB_RECURSE SOURCES "src/*.cpp")
+
+IF (CMP_LIN)
+	# ------------------
+	# Release - Linux 64
+	# ------------------
+	ADD_LIBRARY (LIN_RELEASE_64 SHARED ${SOURCES})
+	ADD_DEPENDENCIES (LIN_RELEASE_64 Portaudio)
+	ADD_DEPENDENCIES (LIN_RELEASE_64 Sphinxbase)
+	ADD_DEPENDENCIES (LIN_RELEASE_64 Pocketsphinx)
+
+	TARGET_COMPILE_OPTIONS (LIN_RELEASE_64 PRIVATE ${GCC_DEFAULT_FLAGS} -m64 -fPIC -DLIN)
+	# SET_TARGET_PROPERTIES (LIN_RELEASE_64 PROPERTIES LINK_FLAGS "-Wl,-whole-archive")
+	SET_TARGET_PROPERTIES (LIN_RELEASE_64 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../bin/Release/XCopilot/64/")
+	SET_TARGET_PROPERTIES (LIN_RELEASE_64 PROPERTIES PREFIX "")
+	SET_TARGET_PROPERTIES (LIN_RELEASE_64 PROPERTIES OUTPUT_NAME "lin.xpl")
+	SET_TARGET_PROPERTIES (LIN_RELEASE_64 PROPERTIES SUFFIX "")
+
+	TARGET_LINK_LIBRARIES (LIN_RELEASE_64 portaudio)
+	TARGET_LINK_LIBRARIES (LIN_RELEASE_64 sphinxbase)
+	TARGET_LINK_LIBRARIES (LIN_RELEASE_64 pocketsphinx)
+
+	# ------------------
+	# Debug - Linux 64
+	# ------------------
+	ADD_LIBRARY (LIN_DEBUG_64 SHARED ${SOURCES})
+	ADD_DEPENDENCIES (LIN_DEBUG_64 Portaudio)
+	ADD_DEPENDENCIES (LIN_DEBUG_64 Sphinxbase)
+	ADD_DEPENDENCIES (LIN_DEBUG_64 Pocketsphinx)
+
+	TARGET_COMPILE_OPTIONS (LIN_DEBUG_64 PRIVATE ${GCC_DEFAULT_FLAGS} -m64 -fPIC -g -DLIN)
+	# SET_TARGET_PROPERTIES (LIN_DEBUG_64 PROPERTIES LINK_FLAGS "-Wl,-whole-archive")
+	SET_TARGET_PROPERTIES (LIN_DEBUG_64 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../bin/Debug/XCopilot/64/")
+	SET_TARGET_PROPERTIES (LIN_DEBUG_64 PROPERTIES PREFIX "")
+	SET_TARGET_PROPERTIES (LIN_DEBUG_64 PROPERTIES OUTPUT_NAME "lin.xpl")
+	SET_TARGET_PROPERTIES (LIN_DEBUG_64 PROPERTIES SUFFIX "")
+
+	TARGET_LINK_LIBRARIES (LIN_DEBUG_64 portaudio)
+	TARGET_LINK_LIBRARIES (LIN_DEBUG_64 sphinxbase)
+	TARGET_LINK_LIBRARIES (LIN_DEBUG_64 pocketsphinx)
+
+	# ------------------
+	# Release - Linux 32
+	# ------------------
+	ADD_LIBRARY (LIN_RELEASE_32 SHARED ${SOURCES})
+	ADD_DEPENDENCIES (LIN_RELEASE_32 Portaudio)
+	ADD_DEPENDENCIES (LIN_RELEASE_32 Sphinxbase)
+	ADD_DEPENDENCIES (LIN_RELEASE_32 Pocketsphinx)
+
+	TARGET_COMPILE_OPTIONS (LIN_RELEASE_32 PRIVATE ${GCC_DEFAULT_FLAGS} -m32 -fPIC -DLIN)
+	SET_TARGET_PROPERTIES (LIN_RELEASE_32 PROPERTIES LINK_FLAGS "-m32")
+	SET_TARGET_PROPERTIES (LIN_RELEASE_32 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../bin/Release/XCopilot/32/")
+	SET_TARGET_PROPERTIES (LIN_RELEASE_32 PROPERTIES PREFIX "")
+	SET_TARGET_PROPERTIES (LIN_RELEASE_32 PROPERTIES OUTPUT_NAME "lin.xpl")
+	SET_TARGET_PROPERTIES (LIN_RELEASE_32 PROPERTIES SUFFIX "")
+
+	TARGET_LINK_LIBRARIES (LIN_RELEASE_32 portaudio)
+	TARGET_LINK_LIBRARIES (LIN_RELEASE_32 sphinxbase)
+	TARGET_LINK_LIBRARIES (LIN_RELEASE_32 pocketsphinx)
+
+	# ------------------
+	# Debug - Linux 32
+	# ------------------
+	ADD_LIBRARY (LIN_DEBUG_32 SHARED ${SOURCES})
+	ADD_DEPENDENCIES (LIN_DEBUG_32 Portaudio)
+	ADD_DEPENDENCIES (LIN_DEBUG_32 Sphinxbase)
+	ADD_DEPENDENCIES (LIN_DEBUG_32 Pocketsphinx)
+
+	TARGET_COMPILE_OPTIONS (LIN_DEBUG_32 PRIVATE ${GCC_DEFAULT_FLAGS} -m32 -fPIC -g -DLIN)
+	SET_TARGET_PROPERTIES (LIN_DEBUG_32 PROPERTIES LINK_FLAGS "-m32")
+	SET_TARGET_PROPERTIES (LIN_DEBUG_32 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../bin/Debug/XCopilot/32/")
+	SET_TARGET_PROPERTIES (LIN_DEBUG_32 PROPERTIES PREFIX "")
+	SET_TARGET_PROPERTIES (LIN_DEBUG_32 PROPERTIES OUTPUT_NAME "lin.xpl")
+	SET_TARGET_PROPERTIES (LIN_DEBUG_32 PROPERTIES SUFFIX "")
+
+	TARGET_LINK_LIBRARIES (LIN_DEBUG_32 portaudio)
+	TARGET_LINK_LIBRARIES (LIN_DEBUG_32 sphinxbase)
+	TARGET_LINK_LIBRARIES (LIN_DEBUG_32 pocketsphinx)
+ENDIF (CMP_LIN)
+
+IF (CMP_WIN_64)
+	CMAKE_POLICY (SET CMP0015 NEW)
+	SET (CMAKE_SYSTEM_NAME Windows)
+	SET (CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
+	LINK_DIRECTORIES ("${XPSDK_PATH}/Libraries/Win")
+
+	# --------------------
+	# Release - Windows 64
+	# --------------------
+	ADD_LIBRARY (WIN_RELEASE_64 SHARED ${SOURCES})
+	ADD_DEPENDENCIES (WIN_RELEASE_64 Portaudio)
+	ADD_DEPENDENCIES (WIN_RELEASE_64 Sphinxbase)
+	ADD_DEPENDENCIES (WIN_RELEASE_64 Pocketsphinx)
+
+	FIND_PACKAGE (Threads REQUIRED)
+	TARGET_COMPILE_OPTIONS (WIN_RELEASE_64 PRIVATE ${GCC_DEFAULT_FLAGS} -c -fno-stack-protector -static-libgcc -static-libstdc++ -DXPLM200 -DIBM)
+	TARGET_LINK_LIBRARIES (WIN_RELEASE_64 XPLM_64 XPWidgets_64 -static-libgcc -static-libstdc++ -static ${CMAKE_THREAD_LIBS_INIT})
+	SET_TARGET_PROPERTIES (WIN_RELEASE_64 PROPERTIES LINK_FLAGS "-Wl,-whole-archive")
+	SET_TARGET_PROPERTIES (WIN_RELEASE_64 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../bin/Release/XCopilot/64/")
+	SET_TARGET_PROPERTIES (WIN_RELEASE_64 PROPERTIES PREFIX "")
+	SET_TARGET_PROPERTIES (WIN_RELEASE_64 PROPERTIES OUTPUT_NAME "win.xpl")
+	SET_TARGET_PROPERTIES (WIN_RELEASE_64 PROPERTIES SUFFIX "")
+
+	TARGET_LINK_LIBRARIES (WIN_RELEASE_64 portaudio)
+	TARGET_LINK_LIBRARIES (WIN_RELEASE_64 sphinxbase)
+	TARGET_LINK_LIBRARIES (WIN_RELEASE_64 pocketsphinx)
+ENDIF(CMP_WIN_64)
+
+IF (CMP_WIN_32)
+	CMAKE_POLICY (SET CMP0015 NEW)
+	SET (CMAKE_SYSTEM_NAME Windows)
+	SET (CMAKE_CXX_COMPILER i686-w64-mingw32-g++)
+	LINK_DIRECTORIES ("${XPSDK_PATH}/Libraries/Win")
+
+	# --------------------
+	# Release - Windows 32
+	# --------------------
+	ADD_LIBRARY (WIN_RELEASE_32 SHARED ${SOURCES})
+	ADD_DEPENDENCIES (WIN_RELEASE_32 Portaudio)
+	ADD_DEPENDENCIES (WIN_RELEASE_32 Sphinxbase)
+	ADD_DEPENDENCIES (WIN_RELEASE_32 Pocketsphinx)
+
+	FIND_PACKAGE (Threads REQUIRED)
+	TARGET_COMPILE_OPTIONS (WIN_RELEASE_32 PRIVATE ${GCC_DEFAULT_FLAGS} -c -fno-stack-protector -static-libgcc -static-libstdc++ -DXPLM200 -DIBM)
+	TARGET_LINK_LIBRARIES (WIN_RELEASE_32 XPLM XPWidgets -static-libgcc -static-libstdc++ -static ${CMAKE_THREAD_LIBS_INIT})
+	SET_TARGET_PROPERTIES (WIN_RELEASE_32 PROPERTIES LINK_FLAGS "-Wl,-whole-archive")
+	SET_TARGET_PROPERTIES (WIN_RELEASE_32 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../bin/Release/XCopilot/32/")
+	SET_TARGET_PROPERTIES (WIN_RELEASE_32 PROPERTIES PREFIX "")
+	SET_TARGET_PROPERTIES (WIN_RELEASE_32 PROPERTIES OUTPUT_NAME "win.xpl")
+	SET_TARGET_PROPERTIES (WIN_RELEASE_32 PROPERTIES SUFFIX "")
+
+	TARGET_LINK_LIBRARIES (WIN_RELEASE_32 portaudio)
+	TARGET_LINK_LIBRARIES (WIN_RELEASE_32 sphinxbase)
+	TARGET_LINK_LIBRARIES (WIN_RELEASE_32 pocketsphinx)
+ENDIF (CMP_WIN_32)
+
+IF (CMP_MAC)
+	CMAKE_POLICY (SET CMP0042 NEW)
+	SET (CMAKE_SYSTEM_NAME Darwin)
+	SET (CMAKE_CXX_COMPILER g++)
+
+	# --------------------
+	# Release - Mac 64
+	# --------------------
+	ADD_LIBRARY (MAC_RELEASE_64 SHARED ${SOURCES})
+	ADD_DEPENDENCIES (MAC_RELEASE_64 Portaudio)
+	ADD_DEPENDENCIES (MAC_RELEASE_64 Sphinxbase)
+	ADD_DEPENDENCIES (MAC_RELEASE_64 Pocketsphinx)
+
+	TARGET_COMPILE_OPTIONS (MAC_RELEASE_64 PRIVATE ${GCC_DEFAULT_FLAGS} -arch x86_64 -DXPLM200 -DAPL)
+	TARGET_LINK_LIBRARIES (MAC_RELEASE_64 "-F${XPSDK_PATH}/Libraries/Mac" "-framework XPLM" "-framework XPWidgets")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_64 PROPERTIES LINK_FLAGS "-m64 -fvisibility=hidden")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_64 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../bin/Release/XCopilot/64/")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_64 PROPERTIES PREFIX "")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_64 PROPERTIES OUTPUT_NAME "mac.xpl")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_64 PROPERTIES SUFFIX "")
+
+	TARGET_LINK_LIBRARIES (MAC_RELEASE_64 portaudio)
+	TARGET_LINK_LIBRARIES (MAC_RELEASE_64 sphinxbase)
+	TARGET_LINK_LIBRARIES (MAC_RELEASE_64 pocketsphinx)
+
+	# --------------------
+	# Release - Mac 32
+	# --------------------
+	ADD_LIBRARY (MAC_RELEASE_32 SHARED ${SOURCES})
+	ADD_DEPENDENCIES (MAC_RELEASE_32 Portaudio)
+	ADD_DEPENDENCIES (MAC_RELEASE_32 Sphinxbase)
+	ADD_DEPENDENCIES (MAC_RELEASE_32 Pocketsphinx)
+
+	TARGET_COMPILE_OPTIONS (MAC_RELEASE_32 PRIVATE ${GCC_DEFAULT_FLAGS} -arch i386 -DXPLM200 -DAPL)
+	TARGET_LINK_LIBRARIES (MAC_RELEASE_32 "-F${XPSDK_PATH}/Libraries/Mac" "-framework XPLM" "-framework XPWidgets")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_32 PROPERTIES LINK_FLAGS "-m32")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_32 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "../bin/Release/XCopilot/32/")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_32 PROPERTIES PREFIX "")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_32 PROPERTIES OUTPUT_NAME "mac.xpl")
+	SET_TARGET_PROPERTIES (MAC_RELEASE_32 PROPERTIES SUFFIX "")
+
+	TARGET_LINK_LIBRARIES (MAC_RELEASE_32 portaudio)
+	TARGET_LINK_LIBRARIES (MAC_RELEASE_32 sphinxbase)
+	TARGET_LINK_LIBRARIES (MAC_RELEASE_32 pocketsphinx)
+ENDIF (CMP_MAC)
+
+
+
+# Tests
+# add_executable(XCopilot)
