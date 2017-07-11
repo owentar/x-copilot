@@ -19,14 +19,12 @@ static int micCallback(const void* input,
 
 void Microphone::init()
 {
-    std::cout << "I'm also being executed" << std::endl;
     PaError error = Pa_Initialize();
     handlePaError(error);
 }
 
 void Microphone::terminate()
 {
-    std::cout << "I'm being executed" << std::endl;
     if (isListening())
     {
         PaError error = Pa_StopStream(stream);
