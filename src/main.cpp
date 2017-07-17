@@ -5,6 +5,7 @@
 //#include "XPLMUtilities.h"
 
 #include "StatusWindow.h"
+#include "XCopilot.h"
 
 void configureForAircraft();
 
@@ -28,11 +29,13 @@ PLUGIN_API void	XPluginStop(void)
 
 PLUGIN_API int XPluginEnable(void)
 {
+    XCopilot::getInstance()->enable();
 	return 1;
 }
 
 PLUGIN_API void XPluginDisable(void)
 {
+    XCopilot::getInstance()->disable();
 }
 
 PLUGIN_API void XPluginReceiveMessage(XPLMPluginID inFrom, int inMsg, void * inParam)
@@ -54,5 +57,5 @@ void configureForAircraft()
     XPLMGetDatab(authorID, author, 0, 500);
     XPLMGetDatab(ICAOID, icao, 0, 40);
     XPLMGetDatab(descID, desc, 0, 260);
-    //xcopilot.configureForAircraft((str(author[0]), str(desc[0]), str(icao[0])))
+    XCopilot::getInstance()->configureForAircraft(author, desc, icao);
 }

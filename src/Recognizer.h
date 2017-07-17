@@ -12,6 +12,7 @@ public:
     explicit Recognizer(Pocketsphinx* p, Microphone* m);
     virtual ~Recognizer();
     void start();
+    void stop();
     void handleAudio(const short* rawData, unsigned long frameCount);
 
 protected:

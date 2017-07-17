@@ -27,5 +27,9 @@ void XCopilot::enable()
 
 void XCopilot::disable()
 {
+    recognizer.stop();
+}
 
+void XCopilot::configureForAircraft(const char* author, const char* description, const char* icao)
+{
 }

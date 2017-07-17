@@ -11,10 +11,10 @@ class XCopilot
         static XCopilot* getInstance();
         void enable();
         void disable();
+        void configureForAircraft(const char*, const char*, const char*);
 
     private:
         XCopilot();
-        //XCopilot(XCopilot const&);
         XCopilot& operator=(XCopilot const&) { return *instance; };
         virtual ~XCopilot() {};
 
