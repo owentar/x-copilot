@@ -13,8 +13,7 @@
 class StatusWindow
 {
     public:
-        StatusWindow();
-        virtual ~StatusWindow();
+        static StatusWindow* getInstance();
         void show(const std::string& message);
         void hide();
 
@@ -47,8 +46,11 @@ class StatusWindow
             int bottom;
         };
 
+        StatusWindow();
+        virtual ~StatusWindow();
         static float flightLoopCallback(float elapsedMe, float elapsedSim, int counter, void* refcon);
 
+        static StatusWindow* instance;
         std::string message;
         Dimensions dimensions;
         XPWidgetID widgetId;

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Recognizer::Recognizer(Pocketsphinx* p, Microphone* m) : pocketsphinx(p), microphone(m), shouldDecode(false)
+Recognizer::Recognizer(Pocketsphinx* p, Microphone* m) : pocketsphinx{p}, microphone{m}, shouldDecode{false}
 {
     pocketsphinx->init();
     microphone->init();

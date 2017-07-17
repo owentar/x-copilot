@@ -7,6 +7,8 @@
 #define STATUSWINDOW_TITLE "X-Copilot"
 #define STATUSWINDOW_TIMER 8
 
+StatusWindow* StatusWindow::instance = nullptr;
+
 StatusWindow::StatusWindow()
 {
     widgetId = XPCreateWidget(dimensions.getLeft(), dimensions.getTop(), dimensions.getRight(), dimensions.getBottom(), 0, STATUSWINDOW_TITLE, 1, 0, xpWidgetClass_MainWindow);
@@ -23,6 +25,16 @@ StatusWindow::StatusWindow()
 StatusWindow::~StatusWindow()
 {
     XPLMUnregisterFlightLoopCallback(StatusWindow::flightLoopCallback, this);
+}
+
+StatusWindow* StatusWindow::getInstance()
+{
+    if (!instance)
+    {
+        instance = new StatusWindow();
+    }
+
+    return instance;
 }
 
 void StatusWindow::show(const std::string& message)

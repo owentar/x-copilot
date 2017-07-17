@@ -4,6 +4,8 @@
 #include "PocketsphinxWrapper.h"
 #include "Microphone.h"
 
+XCopilot* XCopilot::instance = nullptr;
+
 XCopilot::XCopilot() : microphone{}, pocketsphinx{}, recognizer{&pocketsphinx, &microphone}
 {
 }
