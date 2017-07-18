@@ -14,6 +14,7 @@ public:
     MOCK_METHOD0(init, void());
     MOCK_METHOD0(start, void());
     MOCK_METHOD2(process, void(const short*, unsigned long));
+    MOCK_METHOD0(decode, std::string());
     MOCK_CONST_METHOD0(isSpeaking, bool());
 };
 
@@ -66,8 +67,15 @@ TEST_F(RecognizerTest, WhenSpeechIsNotRecognizedNoRecognitionIsNotified)
 {
     NiceMock<MicrophoneMock> microphone;
     NiceMock<PocketsphinxMock> pocketsphinx;
+    EXPECT_CALL(pocketsphinx, isSpeaking())
+        .WillOnce(Return(true))
+        .WillOnce(Return(false));
+    EXPECT_CALL(pocketsphinx, decode())
+        .WillOnce(Return("test"));
     Recognizer recognizer(&pocketsphinx, &microphone);
+    recognizer.connect([] (const std::string& msg) { ASSERT_THAT(msg, Eq("test")); });
     recognizer.start();
 
+    recognizer.handleAudio(micData, 10);
     recognizer.handleAudio(micData, 10);
 }

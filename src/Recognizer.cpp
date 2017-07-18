@@ -37,7 +37,7 @@ void Recognizer::handleAudio(const short* rawData, unsigned long frameCount)
         if (shouldDecode)
         {
             shouldDecode = false;
-            std::cout << "You just said: " << pocketsphinx->decode() << std::endl;
+            onRecognition(pocketsphinx->decode());
         }
     }
 }

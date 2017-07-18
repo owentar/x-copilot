@@ -2,7 +2,6 @@
 
 #include "XPLMPlugin.h"
 #include "XPLMDataAccess.h"
-//#include "XPLMUtilities.h"
 
 #include "StatusWindow.h"
 #include "XCopilot.h"
@@ -17,8 +16,6 @@ PLUGIN_API int XPluginStart(
 	strcpy(outName, "X-Copilot");
 	strcpy(outSig, "Owentar");
 	strcpy(outDesc, "A plug-in to...");
-
-	// command = XPLMCreateCommand("xcopilot/record_voice_command", "Record voice command.");
 
 	return 1;
 }
