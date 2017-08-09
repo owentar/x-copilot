@@ -42,7 +42,9 @@ cmake_install.cmake
 Makefile
 CMakeFiles/
 
+.idea/
 bin/
 obj/
 3rdparty/
 build/
+cmake-build-debug/

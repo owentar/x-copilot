@@ -1,7 +1,7 @@
 #ifndef POCKETSPHINXWRAPPER_H
 #define POCKETSPHINXWRAPPER_H
 
-#include <pocketsphinx.h>
+#include "pocketsphinx/pocketsphinx.h"
 #include <string>
 
 class Pocketsphinx
