@@ -1,0 +1,209 @@
+Language model created by QuickLM on Wed Apr 19 16:24:46 EDT 2017
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 46 sentences and 48 words
+
+\data\
+ngram 1=48
+ngram 2=92
+ngram 3=46
+
+\1-grams:
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-2.4409 ALTIMETER -0.2218
+-2.4409 ALTITUDE -0.2218
+-2.4409 BEACON -0.2218
+-2.4409 COM -0.2218
+-2.4409 COURSE -0.2218
+-2.4409 DECIMAL -0.2218
+-2.4409 DOWN -0.2218
+-2.4409 EIGHT -0.2218
+-2.4409 ELEVEN -0.2218
+-2.4409 FIFTEEN -0.2218
+-2.4409 FIVE -0.2218
+-2.4409 FLAPS -0.2218
+-2.4409 FLIGHT -0.2218
+-2.4409 FOUR -0.2218
+-2.4409 FOURTY -0.2218
+-2.4409 GEAR -0.2218
+-2.4409 HEADING -0.2218
+-2.4409 LANDING -0.2218
+-2.4409 LEVEL -0.2218
+-2.4409 LIGHT -0.2218
+-2.4409 LIGHTS -0.2218
+-2.4409 LNAV -0.2218
+-2.4409 LOGO -0.2218
+-2.4409 NAV -0.2218
+-2.4409 NAVIGATION -0.2218
+-2.4409 NINE -0.2218
+-2.4409 OFF -0.2218
+-2.4409 ON -0.2218
+-2.4409 ONE -0.2218
+-2.4409 POSITION -0.2218
+-2.4409 SELECT -0.2218
+-2.4409 SET -0.2218
+-2.4409 SEVEN -0.2218
+-2.4409 SIX -0.2218
+-2.4409 SPEED -0.2218
+-2.4409 STROBE -0.2218
+-2.4409 TAXI -0.2218
+-2.4409 TEN -0.2218
+-2.4409 THIRTY -0.2218
+-2.4409 THREE -0.2218
+-2.4409 TWENTY -0.2218
+-2.4409 TWO -0.2218
+-2.4409 UP -0.2218
+-2.4409 VNAV -0.2218
+-2.4409 WING -0.2218
+-2.4409 ZERO -0.2218
+
+\2-grams:
+-1.9638 <s> ALTIMETER 0.0000
+-1.9638 <s> ALTITUDE 0.0000
+-1.9638 <s> BEACON 0.0000
+-1.9638 <s> COM 0.0000
+-1.9638 <s> COURSE 0.0000
+-1.9638 <s> DECIMAL 0.0000
+-1.9638 <s> DOWN 0.0000
+-1.9638 <s> EIGHT 0.0000
+-1.9638 <s> ELEVEN 0.0000
+-1.9638 <s> FIFTEEN 0.0000
+-1.9638 <s> FIVE 0.0000
+-1.9638 <s> FLAPS 0.0000
+-1.9638 <s> FLIGHT 0.0000
+-1.9638 <s> FOUR 0.0000
+-1.9638 <s> FOURTY 0.0000
+-1.9638 <s> GEAR 0.0000
+-1.9638 <s> HEADING 0.0000
+-1.9638 <s> LANDING 0.0000
+-1.9638 <s> LEVEL 0.0000
+-1.9638 <s> LIGHT 0.0000
+-1.9638 <s> LIGHTS 0.0000
+-1.9638 <s> LNAV 0.0000
+-1.9638 <s> LOGO 0.0000
+-1.9638 <s> NAV 0.0000
+-1.9638 <s> NAVIGATION 0.0000
+-1.9638 <s> NINE 0.0000
+-1.9638 <s> OFF 0.0000
+-1.9638 <s> ON 0.0000
+-1.9638 <s> ONE 0.0000
+-1.9638 <s> POSITION 0.0000
+-1.9638 <s> SELECT 0.0000
+-1.9638 <s> SET 0.0000
+-1.9638 <s> SEVEN 0.0000
+-1.9638 <s> SIX 0.0000
+-1.9638 <s> SPEED 0.0000
+-1.9638 <s> STROBE 0.0000
+-1.9638 <s> TAXI 0.0000
+-1.9638 <s> TEN 0.0000
+-1.9638 <s> THIRTY 0.0000
+-1.9638 <s> THREE 0.0000
+-1.9638 <s> TWENTY 0.0000
+-1.9638 <s> TWO 0.0000
+-1.9638 <s> UP 0.0000
+-1.9638 <s> VNAV 0.0000
+-1.9638 <s> WING 0.0000
+-1.9638 <s> ZERO 0.0000
+-0.3010 ALTIMETER </s> -0.3010
+-0.3010 ALTITUDE </s> -0.3010
+-0.3010 BEACON </s> -0.3010
+-0.3010 COM </s> -0.3010
+-0.3010 COURSE </s> -0.3010
+-0.3010 DECIMAL </s> -0.3010
+-0.3010 DOWN </s> -0.3010
+-0.3010 EIGHT </s> -0.3010
+-0.3010 ELEVEN </s> -0.3010
+-0.3010 FIFTEEN </s> -0.3010
+-0.3010 FIVE </s> -0.3010
+-0.3010 FLAPS </s> -0.3010
+-0.3010 FLIGHT </s> -0.3010
+-0.3010 FOUR </s> -0.3010
+-0.3010 FOURTY </s> -0.3010
+-0.3010 GEAR </s> -0.3010
+-0.3010 HEADING </s> -0.3010
+-0.3010 LANDING </s> -0.3010
+-0.3010 LEVEL </s> -0.3010
+-0.3010 LIGHT </s> -0.3010
+-0.3010 LIGHTS </s> -0.3010
+-0.3010 LNAV </s> -0.3010
+-0.3010 LOGO </s> -0.3010
+-0.3010 NAV </s> -0.3010
+-0.3010 NAVIGATION </s> -0.3010
+-0.3010 NINE </s> -0.3010
+-0.3010 OFF </s> -0.3010
+-0.3010 ON </s> -0.3010
+-0.3010 ONE </s> -0.3010
+-0.3010 POSITION </s> -0.3010
+-0.3010 SELECT </s> -0.3010
+-0.3010 SET </s> -0.3010
+-0.3010 SEVEN </s> -0.3010
+-0.3010 SIX </s> -0.3010
+-0.3010 SPEED </s> -0.3010
+-0.3010 STROBE </s> -0.3010
+-0.3010 TAXI </s> -0.3010
+-0.3010 TEN </s> -0.3010
+-0.3010 THIRTY </s> -0.3010
+-0.3010 THREE </s> -0.3010
+-0.3010 TWENTY </s> -0.3010
+-0.3010 TWO </s> -0.3010
+-0.3010 UP </s> -0.3010
+-0.3010 VNAV </s> -0.3010
+-0.3010 WING </s> -0.3010
+-0.3010 ZERO </s> -0.3010
+
+\3-grams:
+-0.3010 <s> ALTIMETER </s>
+-0.3010 <s> ALTITUDE </s>
+-0.3010 <s> BEACON </s>
+-0.3010 <s> COM </s>
+-0.3010 <s> COURSE </s>
+-0.3010 <s> DECIMAL </s>
+-0.3010 <s> DOWN </s>
+-0.3010 <s> EIGHT </s>
+-0.3010 <s> ELEVEN </s>
+-0.3010 <s> FIFTEEN </s>
+-0.3010 <s> FIVE </s>
+-0.3010 <s> FLAPS </s>
+-0.3010 <s> FLIGHT </s>
+-0.3010 <s> FOUR </s>
+-0.3010 <s> FOURTY </s>
+-0.3010 <s> GEAR </s>
+-0.3010 <s> HEADING </s>
+-0.3010 <s> LANDING </s>
+-0.3010 <s> LEVEL </s>
+-0.3010 <s> LIGHT </s>
+-0.3010 <s> LIGHTS </s>
+-0.3010 <s> LNAV </s>
+-0.3010 <s> LOGO </s>
+-0.3010 <s> NAV </s>
+-0.3010 <s> NAVIGATION </s>
+-0.3010 <s> NINE </s>
+-0.3010 <s> OFF </s>
+-0.3010 <s> ON </s>
+-0.3010 <s> ONE </s>
+-0.3010 <s> POSITION </s>
+-0.3010 <s> SELECT </s>
+-0.3010 <s> SET </s>
+-0.3010 <s> SEVEN </s>
+-0.3010 <s> SIX </s>
+-0.3010 <s> SPEED </s>
+-0.3010 <s> STROBE </s>
+-0.3010 <s> TAXI </s>
+-0.3010 <s> TEN </s>
+-0.3010 <s> THIRTY </s>
+-0.3010 <s> THREE </s>
+-0.3010 <s> TWENTY </s>
+-0.3010 <s> TWO </s>
+-0.3010 <s> UP </s>
+-0.3010 <s> VNAV </s>
+-0.3010 <s> WING </s>
+-0.3010 <s> ZERO </s>
+
+\end\
