@@ -1,4 +1,4 @@
-#include <gmock.h>
+#include "gmock/gmock.h"
 
 #include "PocketsphinxWrapper.h"
 #include "Recognizer.h"

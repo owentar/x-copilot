@@ -1,6 +1,6 @@
 #include "PocketsphinxWrapper.h"
 
-#include <pocketsphinx.h>
+#include "pocketsphinx/pocketsphinx.h"
 #include <string>
 
 void Pocketsphinx::init()

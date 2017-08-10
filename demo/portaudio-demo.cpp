@@ -2,7 +2,7 @@
 #include "Recognizer.h"
 #include "Microphone.h"
 
-int main3(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
     Microphone mic;
     Pocketsphinx pocketsphinx;
     Recognizer recognizer(&pocketsphinx, &mic);
