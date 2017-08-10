@@ -4,7 +4,9 @@ add_subdirectory(lib/googletest)
 
 set(SOURCE_FILES
         main.cpp
-        RecognizerTest.cpp)
+        CommandTest.cpp
+        RecognizerTest.cpp
+        XCopilotTest.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
