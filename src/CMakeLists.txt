@@ -39,13 +39,6 @@ target_include_directories(${PROJECT_NAME}
             ${PROJECT_SOURCE_DIR}/lib/pocketsphinx/includes/pocketsphinx
         )
 
-target_link_libraries(${PROJECT_NAME}
-        PUBLIC
-            ${PROJECT_SOURCE_DIR}/lib/portaudio/lib/libportaudio.a
-            ${PROJECT_SOURCE_DIR}/lib/sphinxbase/lib/libsphinxbase.a
-            ${PROJECT_SOURCE_DIR}/lib/pocketsphinx/lib/libpocketsphinx.a
-        )
-
 if(APPLE)
     find_library(XPLM_LIBRARY XPLM ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Mac)
     find_library(XPWIDGETS_LIBRARY XPWidgets ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Mac)
@@ -66,9 +59,21 @@ if(APPLE)
                 ${AUDIOUNIT_LIBRARY}
                 ${XPLM_LIBRARY}
                 ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Mac/XPWidgets.framework
+                ${PROJECT_SOURCE_DIR}/lib/portaudio/lib/libportaudio.a
+                ${PROJECT_SOURCE_DIR}/lib/sphinxbase/lib/libsphinxbase.a
+                ${PROJECT_SOURCE_DIR}/lib/pocketsphinx/lib/libpocketsphinx.a
             )
 elseif(UNIX)
     target_compile_definitions(${PROJECT_NAME} PUBLIC LIN=1)
+
+    target_link_libraries(${PROJECT_NAME}
+            PUBLIC
+                ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win/XPLM_64.lib
+                ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win/XPWidgets_64.lib
+                ${PROJECT_SOURCE_DIR}/lib/portaudio/lib/libportaudio.so
+                ${PROJECT_SOURCE_DIR}/lib/sphinxbase/lib/libsphinxbase.so
+                ${PROJECT_SOURCE_DIR}/lib/pocketsphinx/lib/libpocketsphinx.so
+            )
 elseif(WIN32)
     find_library(XPLM_LIBRARY XPLM ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win)
     find_library(XPWIDGETS_LIBRARY XPWidgets ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win)
@@ -79,10 +84,5 @@ elseif(WIN32)
             PUBLIC
                 ${XPLM_LIBRARY}
                 ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win
-                #            ${XPWIDGETS_LIBRARY}
-                #            ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Mac/XPLM.framework
-                ${PROJECT_SOURCE_DIR}/lib/portaudio/lib/libportaudio.a
-                ${PROJECT_SOURCE_DIR}/lib/sphinxbase/lib/libsphinxbase.a
-                ${PROJECT_SOURCE_DIR}/lib/pocketsphinx/lib/libpocketsphinx.a
             )
 endif()
