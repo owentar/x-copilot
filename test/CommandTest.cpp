@@ -14,11 +14,11 @@ protected:
 
 TEST_F(CommandTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
 {
-    ASSERT_TRUE(command.isRecognized("a test"));
+    ASSERT_THAT(command.isRecognized("a test"), Eq(true));
 }
 
 TEST_F(CommandTest, DoesNotRecognizeCommandWhenPhraseDoesNotMatchRegEx)
 {
-    ASSERT_FALSE(command.isRecognized("does not match"));
+    ASSERT_THAT(command.isRecognized("does not match"), Eq(false));
 }
 
