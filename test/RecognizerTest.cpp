@@ -31,13 +31,14 @@ class RecognizerTest : public Test
 {
 protected:
     short micData[10];
+    NiceMock<MicrophoneMock> microphone;
+    NiceMock<PocketsphinxMock> pocketsphinx;
+
 };
 
 TEST_F(RecognizerTest, InConstructionIsNotListening)
 {
-    NiceMock<MicrophoneMock> microphone;
     EXPECT_CALL(microphone, listen(_)).Times(0);
-    NiceMock<PocketsphinxMock> pocketsphinx;
     EXPECT_CALL(pocketsphinx, start()).Times(0);
 
     Recognizer recognizer(&pocketsphinx, &microphone);
@@ -45,8 +46,6 @@ TEST_F(RecognizerTest, InConstructionIsNotListening)
 
 TEST_F(RecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
 {
-    NiceMock<MicrophoneMock> microphone;
-    NiceMock<PocketsphinxMock> pocketsphinx;
     Recognizer recognizer(&pocketsphinx, &microphone);
     EXPECT_CALL(pocketsphinx, start());
 
@@ -55,8 +54,6 @@ TEST_F(RecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
 
 TEST_F(RecognizerTest, WhenRecognizerIsStartedMicrophoneStartsListening)
 {
-    NiceMock<MicrophoneMock> microphone;
-    NiceMock<PocketsphinxMock> pocketsphinx;
     Recognizer recognizer(&pocketsphinx, &microphone);
     EXPECT_CALL(microphone, listen(&recognizer));
 
@@ -65,8 +62,6 @@ TEST_F(RecognizerTest, WhenRecognizerIsStartedMicrophoneStartsListening)
 
 TEST_F(RecognizerTest, WhenSpeechIsNotRecognizedNoRecognitionIsNotified)
 {
-    NiceMock<MicrophoneMock> microphone;
-    NiceMock<PocketsphinxMock> pocketsphinx;
     EXPECT_CALL(pocketsphinx, isSpeaking())
         .WillOnce(Return(true))
         .WillOnce(Return(false));
