@@ -22,3 +22,8 @@ TEST_F(CommandTest, DoesNotRecognizeCommandWhenPhraseDoesNotMatchRegEx)
     ASSERT_THAT(command.isRecognized("does not match"), Eq(false));
 }
 
+TEST_F(CommandTest, GetAltitudeValueFromCommand)
+{
+    Command c("Altimeter", "^set altitude ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){3,5})$");
+    ASSERT_THAT(c.getValue("set altitude three five zero zero"), Eq(3500));
+}

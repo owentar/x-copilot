@@ -14,10 +14,14 @@ set(SOURCE_FILES
         Recognizer.h
         StatusWindow.cpp
         StatusWindow.h
+        utils.h
         XCopilot.cpp
         XCopilot.h)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+
+set(Boost_USE_STATIC_LIBS ON)
+find_package(Boost REQUIRED COMPONENTS signals)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC XPLM200=1 XPLM210=1)
 
@@ -29,6 +33,7 @@ target_compile_features(${PROJECT_NAME}
 
 target_include_directories(${PROJECT_NAME}
         PUBLIC
+            ${Boost_INCLUDE_DIRS}
             ${PROJECT_SOURCE_DIR}
             ${PROJECT_SOURCE_DIR}/lib/XPSDK/CHeaders/XPLM
             ${PROJECT_SOURCE_DIR}/lib/XPSDK/CHeaders/Widgets
@@ -58,6 +63,7 @@ if(APPLE)
                 ${AUDIOTOOLBOX_LIBRARY}
                 ${AUDIOUNIT_LIBRARY}
                 ${XPLM_LIBRARY}
+                ${Boost_LIBRARIES}
                 ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Mac/XPWidgets.framework
                 ${PROJECT_SOURCE_DIR}/lib/portaudio/lib/libportaudio.a
                 ${PROJECT_SOURCE_DIR}/lib/sphinxbase/lib/libsphinxbase.a
@@ -68,6 +74,7 @@ elseif(UNIX)
 
     target_link_libraries(${PROJECT_NAME}
             PUBLIC
+                ${Boost_LIBRARIES}
                 ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win/XPLM_64.lib
                 ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win/XPWidgets_64.lib
                 ${PROJECT_SOURCE_DIR}/lib/portaudio/lib/libportaudio.so
@@ -82,6 +89,7 @@ elseif(WIN32)
 
     target_link_libraries(${PROJECT_NAME}
             PUBLIC
+                ${Boost_LIBRARIES}
                 ${XPLM_LIBRARY}
                 ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win
             )

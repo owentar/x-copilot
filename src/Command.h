@@ -10,6 +10,7 @@ class Command
         explicit Command(const std::string& name, const std::string& regExp) : name{name}, commandRegExp{regExp} {};
         virtual ~Command() {};
         virtual bool isRecognized(const std::string&) const;
+        virtual int getValue(const std::string&) const;
 
     private:
         std::string name;
