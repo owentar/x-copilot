@@ -16,7 +16,8 @@ set(SOURCE_FILES
         StatusWindow.h
         utils.h
         XCopilot.cpp
-        XCopilot.h)
+        XCopilot.h
+        XPlaneDataRefSDK.h)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
