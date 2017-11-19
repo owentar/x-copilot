@@ -1,18 +1,32 @@
+#include <memory>
+#include <utility>
+
+#include "Command.h"
+#include "Microphone.h"
 #include "PocketsphinxWrapper.h"
 #include "Recognizer.h"
-#include "Microphone.h"
+#include "XCopilot.h"
+#include "XPlaneDataRefSDKStub.h"
 
 #include <iostream>
 
 int main(int argc, char *argv[]) {
-    Microphone mic;
+    XPlaneDataRefSDKStub xplaneSDK;
+    Microphone microphone;
     Pocketsphinx pocketsphinx;
-    Recognizer recognizer(&pocketsphinx, &mic);
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(&pocketsphinx, &microphone);
+    XCopilot xcopilot(std::move(recognizer));
+    Command command("Test Command", "^set altitude ((?:(?:\\\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\\\s?){3,5})$", "set/altitude", &xplaneSDK);
+    xcopilot.addCommand(&command);
 
-    recognizer.connect([](const std::string phrase) { std::cout << phrase << std::endl; } );
-    recognizer.start();
+    xcopilot.enable();
+    xcopilot.configureForAircraft("", "", "");
 
-    while(true) { }
+    std::cout << "Listening..." << std::endl;
+    while(!xcopilot.hasCommands()) {}
+
+    xcopilot.executePendingCommands();
+    xcopilot.disable();
 
     return 0;
 }
