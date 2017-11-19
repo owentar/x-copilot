@@ -17,13 +17,13 @@ static int micCallback(const void* input,
                         PaStreamCallbackFlags statusFlags,
                         void* userData);
 
-void Microphone::init()
+Microphone::Microphone()
 {
     PaError error = Pa_Initialize();
     handlePaError(error);
 }
 
-void Microphone::terminate()
+Microphone::~Microphone()
 {
     if (isListening())
     {

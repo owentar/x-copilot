@@ -3,12 +3,12 @@
 #include "pocketsphinx/pocketsphinx.h"
 #include <string>
 
-void Pocketsphinx::init()
+Pocketsphinx::Pocketsphinx()
 {
     cmd_ln_t* config = cmd_ln_init(NULL, ps_args(), TRUE,       // Load the configuration structure - ps_args() passes the default values
-    "-hmm", "/usr/local/share/pocketsphinx/model/en-us/en-us",  // path to the standard english language model
-    "-lm", "/home/owentar/Projects/X-Plane/x-copilot-py/xcopilot/pocketsphinx-data/xp-XP/language-model.lm",
-    "-dict", "/home/owentar/Projects/X-Plane/x-copilot-py/xcopilot/pocketsphinx-data/xp-XP/pronounciation-dictionary.dic",
+    "-hmm", "/Users/hcarrizo/projects/owentar/x-copilot/pocketsphinx-data/xp-XP/acoustic-model",  // path to the standard english language model
+    "-lm", "/Users/hcarrizo/projects/owentar/x-copilot/pocketsphinx-data/xp-XP/language-model.lm",
+    "-dict", "/Users/hcarrizo/projects/owentar/x-copilot/pocketsphinx-data/xp-XP/pronounciation-dictionary.dic",
     "-logfn", "/dev/null",                                      // suppress log info from being sent to screen
      NULL);
     ps = ps_init(config);

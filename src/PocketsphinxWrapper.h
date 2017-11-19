@@ -7,9 +7,8 @@
 class Pocketsphinx
 {
     public:
-        explicit Pocketsphinx() { };
+        explicit Pocketsphinx();
         virtual ~Pocketsphinx() { };
-        virtual void init();
         virtual void start();
         virtual void end();
         virtual std::string decode();

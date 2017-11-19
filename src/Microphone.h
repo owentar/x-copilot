@@ -9,10 +9,8 @@ typedef short SAMPLE;
 class Microphone
 {
     public:
-        Microphone() {};
-        virtual ~Microphone() {};
-        virtual void init();
-        virtual void terminate();
+        Microphone();
+        virtual ~Microphone();
         virtual void listen(MicrophoneHandler<SAMPLE>*);
         bool isListening();
 
