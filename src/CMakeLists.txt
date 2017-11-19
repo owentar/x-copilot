@@ -18,7 +18,12 @@ set(SOURCE_FILES
         XCopilot.cpp
         XCopilot.h
         XPlaneDataRefSDK.h
-        utils.cpp)
+        CommandExecutor.h
+        utils.cpp
+        FloatCommandExecutor.cpp
+        FloatCommandExecutor.h
+        IntCommandExecutor.cpp
+        IntCommandExecutor.h)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
