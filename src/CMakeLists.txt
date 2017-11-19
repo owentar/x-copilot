@@ -17,7 +17,8 @@ set(SOURCE_FILES
         utils.h
         XCopilot.cpp
         XCopilot.h
-        XPlaneDataRefSDK.h)
+        XPlaneDataRefSDK.h
+        utils.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
