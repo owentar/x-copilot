@@ -1,12 +1,20 @@
 #include <cstring>
+#include <memory>
+#include <utility>
 
 #include "XPLMPlugin.h"
 #include "XPLMDataAccess.h"
+#include "XPLMProcessing.h"
 
 #include "StatusWindow.h"
 #include "XCopilot.h"
+#include "Recognizer.h"
+#include "Microphone.h"
+#include "PocketsphinxWrapper.h"
 
+XCopilot* xCopilot;
 void configureForAircraft();
+float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon);
 
 PLUGIN_API int XPluginStart(
 						char *		outName,
@@ -15,7 +23,7 @@ PLUGIN_API int XPluginStart(
 {
 	strcpy(outName, "X-Copilot");
 	strcpy(outSig, "Owentar");
-	strcpy(outDesc, "A plug-in to...");
+	strcpy(outDesc, "Recognize voice commands");
 
 	return 1;
 }
@@ -26,21 +34,29 @@ PLUGIN_API void	XPluginStop(void)
 
 PLUGIN_API int XPluginEnable(void)
 {
-    XCopilot::getInstance()->enable();
+    Pocketsphinx pocketsphinx;
+    Microphone microphone;
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(&pocketsphinx, &microphone);
+    xCopilot = new XCopilot(std::move(recognizer));
+    xCopilot->enable();
+    XPLMRegisterFlightLoopCallback(flightLoopCallback, 1, 0);
 	return 1;
 }
 
 PLUGIN_API void XPluginDisable(void)
 {
-    XCopilot::getInstance()->disable();
+    xCopilot->disable();
+    delete xCopilot;
 }
 
 PLUGIN_API void XPluginReceiveMessage(XPLMPluginID inFrom, int inMsg, void * inParam)
 {
+    /*
     if (inMsg == XPLM_MSG_PLANE_LOADED)
     {
         configureForAircraft();
     }
+    */
 }
 
 void configureForAircraft()
@@ -54,5 +70,11 @@ void configureForAircraft()
     XPLMGetDatab(authorID, author, 0, 500);
     XPLMGetDatab(ICAOID, icao, 0, 40);
     XPLMGetDatab(descID, desc, 0, 260);
-    XCopilot::getInstance()->configureForAircraft(author, desc, icao);
+    xCopilot->configureForAircraft(author, desc, icao);
+}
+
+float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon)
+{
+    xCopilot->executePendingCommands();
+    return 1;
 }

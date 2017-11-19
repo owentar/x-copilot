@@ -1,9 +1,10 @@
 #ifndef XCOPILOT_H
 #define XCOPILOT_H
 
-#include <queue>
-#include <vector>
+#include <memory>
 #include <regex>
+#include <utility>
+#include <vector>
 
 #include "Recognizer.h"
 #include "PocketsphinxWrapper.h"
@@ -13,25 +14,21 @@
 class XCopilot
 {
     public:
-        static XCopilot* getInstance();
-        static void releaseInstance();
+        XCopilot(std::unique_ptr<Recognizer> recognizer) : recognizer{std::move(recognizer)}, commands{}, commandProcessor{} {};
+        virtual ~XCopilot() {};
         void enable();
         void disable();
         void configureForAircraft(const char*, const char*, const char*);
         void addCommand(Command* command) { commandProcessor.push_back(command); };
         bool hasCommands() const { return !commands.empty(); };
         void recognizeCommand(const std::string& command);
+        void executePendingCommands();
 
     private:
-        XCopilot();
-        XCopilot& operator=(XCopilot const&) { return *instance; };
-        virtual ~XCopilot() {};
+        XCopilot& operator=(XCopilot const&);
 
-        static XCopilot* instance;
-        Microphone microphone;
-        Pocketsphinx pocketsphinx;
-        Recognizer recognizer;
-        std::queue<int> commands;
+        std::unique_ptr<Recognizer> recognizer;
+        std::vector<CommandExecutorPtr> commands;
         std::vector<Command*> commandProcessor;
 };
 
