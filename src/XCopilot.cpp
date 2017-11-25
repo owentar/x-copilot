@@ -10,16 +10,6 @@
 
 #include <iostream>
 
-void XCopilot::enable()
-{
-    recognizer->start();
-}
-
-void XCopilot::disable()
-{
-    recognizer->stop();
-}
-
 void XCopilot::configureForAircraft(const char* author, const char* description, const char* icao)
 {
     recognizer->connect([this] (const std::string& phrase) { recognizeCommand(phrase); });
