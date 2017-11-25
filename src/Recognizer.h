@@ -7,16 +7,15 @@
 
 #include <boost/signals2.hpp>
 
-
 class Recognizer : public MicrophoneHandler<short>
 {
 public:
     typedef boost::signals2::signal<void (const std::string&)> signal_t;
 
     explicit Recognizer(Pocketsphinx* p, Microphone* m) : pocketsphinx{p}, microphone{m}, shouldDecode{false} {};
-    virtual ~Recognizer() {};
+    virtual ~Recognizer() = default;
     virtual void start();
-    virtual void stop() {};
+    virtual void stop();
     void handleAudio(const short* rawData, unsigned long frameCount);
     boost::signals2::connection connect(const signal_t::slot_type &subscriber)
     {

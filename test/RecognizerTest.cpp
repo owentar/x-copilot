@@ -13,6 +13,7 @@ public:
     virtual ~PocketsphinxMock() {};
     MOCK_METHOD0(init, void());
     MOCK_METHOD0(start, void());
+    MOCK_METHOD0(end, void());
     MOCK_METHOD2(process, void(const short*, unsigned long));
     MOCK_METHOD0(decode, std::string());
     MOCK_CONST_METHOD0(isSpeaking, bool());
@@ -24,6 +25,7 @@ public:
     virtual ~MicrophoneMock() {};
     MOCK_METHOD0(init, void());
     MOCK_METHOD0(terminate, void());
+    MOCK_METHOD0(isListening, bool());
     MOCK_METHOD1(listen, void(MicrophoneHandler<short>*));
 };
 
@@ -46,8 +48,9 @@ TEST_F(RecognizerTest, InConstructionIsNotListening)
 
 TEST_F(RecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
 {
-    Recognizer recognizer(&pocketsphinx, &microphone);
+    EXPECT_CALL(pocketsphinx, init());
     EXPECT_CALL(pocketsphinx, start());
+    Recognizer recognizer(&pocketsphinx, &microphone);
 
     recognizer.start();
 }
@@ -55,6 +58,7 @@ TEST_F(RecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
 TEST_F(RecognizerTest, WhenRecognizerIsStartedMicrophoneStartsListening)
 {
     Recognizer recognizer(&pocketsphinx, &microphone);
+    EXPECT_CALL(microphone, init());
     EXPECT_CALL(microphone, listen(&recognizer));
 
     recognizer.start();
@@ -73,4 +77,22 @@ TEST_F(RecognizerTest, WhenSpeechIsNotRecognizedNoRecognitionIsNotified)
 
     recognizer.handleAudio(micData, 10);
     recognizer.handleAudio(micData, 10);
+}
+
+TEST_F(RecognizerTest, WhenRecognizerIsStoppedTerminatesMicrophone)
+{
+    EXPECT_CALL(microphone, terminate());
+
+    Recognizer recognizer(&pocketsphinx, &microphone);
+    recognizer.start();
+    recognizer.stop();
+}
+
+TEST_F(RecognizerTest, WhenRecognizerIsStoppedTerminatesPocketsphinx)
+{
+    EXPECT_CALL(pocketsphinx, end());
+
+    Recognizer recognizer(&pocketsphinx, &microphone);
+    recognizer.start();
+    recognizer.stop();
 }

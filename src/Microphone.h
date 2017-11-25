@@ -9,10 +9,12 @@ typedef short SAMPLE;
 class Microphone
 {
     public:
-        Microphone();
-        virtual ~Microphone();
+        Microphone() : stream{nullptr} {};
+        virtual ~Microphone() = default;
+        virtual void init();
+        virtual void terminate();
         virtual void listen(MicrophoneHandler<SAMPLE>*);
-        bool isListening();
+        virtual bool isListening();
 
     private:
         void handlePaError(PaError error);
