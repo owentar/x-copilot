@@ -15,7 +15,7 @@ class XCopilot
 {
     public:
         XCopilot(std::unique_ptr<Recognizer> recognizer) : recognizer{std::move(recognizer)}, commands{}, commandProcessor{} {};
-        virtual ~XCopilot() {};
+        virtual ~XCopilot() = default;
         void enable() { recognizer->start(); };
         void disable() { recognizer->stop(); };
         void configureForAircraft(const char*, const char*, const char*);

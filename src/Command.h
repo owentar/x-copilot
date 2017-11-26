@@ -30,8 +30,8 @@ public:
             : name{name}, commandRegExp{regExp, std::regex::icase}, dataRefsIds{} {
         init(dataRefs);
     }
-    explicit Command() {}
-    virtual ~Command() {};
+    explicit Command() = default;
+    virtual ~Command() = default;
     virtual bool isRecognized(const std::string&) const;
     virtual CommandExecutorPtr getExecutor(const std::string&);
 

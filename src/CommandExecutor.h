@@ -11,6 +11,7 @@ class CommandExecutor {
 public:
     explicit CommandExecutor(const XPLMDataRef dataRef) : dataRefs{dataRef} {};
     explicit CommandExecutor(const std::vector<XPLMDataRef> dataRefs) : dataRefs{dataRefs} {};
+    virtual ~CommandExecutor() = default;
     virtual void execute() const = 0;
 
 protected:
