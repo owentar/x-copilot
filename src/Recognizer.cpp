@@ -2,7 +2,6 @@
 
 void Recognizer::start()
 {
-    pocketsphinx->init();
     microphone->init();
     pocketsphinx->start();
     microphone->listen(this);
@@ -10,7 +9,7 @@ void Recognizer::start()
 
 void Recognizer::stop()
 {
-    pocketsphinx->end();
+    pocketsphinx->stop();
     microphone->terminate();
 }
 

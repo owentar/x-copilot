@@ -11,9 +11,8 @@ class PocketsphinxMock : public Pocketsphinx
 {
 public:
     virtual ~PocketsphinxMock() {};
-    MOCK_METHOD0(init, void());
     MOCK_METHOD0(start, void());
-    MOCK_METHOD0(end, void());
+    MOCK_METHOD0(stop, void());
     MOCK_METHOD2(process, void(const short*, unsigned long));
     MOCK_METHOD0(decode, std::string());
     MOCK_CONST_METHOD0(isSpeaking, bool());
@@ -48,7 +47,6 @@ TEST_F(RecognizerTest, InConstructionIsNotListening)
 
 TEST_F(RecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
 {
-    EXPECT_CALL(pocketsphinx, init());
     EXPECT_CALL(pocketsphinx, start());
     Recognizer recognizer(&pocketsphinx, &microphone);
 
@@ -90,7 +88,7 @@ TEST_F(RecognizerTest, WhenRecognizerIsStoppedTerminatesMicrophone)
 
 TEST_F(RecognizerTest, WhenRecognizerIsStoppedTerminatesPocketsphinx)
 {
-    EXPECT_CALL(pocketsphinx, end());
+    EXPECT_CALL(pocketsphinx, stop());
 
     Recognizer recognizer(&pocketsphinx, &microphone);
     recognizer.start();

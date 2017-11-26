@@ -9,9 +9,8 @@ class Pocketsphinx
     public:
         explicit Pocketsphinx() {};
         virtual ~Pocketsphinx() = default;
-        virtual void init();
         virtual void start();
-        virtual void end();
+        virtual void stop();
         virtual std::string decode();
         virtual void process(const short* rawData, unsigned long frameCount);
         virtual bool isSpeaking() const;
