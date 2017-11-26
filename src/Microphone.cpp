@@ -17,13 +17,20 @@ static int micCallback(const void* input,
                         PaStreamCallbackFlags statusFlags,
                         void* userData);
 
-void Microphone::init()
+void Microphone::start(MicrophoneHandler<SAMPLE>* handler)
 {
     PaError error = Pa_Initialize();
     handlePaError(error);
+
+    PaStreamParameters inputParameters = getMicParams();
+    error = Pa_OpenStream(&stream, &inputParameters, NULL, SAMPLE_RATE, 256, paClipOff, micCallback, handler);
+    handlePaError(error);
+
+    error = Pa_StartStream(stream);
+    handlePaError(error);
 }
 
-void Microphone::terminate()
+void Microphone::stop()
 {
     if (isListening())
     {
@@ -32,16 +39,6 @@ void Microphone::terminate()
     }
 
     PaError error = Pa_Terminate();
-    handlePaError(error);
-}
-
-void Microphone::listen(MicrophoneHandler<SAMPLE>* handler)
-{
-    PaStreamParameters inputParameters = getMicParams();
-    PaError error = Pa_OpenStream(&stream, &inputParameters, NULL, SAMPLE_RATE, 256, paClipOff, micCallback, handler);
-    handlePaError(error);
-
-    error = Pa_StartStream(stream);
     handlePaError(error);
 }
 

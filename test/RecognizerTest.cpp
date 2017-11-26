@@ -22,10 +22,9 @@ class MicrophoneMock : public Microphone
 {
 public:
     virtual ~MicrophoneMock() {};
-    MOCK_METHOD0(init, void());
-    MOCK_METHOD0(terminate, void());
+    MOCK_METHOD1(start, void(MicrophoneHandler<short>*));
+    MOCK_METHOD0(stop, void());
     MOCK_METHOD0(isListening, bool());
-    MOCK_METHOD1(listen, void(MicrophoneHandler<short>*));
 };
 
 class RecognizerTest : public Test
@@ -39,7 +38,7 @@ protected:
 
 TEST_F(RecognizerTest, InConstructionIsNotListening)
 {
-    EXPECT_CALL(microphone, listen(_)).Times(0);
+    EXPECT_CALL(microphone, start(_)).Times(0);
     EXPECT_CALL(pocketsphinx, start()).Times(0);
 
     Recognizer recognizer(&pocketsphinx, &microphone);
@@ -56,8 +55,7 @@ TEST_F(RecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
 TEST_F(RecognizerTest, WhenRecognizerIsStartedMicrophoneStartsListening)
 {
     Recognizer recognizer(&pocketsphinx, &microphone);
-    EXPECT_CALL(microphone, init());
-    EXPECT_CALL(microphone, listen(&recognizer));
+    EXPECT_CALL(microphone, start(&recognizer));
 
     recognizer.start();
 }
@@ -79,7 +77,7 @@ TEST_F(RecognizerTest, WhenSpeechIsNotRecognizedNoRecognitionIsNotified)
 
 TEST_F(RecognizerTest, WhenRecognizerIsStoppedTerminatesMicrophone)
 {
-    EXPECT_CALL(microphone, terminate());
+    EXPECT_CALL(microphone, stop());
 
     Recognizer recognizer(&pocketsphinx, &microphone);
     recognizer.start();

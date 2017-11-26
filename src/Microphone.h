@@ -11,9 +11,8 @@ class Microphone
     public:
         Microphone() : stream{nullptr} {};
         virtual ~Microphone() = default;
-        virtual void init();
-        virtual void terminate();
-        virtual void listen(MicrophoneHandler<SAMPLE>*);
+        virtual void start(MicrophoneHandler<SAMPLE>*);
+        virtual void stop();
         virtual bool isListening();
 
     private:
