@@ -35,8 +35,8 @@ PLUGIN_API void	XPluginStop(void)
 PLUGIN_API int XPluginEnable(void)
 {
     std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
-    Microphone microphone;
-    std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), &microphone);
+    std::unique_ptr<Microphone> microphone;
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
     xCopilot = new XCopilot(std::move(recognizer));
     xCopilot->enable();
     XPLMRegisterFlightLoopCallback(flightLoopCallback, 1, 0);
