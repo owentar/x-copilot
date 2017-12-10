@@ -13,6 +13,7 @@ add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
 target_include_directories(${PROJECT_NAME} PRIVATE
         ${gmock_SOURCE_DIR}/include
+        ${gtest_SOURCE_DIR}/include
         $<TARGET_PROPERTY:x_copilot,INTERFACE_INCLUDE_DIRECTORIES>)
 
 target_link_libraries(${PROJECT_NAME} gmock gmock_main x_copilot)
