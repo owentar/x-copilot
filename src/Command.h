@@ -18,16 +18,8 @@ typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
 class Command
 {
 public:
-    explicit Command(const std::string& name, const std::string& regExp, const std::string& dataRef, XPlaneDataRefSDK* xPlaneDataRefSDK)
-            : name{name}, commandRegExp{regExp, std::regex::icase}, xPlaneDataRefSDK{xPlaneDataRefSDK}, dataRefsIds{} {
-        init({dataRef});
-    }
-    explicit Command(const std::string& name, const std::string& regExp, const std::string& dataRef)
-            : name{name}, commandRegExp{regExp, std::regex::icase}, xPlaneDataRefSDK{}, dataRefsIds{} {
-        init({dataRef});
-    }
-    explicit Command(const std::string& name, const std::string& regExp, const std::vector<std::string> dataRefs)
-            : name{name}, commandRegExp{regExp, std::regex::icase}, dataRefsIds{} {
+    explicit Command(const std::string& name, const std::string& regExp, const std::vector<std::string>& dataRefs, XPlaneDataRefSDK* xPlaneDataRefSDK)
+            : name{name}, commandRegExp{regExp, std::regex::icase}, dataRefsIds{}, xPlaneDataRefSDK{xPlaneDataRefSDK} {
         init(dataRefs);
     }
     explicit Command() = default;

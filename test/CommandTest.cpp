@@ -19,7 +19,7 @@ protected:
     NiceMock<XPlaneDataRefSDKMock> xPlaneDataRefSDKMock;
     Command command;
 
-    CommandTest() : xPlaneDataRefSDKMock{}, command("Test", "^.*test$", "dataRefId", &xPlaneDataRefSDKMock) {};
+    CommandTest() : xPlaneDataRefSDKMock{}, command("Test", "^.*test$", {"dataRefId"}, &xPlaneDataRefSDKMock) {};
 };
 
 TEST_F(CommandTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
@@ -30,6 +30,13 @@ TEST_F(CommandTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
 TEST_F(CommandTest, DoesNotRecognizeCommandWhenPhraseDoesNotMatchRegEx)
 {
     ASSERT_THAT(command.isRecognized("does not match"), Eq(false));
+}
+
+TEST_F(CommandTest, GetDataRefsIdsWhenCommandIsConstructed)
+{
+    EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId1"));
+    EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId2"));
+    command = Command("Test", "regex", {"dataRefId1", "dataRefId2"}, &xPlaneDataRefSDKMock);
 }
 
 //TEST_F(CommandTest, GetAltitudeValueFromCommand)
