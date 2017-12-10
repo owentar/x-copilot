@@ -58,8 +58,8 @@ TEST_F(RecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
 
 TEST_F(RecognizerTest, WhenRecognizerIsStartedMicrophoneStartsListening)
 {
+    EXPECT_CALL(*microphone, start(testing::_));
     Recognizer recognizer(std::move(pocketsphinx), std::move(microphone));
-    EXPECT_CALL(*microphone, start(&recognizer));
 
     recognizer.start();
 }
