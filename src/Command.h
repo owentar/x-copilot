@@ -33,10 +33,7 @@ private:
     std::string name;
     std::regex commandRegExp;
 
-    void init(const std::vector<std::string> dataRefs) {
-//        dataRefsIds.resize(dataRefs.size());
-//        std::cout << dataRefsIds.size() << std::endl;
-//        std::for_each(dataRefsIds.begin(), dataRefsIds.end(), [this](const XPLMDataRef id) { std::cout << id << std::endl; });
+    void init(const std::vector<std::string>& dataRefs) {
         std::transform(dataRefs.begin(), dataRefs.end(), std::back_inserter(dataRefsIds), [this](const std::string& dataRef) { return xPlaneDataRefSDK->findDataRef(dataRef); });
     }
 };
