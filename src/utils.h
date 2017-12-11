@@ -10,6 +10,8 @@ double parseToNumber(const std::string& numbersAsWords, unsigned short decimals=
 
 int parseToInt(const std::string& numbersAsWords);
 
-double parseToDecimal(const std::string& numbersAsWords, unsigned short decimals);
+double parseToDecimal(const std::string& numbersAsWords, unsigned short decimals=2);
+
+float parseToFloat(const std::string& numbersAsWords, unsigned short decimals=2);
 
 #endif //X_COPILOT_UTILS_H

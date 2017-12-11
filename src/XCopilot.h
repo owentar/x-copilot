@@ -6,10 +6,11 @@
 #include <utility>
 #include <vector>
 
-#include "Recognizer.h"
-#include "PocketsphinxWrapper.h"
-#include "Microphone.h"
 #include "Command.h"
+#include "CommandExecutor.h"
+#include "Microphone.h"
+#include "PocketsphinxWrapper.h"
+#include "Recognizer.h"
 
 class XCopilot
 {
@@ -28,7 +29,7 @@ class XCopilot
         XCopilot& operator=(XCopilot const&);
 
         std::unique_ptr<Recognizer> recognizer;
-        std::vector<CommandExecutorPtr> commands;
+        std::vector<CommandExecutor> commands;
         std::vector<Command*> commandProcessor;
 };
 

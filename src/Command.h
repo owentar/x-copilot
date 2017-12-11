@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <iostream>
 #include <iterator>
-#include <memory>
 #include <string>
 #include <regex>
 #include <vector>
@@ -12,8 +11,6 @@
 #include "XPlaneDataRefSDK.h"
 
 #include "CommandExecutor.h"
-
-typedef std::shared_ptr<CommandExecutor> CommandExecutorPtr;
 
 class Command
 {
@@ -25,7 +22,7 @@ public:
     explicit Command() = default;
     virtual ~Command() = default;
     virtual bool isRecognized(const std::string&) const;
-    virtual CommandExecutorPtr getExecutor(const std::string&);
+    virtual CommandExecutor getExecutor(const std::string&);
 
 private:
     std::vector<XPLMDataRef> dataRefsIds;

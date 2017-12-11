@@ -1,7 +1,8 @@
-#include <iostream>
 #include "Command.h"
 
-#include "IntCommandExecutor.h"
+#include <iostream>
+
+#include "CommandExecutor.h"
 
 bool Command::isRecognized(const std::string& phrase) const
 {
@@ -10,12 +11,12 @@ bool Command::isRecognized(const std::string& phrase) const
     return result;
 }
 
-CommandExecutorPtr Command::getExecutor(const std::string& phrase)
+CommandExecutor Command::getExecutor(const std::string& phrase)
 {
     std::smatch result;
     std::regex_search(phrase, result, commandRegExp);
     std::string altitude = result[1];
-    return CommandExecutorPtr{new IntCommandExecutor(altitude, dataRefsIds)};
+    return CommandExecutor{altitude, dataRefsIds, CommandExecutor::Type::INT};
 }
 
 //void Command::execute(const std::string& phrase) const

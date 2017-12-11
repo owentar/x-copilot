@@ -20,10 +20,7 @@ set(SOURCE_FILES
         XPlaneDataRefSDK.h
         CommandExecutor.h
         utils.cpp
-        FloatCommandExecutor.cpp
-        FloatCommandExecutor.h
-        IntCommandExecutor.cpp
-        IntCommandExecutor.h)
+        CommandExecutor.cpp)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 

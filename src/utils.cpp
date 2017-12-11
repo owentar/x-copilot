@@ -6,7 +6,6 @@
 
 #include "boost/algorithm/string.hpp"
 
-
 std::map<std::string, int> WORD_TO_NUMBER = {
         { "zero", 0 },
         { "one", 1 },
@@ -49,4 +48,9 @@ int parseToInt(const std::string& numbersAsWords)
 double parseToDecimal(const std::string& numbersAsWords, unsigned short decimals)
 {
     return parseToNumber(numbersAsWords, decimals);
+}
+
+float parseToFloat(const std::string& numbersAsWords, unsigned short decimals)
+{
+    return static_cast<float>(parseToDecimal(numbersAsWords, decimals));
 }

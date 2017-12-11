@@ -28,6 +28,6 @@ void XCopilot::recognizeCommand(const std::string& phrase)
 
 void XCopilot::executePendingCommands()
 {
-    std::for_each(commands.begin(), commands.end(), [](const CommandExecutorPtr& commandExecutor) { commandExecutor->execute(); });
+    std::for_each(commands.begin(), commands.end(), [](const CommandExecutor& commandExecutor) { commandExecutor.execute(); });
     commands.clear();
 }
