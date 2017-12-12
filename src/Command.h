@@ -21,6 +21,7 @@ public:
     }
     explicit Command() = default;
     virtual ~Command() = default;
+    virtual std::string getName() const { return name; }
     virtual bool isRecognized(const std::string&) const;
     virtual CommandExecutor getExecutor(const std::string&);
 

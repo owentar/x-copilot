@@ -21,7 +21,7 @@ void XCopilot::recognizeCommand(const std::string& phrase)
     auto value = std::find_if(commandProcessor.begin(), commandProcessor.end(),
                               [phrase] (const Command* command) -> bool { return command->isRecognized(phrase); });
     if (value != commandProcessor.end()) {
-        std::cout << "Command recognized: " << (*value) << std::endl;
+        std::cout << "Command recognized: " << (*value)->getName() << std::endl;
         commands.push_back((*value)->getExecutor(phrase));
     }
 }
