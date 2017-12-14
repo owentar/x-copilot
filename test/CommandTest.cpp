@@ -4,6 +4,7 @@
 #include "XPlaneDataRefSDK.h"
 
 using namespace testing;
+using namespace xcopilot;
 
 class XPlaneDataRefSDKMock : public XPlaneDataRefSDK
 {

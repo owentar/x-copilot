@@ -20,7 +20,7 @@ class XCopilot
         void enable() { recognizer->start(); };
         void disable() { recognizer->stop(); };
         void configureForAircraft(const char*, const char*, const char*);
-        void addCommand(Command* command) { commandProcessor.push_back(command); };
+        void addCommand(xcopilot::Command* command) { commandProcessor.push_back(command); };
         bool hasCommands() const { return !commands.empty(); };
         void recognizeCommand(const std::string& command);
         void executePendingCommands();
@@ -29,8 +29,8 @@ class XCopilot
         XCopilot& operator=(XCopilot const&);
 
         std::unique_ptr<Recognizer> recognizer;
-        std::vector<CommandExecutor> commands;
-        std::vector<Command*> commandProcessor;
+        std::vector<xcopilot::CommandExecutor> commands;
+        std::vector<xcopilot::Command*> commandProcessor;
 };
 
 #endif // XCOPILOT_H

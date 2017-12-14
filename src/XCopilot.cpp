@@ -10,6 +10,8 @@
 
 #include <iostream>
 
+using namespace xcopilot;
+
 void XCopilot::configureForAircraft(const char* author, const char* description, const char* icao)
 {
     recognizer->connect([this] (const std::string& phrase) { recognizeCommand(phrase); });

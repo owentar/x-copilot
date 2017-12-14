@@ -9,6 +9,7 @@
 #include "XPlaneDataRefSDK.h"
 
 using namespace testing;
+using namespace xcopilot;
 
 class RecognizerMock : public Recognizer
 {

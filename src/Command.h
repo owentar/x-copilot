@@ -8,32 +8,40 @@
 #include <regex>
 #include <vector>
 
+#include "CommandExecutor.h"
 #include "XPlaneDataRefSDK.h"
 
-#include "CommandExecutor.h"
+namespace xcopilot {
+    class Command {
+    public:
+        explicit Command(const std::string &name, const std::string &regExp, const std::vector<std::string> &dataRefs,
+                         XPlaneDataRefSDK *xPlaneDataRefSDK)
+                : name{name}, commandRegExp{regExp, std::regex::icase}, dataRefsIds{},
+                  xPlaneDataRefSDK{xPlaneDataRefSDK} {
+            init(dataRefs);
+        }
 
-class Command
-{
-public:
-    explicit Command(const std::string& name, const std::string& regExp, const std::vector<std::string>& dataRefs, XPlaneDataRefSDK* xPlaneDataRefSDK)
-            : name{name}, commandRegExp{regExp, std::regex::icase}, dataRefsIds{}, xPlaneDataRefSDK{xPlaneDataRefSDK} {
-        init(dataRefs);
-    }
-    explicit Command() = default;
-    virtual ~Command() = default;
-    virtual std::string getName() const { return name; }
-    virtual bool isRecognized(const std::string&) const;
-    virtual CommandExecutor getExecutor(const std::string&);
+        explicit Command() = default;
 
-private:
-    std::vector<XPLMDataRef> dataRefsIds;
-    XPlaneDataRefSDK* xPlaneDataRefSDK;
-    std::string name;
-    std::regex commandRegExp;
+        virtual ~Command() = default;
 
-    void init(const std::vector<std::string>& dataRefs) {
-        std::transform(dataRefs.begin(), dataRefs.end(), std::back_inserter(dataRefsIds), [this](const std::string& dataRef) { return xPlaneDataRefSDK->findDataRef(dataRef); });
-    }
-};
+        virtual std::string getName() const { return name; }
+
+        virtual bool isRecognized(const std::string &) const;
+
+        virtual CommandExecutor getExecutor(const std::string &);
+
+    private:
+        std::vector<XPLMDataRef> dataRefsIds;
+        XPlaneDataRefSDK *xPlaneDataRefSDK;
+        std::string name;
+        std::regex commandRegExp;
+
+        void init(const std::vector<std::string> &dataRefs) {
+            std::transform(dataRefs.begin(), dataRefs.end(), std::back_inserter(dataRefsIds),
+                           [this](const std::string &dataRef) { return xPlaneDataRefSDK->findDataRef(dataRef); });
+        }
+    };
+}
 
 #endif // COMMAND_H

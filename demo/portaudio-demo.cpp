@@ -9,6 +9,8 @@
 #include "XCopilot.h"
 #include "XPlaneDataRefSDKStub.h"
 
+using namespace xcopilot;
+
 int main(int argc, char *argv[]) {
     XPlaneDataRefSDKStub xplaneSDK;
     std::unique_ptr<Microphone> microphone = std::make_unique<Microphone>();
