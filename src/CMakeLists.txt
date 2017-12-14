@@ -48,6 +48,8 @@ target_include_directories(${PROJECT_NAME}
             ${PROJECT_SOURCE_DIR}/lib/pocketsphinx/includes/pocketsphinx
         )
 
+file(COPY ${POCKETSPHINX_DATA_DIR} DESTINATION ${PROJECT_BINARY_DIR})
+
 if(APPLE)
     find_library(XPLM_LIBRARY XPLM ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Mac)
     find_library(XPWIDGETS_LIBRARY XPWidgets ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Mac)
