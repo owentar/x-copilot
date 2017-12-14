@@ -25,7 +25,7 @@ set(SOURCE_FILES
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost REQUIRED COMPONENTS signals)
+find_package(Boost REQUIRED COMPONENTS filesystem system signals)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC XPLM200=1 XPLM210=1)
 

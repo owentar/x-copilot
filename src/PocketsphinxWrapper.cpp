@@ -1,14 +1,24 @@
 #include "PocketsphinxWrapper.h"
 
-#include "pocketsphinx/pocketsphinx.h"
 #include <string>
+#include <boost/filesystem.hpp>
+
+#include "pocketsphinx/pocketsphinx.h"
+
+boost::filesystem::path getPocketsphinxDataPathForResource(const std::string& resource)
+{
+    return boost::filesystem::absolute("pocketsphinx-data/xp-XP/" + resource);
+}
 
 void Pocketsphinx::start()
 {
+    boost::filesystem::path hmm = getPocketsphinxDataPathForResource("acoustic-model");
+    boost::filesystem::path lm = getPocketsphinxDataPathForResource("language-model.lm");
+    boost::filesystem::path dict = getPocketsphinxDataPathForResource("pronounciation-dictionary.dic");
     cmd_ln_t* config = cmd_ln_init(NULL, ps_args(), TRUE,       // Load the configuration structure - ps_args() passes the default values
-    "-hmm", "/Users/hcarrizo/projects/owentar/x-copilot/pocketsphinx-data/xp-XP/acoustic-model",  // path to the standard english language model
-    "-lm", "/Users/hcarrizo/projects/owentar/x-copilot/pocketsphinx-data/xp-XP/language-model.lm",
-    "-dict", "/Users/hcarrizo/projects/owentar/x-copilot/pocketsphinx-data/xp-XP/pronounciation-dictionary.dic",
+    "-hmm", hmm.c_str(),  // path to the standard english language model
+    "-lm", lm.c_str(),
+    "-dict", dict.c_str(),
     "-logfn", "/dev/null",                                      // suppress log info from being sent to screen
     NULL);
     ps = ps_init(config);
