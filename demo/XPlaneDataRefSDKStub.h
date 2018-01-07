@@ -3,6 +3,8 @@
 
 #include "XPlaneDataRefSDK.h"
 
+using namespace xcopilot;
+
 class XPlaneDataRefSDKStub : public XPlaneDataRefSDK {
 public:
     virtual XPLMDataRef findDataRef(const std::string& name) { return nullptr; }
