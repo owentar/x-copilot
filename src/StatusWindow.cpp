@@ -7,6 +7,8 @@
 #define STATUSWINDOW_TITLE "X-Copilot"
 #define STATUSWINDOW_TIMER 8
 
+using namespace xcopilot;
+
 StatusWindow* StatusWindow::instance = nullptr;
 
 StatusWindow::StatusWindow()
