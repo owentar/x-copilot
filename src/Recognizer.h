@@ -15,7 +15,7 @@ class Recognizer : public MicrophoneHandler<short>
 public:
     typedef boost::signals2::signal<void (const std::string&)> signal_t;
 
-    explicit Recognizer(std::unique_ptr<Pocketsphinx> p, std::unique_ptr<Microphone> m)
+    explicit Recognizer(std::unique_ptr<Pocketsphinx> p, std::unique_ptr<xcopilot::Microphone> m)
             : pocketsphinx{std::move(p)}, microphone{std::move(m)}, shouldDecode{false} {};
     virtual ~Recognizer() = default;
     virtual void start();
@@ -31,7 +31,7 @@ protected:
 
 private:
     std::unique_ptr<Pocketsphinx> pocketsphinx;
-    std::unique_ptr<Microphone> microphone;
+    std::unique_ptr<xcopilot::Microphone> microphone;
     bool shouldDecode;
     signal_t onRecognition;
 };

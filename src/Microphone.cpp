@@ -10,6 +10,8 @@
 
 #define PA_SAMPLE_TYPE      paInt16
 
+using namespace xcopilot;
+
 static int micCallback(const void* input,
                         void* output,
                         unsigned long frameCount,

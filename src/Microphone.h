@@ -4,22 +4,28 @@
 #include "portaudio.h"
 #include "MicrophoneHandler.h"
 
-typedef short SAMPLE;
+namespace xcopilot {
+    typedef short SAMPLE;
 
-class Microphone
-{
+    class Microphone {
     public:
         Microphone() : stream{nullptr} {};
+
         virtual ~Microphone() = default;
-        virtual void start(MicrophoneHandler<SAMPLE>*);
+
+        virtual void start(MicrophoneHandler<SAMPLE> *);
+
         virtual void stop();
+
         virtual bool isListening();
 
     private:
         void handlePaError(PaError error);
+
         PaStreamParameters getMicParams();
 
-        PaStream* stream;
-};
+        PaStream *stream;
+    };
+}
 
 #endif // MICROPHONE_H

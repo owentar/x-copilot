@@ -21,7 +21,7 @@ public:
     MOCK_CONST_METHOD0(isSpeaking, bool());
 };
 
-class MicrophoneMock : public Microphone
+class MicrophoneMock : public xcopilot::Microphone
 {
 public:
     virtual ~MicrophoneMock() {};
