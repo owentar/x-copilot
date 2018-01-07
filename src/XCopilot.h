@@ -12,25 +12,35 @@
 #include "PocketsphinxWrapper.h"
 #include "Recognizer.h"
 
-class XCopilot
-{
+namespace xcopilot {
+    class XCopilot {
     public:
-        XCopilot(std::unique_ptr<xcopilot::Recognizer> recognizer) : recognizer{std::move(recognizer)}, commands{}, commandProcessor{} {};
+        XCopilot(std::unique_ptr<xcopilot::Recognizer> recognizer) : recognizer{std::move(recognizer)}, commands{},
+                                                                     commandProcessor{} {};
+
         virtual ~XCopilot() = default;
+
         void enable() { recognizer->start(); };
+
         void disable() { recognizer->stop(); };
-        void configureForAircraft(const char*, const char*, const char*);
-        void addCommand(xcopilot::Command* command) { commandProcessor.push_back(command); };
+
+        void configureForAircraft(const char *, const char *, const char *);
+
+        void addCommand(xcopilot::Command *command) { commandProcessor.push_back(command); };
+
         bool hasCommands() const { return !commands.empty(); };
-        void recognizeCommand(const std::string& command);
+
+        void recognizeCommand(const std::string &command);
+
         void executePendingCommands();
 
     private:
-        XCopilot& operator=(XCopilot const&);
+        XCopilot &operator=(XCopilot const &);
 
         std::unique_ptr<xcopilot::Recognizer> recognizer;
         std::vector<xcopilot::CommandExecutor> commands;
-        std::vector<xcopilot::Command*> commandProcessor;
-};
+        std::vector<xcopilot::Command *> commandProcessor;
+    };
+}
 
 #endif // XCOPILOT_H
