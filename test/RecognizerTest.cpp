@@ -9,6 +9,7 @@
 #include "MicrophoneHandler.h"
 
 using namespace testing;
+using namespace xcopilot;
 
 class PocketsphinxMock : public Pocketsphinx
 {
@@ -21,7 +22,7 @@ public:
     MOCK_CONST_METHOD0(isSpeaking, bool());
 };
 
-class MicrophoneMock : public xcopilot::Microphone
+class MicrophoneMock : public Microphone
 {
 public:
     virtual ~MicrophoneMock() {};

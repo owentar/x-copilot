@@ -5,6 +5,8 @@
 
 #include "pocketsphinx/pocketsphinx.h"
 
+using namespace xcopilot;
+
 boost::filesystem::path getPocketsphinxDataPathForResource(const std::string& resource)
 {
     return boost::filesystem::absolute("pocketsphinx-data/xp-XP/" + resource);
