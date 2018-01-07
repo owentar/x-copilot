@@ -3,6 +3,7 @@
 #include "utils.h"
 
 using namespace testing;
+using namespace xcopilot;
 
 class UtilsTest : public Test
 {
