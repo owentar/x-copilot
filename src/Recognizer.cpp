@@ -1,5 +1,7 @@
 #include "Recognizer.h"
 
+using namespace xcopilot;
+
 void Recognizer::start()
 {
     pocketsphinx->start();

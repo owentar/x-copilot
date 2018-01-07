@@ -15,7 +15,7 @@
 class XCopilot
 {
     public:
-        XCopilot(std::unique_ptr<Recognizer> recognizer) : recognizer{std::move(recognizer)}, commands{}, commandProcessor{} {};
+        XCopilot(std::unique_ptr<xcopilot::Recognizer> recognizer) : recognizer{std::move(recognizer)}, commands{}, commandProcessor{} {};
         virtual ~XCopilot() = default;
         void enable() { recognizer->start(); };
         void disable() { recognizer->stop(); };
@@ -28,7 +28,7 @@ class XCopilot
     private:
         XCopilot& operator=(XCopilot const&);
 
-        std::unique_ptr<Recognizer> recognizer;
+        std::unique_ptr<xcopilot::Recognizer> recognizer;
         std::vector<xcopilot::CommandExecutor> commands;
         std::vector<xcopilot::Command*> commandProcessor;
 };

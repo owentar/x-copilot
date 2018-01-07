@@ -12,6 +12,8 @@
 #include "Microphone.h"
 #include "PocketsphinxWrapper.h"
 
+using namespace xcopilot;
+
 XCopilot* xCopilot;
 void configureForAircraft();
 float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon);
@@ -34,8 +36,8 @@ PLUGIN_API void	XPluginStop(void)
 
 PLUGIN_API int XPluginEnable(void)
 {
-    std::unique_ptr<xcopilot::Pocketsphinx> pocketsphinx = std::make_unique<xcopilot::Pocketsphinx>();
-    std::unique_ptr<xcopilot::Microphone> microphone;
+    std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
+    std::unique_ptr<Microphone> microphone;
     std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
     xCopilot = new XCopilot(std::move(recognizer));
     xCopilot->enable();
