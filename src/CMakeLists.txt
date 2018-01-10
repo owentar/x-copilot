@@ -21,12 +21,14 @@ set(SOURCE_FILES
         CommandType.h
         CommandExecutor.h
         CommandExecutor.cpp
-        utils.cpp)
+        utils.cpp
+        Logger.cpp
+        Logger.h)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost REQUIRED COMPONENTS filesystem system signals)
+find_package(Boost REQUIRED COMPONENTS filesystem log system signals)
 
 target_compile_definitions(${PROJECT_NAME} PUBLIC XPLM200=1 XPLM210=1)
 

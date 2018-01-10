@@ -8,10 +8,14 @@
 #include "Recognizer.h"
 #include "XCopilot.h"
 #include "XPlaneDataRefSDKStub.h"
+#include "Logger.h"
 
 using namespace xcopilot;
 
 int main(int argc, char *argv[]) {
+    Logger* logger = Logger::getInstance();
+    logger->info("Initializing demo");
+
     XPlaneDataRefSDKStub xplaneSDK;
     std::unique_ptr<Microphone> microphone = std::make_unique<Microphone>();
     std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
