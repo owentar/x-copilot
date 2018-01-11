@@ -4,6 +4,7 @@
 #include <boost/filesystem.hpp>
 
 #include "pocketsphinx/pocketsphinx.h"
+#include "Logger.h"
 
 using namespace xcopilot;
 
@@ -14,6 +15,7 @@ boost::filesystem::path getPocketsphinxDataPathForResource(const std::string& re
 
 void Pocketsphinx::start()
 {
+    Logger::getInstance()->debug("Starting pocketsphinx");
     boost::filesystem::path hmm = getPocketsphinxDataPathForResource("acoustic-model");
     boost::filesystem::path lm = getPocketsphinxDataPathForResource("language-model.lm");
     boost::filesystem::path dict = getPocketsphinxDataPathForResource("pronounciation-dictionary.dic");
@@ -26,6 +28,7 @@ void Pocketsphinx::start()
     ps = ps_init(config);
 
     ps_start_utt(ps);
+    Logger::getInstance()->debug("Pocketsphinx successfuly");
 }
 
 void Pocketsphinx::stop() { ps_end_utt(ps); }
