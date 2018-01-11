@@ -1,8 +1,11 @@
+#include "Microphone.h"
+
 #include <iostream>
 
+#include <boost/format.hpp>
 #include <portaudio.h>
 
-#include "Microphone.h"
+#include "Logger.h"
 #include "MicrophoneHandler.h"
 
 #define SAMPLE_RATE         (16000)
@@ -11,6 +14,7 @@
 #define PA_SAMPLE_TYPE      paInt16
 
 using namespace xcopilot;
+using boost::format;
 
 static int micCallback(const void* input,
                         void* output,
@@ -51,7 +55,7 @@ bool Microphone::isListening()
 
 void Microphone::handlePaError(PaError error)
 {
-    if (error != paNoError) std::cerr << "ERROR: " << Pa_GetErrorText(error) << std::endl;
+    if (error != paNoError) Logger::getInstance()->error(format("Microphone error: %1%") % Pa_GetErrorText(error));
 }
 
 PaStreamParameters Microphone::getMicParams()
@@ -59,7 +63,7 @@ PaStreamParameters Microphone::getMicParams()
     PaStreamParameters inputParameters;
     inputParameters.device = Pa_GetDefaultInputDevice();
     if (inputParameters.device == paNoDevice) {
-        std::cerr << "Error: No default input device" << std::endl;
+        Logger::getInstance()->error("Microphone error: No default input device");
     }
     inputParameters.channelCount = NUM_CHANNELS;
     inputParameters.sampleFormat = PA_SAMPLE_TYPE;
