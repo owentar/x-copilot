@@ -2,15 +2,16 @@
 
 #include <regex>
 #include <algorithm>
+#include <boost/format.hpp>
 
+#include "Logger.h"
 #include "Recognizer.h"
 #include "PocketsphinxWrapper.h"
 #include "Microphone.h"
 #include "Command.h"
 
-#include <iostream>
-
 using namespace xcopilot;
+using boost::format;
 
 void XCopilot::configureForAircraft(const char* author, const char* description, const char* icao)
 {
@@ -19,11 +20,11 @@ void XCopilot::configureForAircraft(const char* author, const char* description,
 
 void XCopilot::recognizeCommand(const std::string& phrase)
 {
-    std::cout << "Processing: " << phrase << std::endl;
+    Logger::getInstance()->debug((format("Processing: %1%") % phrase).str());
     auto value = std::find_if(commandProcessor.begin(), commandProcessor.end(),
                               [phrase] (const Command* command) -> bool { return command->isRecognized(phrase); });
     if (value != commandProcessor.end()) {
-        std::cout << "Command recognized: " << (*value)->getName() << std::endl;
+        Logger::getInstance()->debug((format("Command recognized: %1%") % (*value)->getName()).str());
         commands.push_back((*value)->getExecutor(phrase));
     }
 }

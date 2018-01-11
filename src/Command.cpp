@@ -1,15 +1,17 @@
 #include "Command.h"
 
-#include <iostream>
+#include <boost/format.hpp>
 
+#include "Logger.h"
 #include "CommandExecutor.h"
 
 using namespace xcopilot;
+using boost::format;
 
 bool Command::isRecognized(const std::string& phrase) const
 {
     bool result = std::regex_match(phrase, commandRegExp);
-    std::cout << "Result: " << result <<" - Phrase: " << phrase << std::endl;
+    Logger::getInstance()->debug((format("Result: %1% - Phrase: %2%") % result % phrase).str());
     return result;
 }
 

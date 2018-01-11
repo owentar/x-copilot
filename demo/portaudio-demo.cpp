@@ -1,4 +1,3 @@
-#include <iostream>
 #include <memory>
 #include <utility>
 
@@ -31,7 +30,7 @@ int main(int argc, char *argv[]) {
     xcopilot.enable();
     xcopilot.configureForAircraft("", "", "");
 
-    std::cout << "Listening..." << std::endl;
+    Logger::getInstance()->debug("Listening...");
     while(!xcopilot.hasCommands()) {}
 
     xcopilot.executePendingCommands();
