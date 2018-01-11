@@ -13,8 +13,10 @@
 using namespace xcopilot;
 
 int main(int argc, char *argv[]) {
+    Logger::configureFileLogger();
+    Logger::configureConsoleLogger();
     Logger* logger = Logger::getInstance();
-    logger->info("Initializing demo");
+    logger->info("Starting demo");
 
     XPlaneDataRefSDKStub xplaneSDK;
     std::unique_ptr<Microphone> microphone = std::make_unique<Microphone>();

@@ -10,6 +10,10 @@ namespace xcopilot {
     public:
         static Logger* getInstance();
 
+        static void configureFileLogger(const std::string& fileName = "xcopilot.log");
+
+        static void configureConsoleLogger();
+
         void debug(const std::string &message) { log(message, boost::log::trivial::severity_level::debug); };
 
         void info(const std::string &message) { log(message, boost::log::trivial::severity_level::info); };
@@ -21,7 +25,7 @@ namespace xcopilot {
         void fatal(const std::string &message) { log(message, boost::log::trivial::severity_level::fatal); };
 
     private:
-        Logger(const std::string& fileName);
+        Logger();
 
         Logger(Logger const &);
 
