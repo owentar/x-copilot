@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include <boost/format.hpp>
 #include <boost/log/trivial.hpp>
 
 namespace xcopilot {
@@ -23,14 +24,19 @@ namespace xcopilot {
         static void configureConsoleLogger(Logger::Level level = Logger::Level::INFO);
 
         void debug(const std::string &message) { log(message, Logger::Level::DEBUG); };
+        void debug(const boost::format &message) { log(message.str(), Logger::Level::DEBUG); };
 
         void info(const std::string &message) { log(message, Logger::Level::INFO); };
+        void info(const boost::format &message) { log(message.str(), Logger::Level::INFO); };
 
         void warn(const std::string &message) { log(message, Logger::Level::WARN); };
+        void warn(const boost::format &message) { log(message.str(), Logger::Level::WARN); };
 
         void error(const std::string &message) { log(message, Logger::Level::ERROR); };
+        void error(const boost::format &message) { log(message.str(), Logger::Level::ERROR); };
 
         void fatal(const std::string &message) { log(message, Logger::Level::FATAL); };
+        void fatal(const boost::format &message) { log(message.str(), Logger::Level::FATAL); };
 
     private:
         Logger();

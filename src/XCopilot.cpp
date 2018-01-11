@@ -20,11 +20,11 @@ void XCopilot::configureForAircraft(const char* author, const char* description,
 
 void XCopilot::recognizeCommand(const std::string& phrase)
 {
-    Logger::getInstance()->debug((format("Processing: %1%") % phrase).str());
+    Logger::getInstance()->debug(format("Processing: %1%") % phrase);
     auto value = std::find_if(commandProcessor.begin(), commandProcessor.end(),
                               [phrase] (const Command* command) -> bool { return command->isRecognized(phrase); });
     if (value != commandProcessor.end()) {
-        Logger::getInstance()->debug((format("Command recognized: %1%") % (*value)->getName()).str());
+        Logger::getInstance()->debug(format("Command recognized: %1%") % (*value)->getName());
         commands.push_back((*value)->getExecutor(phrase));
     }
 }
