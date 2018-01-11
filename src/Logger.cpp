@@ -34,23 +34,26 @@ Logger* Logger::getInstance() {
     return instance;
 }
 
-void Logger::configureConsoleLogger() {
-    auto consoleSink = logging::add_console_log(std::cout, keywords::format = getLogFormatter());
+void Logger::configureConsoleLogger(Level level) {
+    auto lvl = static_cast<logging::trivial::severity_level>(level);
+    auto consoleSink = logging::add_console_log(std::cout, keywords::format = getLogFormatter(), keywords::filter = logging::trivial::severity >= lvl);
 }
 
-void Logger::configureFileLogger(const std::string& fileName) {
+void Logger::configureFileLogger(Level level, const std::string& fileName) {
+    auto lvl = static_cast<logging::trivial::severity_level>(level);
     logging::add_file_log(
             keywords::file_name = fileName,
             keywords::format = getLogFormatter(),
-            keywords::auto_flush = true
+            keywords::auto_flush = true,
+            keywords::filter = logging::trivial::severity >= lvl
     );
 }
 
 Logger::Logger() {
-    logging::core::get()->set_filter(logging::trivial::severity >= logging::trivial::info);
     logging::add_common_attributes();
 }
 
-void Logger::log(const std::string &message, boost::log::trivial::severity_level level) {
-    BOOST_LOG_SEV(logger, level) << message;
+void Logger::log(const std::string &message, Level level) {
+    auto lvl = static_cast<logging::trivial::severity_level>(level);
+    BOOST_LOG_SEV(logger, lvl) << message;
 }

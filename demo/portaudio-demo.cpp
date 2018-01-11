@@ -14,7 +14,7 @@ using namespace xcopilot;
 
 int main(int argc, char *argv[]) {
     Logger::configureFileLogger();
-    Logger::configureConsoleLogger();
+    Logger::configureConsoleLogger(Logger::Level::DEBUG);
     Logger* logger = Logger::getInstance();
     logger->info("Starting demo");
 
