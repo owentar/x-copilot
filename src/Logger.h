@@ -10,6 +10,7 @@ namespace xcopilot {
     class Logger {
     public:
         enum Level {
+            TRACE = boost::log::trivial::severity_level::trace,
             DEBUG = boost::log::trivial::severity_level::debug,
             INFO = boost::log::trivial::severity_level::info,
             WARN = boost::log::trivial::severity_level::warning,
@@ -22,6 +23,9 @@ namespace xcopilot {
         static void configureFileLogger(Logger::Level level = Logger::Level::INFO, const std::string& fileName = "xcopilot.log");
 
         static void configureConsoleLogger(Logger::Level level = Logger::Level::INFO);
+
+        void trace(const std::string &message) { log(message, Logger::Level::TRACE); };
+        void trace(const boost::format &message) { log(message.str(), Logger::Level::TRACE); };
 
         void debug(const std::string &message) { log(message, Logger::Level::DEBUG); };
         void debug(const boost::format &message) { log(message.str(), Logger::Level::DEBUG); };
