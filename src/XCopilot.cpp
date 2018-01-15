@@ -31,6 +31,7 @@ void XCopilot::recognizeCommand(const std::string& phrase)
 
 void XCopilot::executePendingCommands()
 {
+    Logger::getInstance()->debug(format("Executing %1% pending commands") % commands.size());
     std::for_each(commands.begin(), commands.end(), [](const CommandExecutor& commandExecutor) { commandExecutor.execute(); });
     commands.clear();
 }
