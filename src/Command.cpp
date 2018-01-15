@@ -11,7 +11,7 @@ using boost::format;
 bool Command::isRecognized(const std::string& phrase) const
 {
     bool result = std::regex_match(phrase, commandRegExp);
-    Logger::getInstance()->trace(format("Phrase: %1% - Result: %1%") % phrase % result);
+    Logger::getInstance()->trace(format("Phrase: %1% - Result: %2%") % phrase % result);
     return result;
 }
 
