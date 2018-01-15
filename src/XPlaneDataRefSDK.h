@@ -8,7 +8,7 @@
 namespace xcopilot {
     class XPlaneDataRefSDK {
     public:
-        virtual XPLMDataRef findDataRef(const std::string &name) { return nullptr; };
+        virtual XPLMDataRef findDataRef(const std::string &name) { return XPLMFindDataRef(name.c_str()); };
 
         virtual int getIntValue(XPLMDataRef id) const { return XPLMGetDatai(id); };
 
