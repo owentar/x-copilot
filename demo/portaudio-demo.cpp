@@ -22,8 +22,8 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
     std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
     XCopilot xcopilot(std::move(recognizer));
-    Command command1("SET ALTITUDE", "^set altitude ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){3,5})$", {"set/altitude"}, &xplaneSDK);
-    Command command2("SET ALTIMETER", "^set altimeter ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){4})", {"set/altimeter"}, &xplaneSDK);
+    Command command1("SET ALTITUDE", CommandType::FLOAT, "^set altitude ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){3,5})$", {"set/altitude"}, &xplaneSDK);
+    Command command2("SET ALTIMETER", CommandType::FLOAT, "^set altimeter ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){4})", {"set/altimeter"}, &xplaneSDK);
     xcopilot.addCommand(&command1);
     xcopilot.addCommand(&command2);
 

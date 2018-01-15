@@ -98,8 +98,8 @@ void configureForAircraft()
     XPLMGetDatab(descID, desc, 0, 260);
     Logger::getInstance()->debug(format("Loading configuration for aircraft (%1%, %2%, %3%)") % author % desc % icao);
     xCopilot->configureForAircraft(author, desc, icao);
-    command1 = new Command("SET ALTITUDE", "^set altitude ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){3,5})$", {"sim/cockpit2/autopilot/altitude_dial_ft"}, xplaneSDK);
-    command2 = new Command("SET ALTIMETER", "^set altimeter ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){4})", {"sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_copilot"}, xplaneSDK);
+    command1 = new Command("SET ALTITUDE", CommandType::FLOAT, "^set altitude ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){3,5})$", {"sim/cockpit2/autopilot/altitude_dial_ft"}, xplaneSDK);
+    command2 = new Command("SET ALTIMETER", CommandType::FLOAT, "^set altimeter ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){4})", {"sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_copilot"}, xplaneSDK);
     xCopilot->addCommand(command1);
     xCopilot->addCommand(command2);
 }

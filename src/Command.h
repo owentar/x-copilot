@@ -14,9 +14,9 @@
 namespace xcopilot {
     class Command {
     public:
-        explicit Command(const std::string &name, const std::string &regExp, const std::vector<std::string> &dataRefs,
+        explicit Command(const std::string &name, const CommandType type, const std::string &regExp, const std::vector<std::string> &dataRefs,
                          XPlaneDataRefSDK *xPlaneDataRefSDK)
-                : name{name}, commandRegExp{regExp, std::regex::icase}, dataRefsIds{},
+                : name{name}, type{type}, commandRegExp{regExp, std::regex::icase}, dataRefsIds{},
                   xPlaneDataRefSDK{xPlaneDataRefSDK} {
             init(dataRefs);
         }
@@ -35,6 +35,7 @@ namespace xcopilot {
         std::vector<XPLMDataRef> dataRefsIds;
         XPlaneDataRefSDK *xPlaneDataRefSDK;
         std::string name;
+        CommandType type;
         std::regex commandRegExp;
 
         void init(const std::vector<std::string> &dataRefs) {

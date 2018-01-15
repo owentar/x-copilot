@@ -20,7 +20,7 @@ protected:
     NiceMock<XPlaneDataRefSDKMock> xPlaneDataRefSDKMock;
     Command command;
 
-    CommandTest() : xPlaneDataRefSDKMock{}, command("Test", "^.*test$", {"dataRefId"}, &xPlaneDataRefSDKMock) {};
+    CommandTest() : xPlaneDataRefSDKMock{}, command("Test", CommandType::FLOAT, "^.*test$", {"dataRefId"}, &xPlaneDataRefSDKMock) {};
 };
 
 TEST_F(CommandTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
@@ -37,19 +37,5 @@ TEST_F(CommandTest, GetDataRefsIdsWhenCommandIsConstructed)
 {
     EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId1"));
     EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId2"));
-    command = Command("Test", "regex", {"dataRefId1", "dataRefId2"}, &xPlaneDataRefSDKMock);
+    command = Command("Test", CommandType::FLOAT, "regex", {"dataRefId1", "dataRefId2"}, &xPlaneDataRefSDKMock);
 }
-
-//TEST_F(CommandTest, GetAltitudeValueFromCommand)
-//{
-//    EXPECT_CALL(xPlaneDataRefSDKMock, setValue(_, Eq(3500)));
-//    Command c("Altitude", "^set altitude ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){3,5})$", "dataRefId", &xPlaneDataRefSDKMock);
-//
-//    c.execute("set altitude three five zero zero");
-//}
-
-//TEST_F(CommandTest, GetAltimeterValueFromCommand)
-//{
-//    Command c("Altimeter", "^set altimeter ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){3,5})$");
-//    ASSERT_THAT(c.getValue("set altimeter two nine nine two"), Eq(29.92));
-//}
