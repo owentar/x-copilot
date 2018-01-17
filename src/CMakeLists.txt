@@ -23,7 +23,9 @@ set(SOURCE_FILES
         CommandExecutor.cpp
         utils.cpp
         Logger.cpp
-        Logger.h)
+        Logger.h
+        CommandsConfigReader.cpp
+        CommandsConfigReader.h)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
@@ -52,6 +54,7 @@ target_include_directories(${PROJECT_NAME}
         )
 
 file(COPY ${POCKETSPHINX_DATA_DIR} DESTINATION ${PROJECT_BINARY_DIR})
+file(COPY ${CONFIG_DATA_DIR} DESTINATION ${PROJECT_BINARY_DIR})
 
 if(APPLE)
     find_library(XPLM_LIBRARY XPLM ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Mac)
