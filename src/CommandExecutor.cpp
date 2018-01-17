@@ -1,5 +1,7 @@
 #include "CommandExecutor.h"
 
+#include <map>
+
 #include "utils.h"
 
 using namespace xcopilot;

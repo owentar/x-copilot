@@ -2,7 +2,6 @@
 #define X_COPILOT_COMMANDEXECUTOR_H
 
 #include <functional>
-#include <map>
 #include <string>
 #include <vector>
 
