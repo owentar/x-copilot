@@ -25,13 +25,13 @@ void XCopilot::recognizeCommand(const std::string& phrase)
                               [phrase] (const Command* command) -> bool { return command->isRecognized(phrase); });
     if (value != commandProcessor.end()) {
         Logger::getInstance()->debug(format("Command recognized: %1%") % (*value)->getName());
-        commands.push_back((*value)->getExecutor(phrase));
+        pendingCommands.push_back((*value)->getExecutor(phrase));
     }
 }
 
 void XCopilot::executePendingCommands()
 {
-    Logger::getInstance()->debug(format("Executing %1% pending commands") % commands.size());
-    std::for_each(commands.begin(), commands.end(), [](const CommandExecutor& commandExecutor) { commandExecutor.execute(); });
-    commands.clear();
+    Logger::getInstance()->debug(format("Executing %1% pending commands") % pendingCommands.size());
+    std::for_each(pendingCommands.begin(), pendingCommands.end(), [](const CommandExecutor& commandExecutor) { commandExecutor.execute(); });
+    pendingCommands.clear();
 }

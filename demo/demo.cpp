@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
     xcopilot.configureForAircraft("", "", "");
 
     Logger::getInstance()->debug("Listening...");
-    while(!xcopilot.hasCommands()) {}
+    while(!xcopilot.hasPendingCommands()) {}
 
     xcopilot.executePendingCommands();
     xcopilot.disable();

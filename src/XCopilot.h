@@ -15,7 +15,7 @@
 namespace xcopilot {
     class XCopilot {
     public:
-        XCopilot(std::unique_ptr<xcopilot::Recognizer> recognizer) : recognizer{std::move(recognizer)}, commands{},
+        XCopilot(std::unique_ptr<xcopilot::Recognizer> recognizer) : recognizer{std::move(recognizer)}, pendingCommands{},
                                                                      commandProcessor{} {};
 
         virtual ~XCopilot() = default;
@@ -28,7 +28,7 @@ namespace xcopilot {
 
         void addCommand(Command *command) { commandProcessor.push_back(command); };
 
-        bool hasCommands() const { return !commands.empty(); };
+        bool hasPendingCommands() const { return !pendingCommands.empty(); };
 
         void recognizeCommand(const std::string &command);
 
@@ -38,7 +38,7 @@ namespace xcopilot {
         XCopilot &operator=(XCopilot const &);
 
         std::unique_ptr<Recognizer> recognizer;
-        std::vector<CommandExecutor> commands;
+        std::vector<CommandExecutor> pendingCommands;
         std::vector<Command *> commandProcessor;
     };
 }

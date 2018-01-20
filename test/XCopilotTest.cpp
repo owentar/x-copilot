@@ -49,7 +49,7 @@ TEST_F(XCopilotTest, ShouldQueueCommandWhenItIsRecognized)
 
     xcopilot.recognizeCommand("recognized command");
 
-    ASSERT_TRUE(xcopilot.hasCommands());
+    ASSERT_TRUE(xcopilot.hasPendingCommands());
 }
 
 TEST_F(XCopilotTest, ShouldNotQueueCommandWhenItIsNotRecognized)
@@ -62,7 +62,7 @@ TEST_F(XCopilotTest, ShouldNotQueueCommandWhenItIsNotRecognized)
 
     xcopilot.recognizeCommand("unrecognized command");
 
-    ASSERT_FALSE(xcopilot.hasCommands());
+    ASSERT_FALSE(xcopilot.hasPendingCommands());
 }
 
 // TODO: test execute pending commands
