@@ -45,7 +45,7 @@ TEST_F(XCopilotTest, ShouldQueueCommandWhenItIsRecognized)
     EXPECT_CALL(command, isRecognized(_))
         .Times(1)
         .WillOnce(Return(true));
-    xcopilot.addCommand(&command);
+    xcopilot.configureForAircraft({&command});
 
     xcopilot.recognizeCommand("recognized command");
 
@@ -58,7 +58,7 @@ TEST_F(XCopilotTest, ShouldNotQueueCommandWhenItIsNotRecognized)
     EXPECT_CALL(command, isRecognized(_))
         .Times(1)
         .WillOnce(Return(false));
-    xcopilot.addCommand(&command);
+    xcopilot.configureForAircraft({&command});
 
     xcopilot.recognizeCommand("unrecognized command");
 

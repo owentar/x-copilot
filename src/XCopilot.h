@@ -24,7 +24,7 @@ namespace xcopilot {
 
         void disable() { recognizer->stop(); };
 
-        void configureForAircraft(const char *, const char *, const char *);
+        void configureForAircraft(const std::vector<Command*>& commands);
 
         void addCommand(Command *command) { commandProcessor.push_back(command); };
 

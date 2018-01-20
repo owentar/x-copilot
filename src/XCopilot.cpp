@@ -1,7 +1,7 @@
 #include "XCopilot.h"
 
-#include <regex>
 #include <algorithm>
+#include <regex>
 #include <boost/format.hpp>
 
 #include "Logger.h"
@@ -13,8 +13,9 @@
 using namespace xcopilot;
 using boost::format;
 
-void XCopilot::configureForAircraft(const char* author, const char* description, const char* icao)
+void XCopilot::configureForAircraft(const std::vector<Command*>& commands)
 {
+    commandProcessor = std::move(commands);
     recognizer->connect([this] (const std::string& phrase) { recognizeCommand(phrase); });
 }
 

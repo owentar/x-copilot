@@ -28,10 +28,9 @@ int main(int argc, char *argv[]) {
     std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
     XCopilot xcopilot(std::move(recognizer));
 
-    std::for_each(std::begin(commands), std::end(commands), [&xcopilot](Command& command) { xcopilot.addCommand(&command); });
-
     xcopilot.enable();
-    xcopilot.configureForAircraft("", "", "");
+    xcopilot.configureForAircraft({});
+    std::for_each(std::begin(commands), std::end(commands), [&xcopilot](Command& command) { xcopilot.addCommand(&command); });
 
     Logger::getInstance()->debug("Listening...");
     while(!xcopilot.hasPendingCommands()) {}
