@@ -1,6 +1,7 @@
 #ifndef X_COPILOT_COMMANDSREADER_H
 #define X_COPILOT_COMMANDSREADER_H
 
+#include <memory>
 #include <vector>
 
 #include "Command.h"
@@ -11,7 +12,7 @@ namespace xcopilot {
     public:
         CommandsConfigReader(XPlaneDataRefSDK* xPlaneSDK) : xPlaneSDK{xPlaneSDK} {};
 
-        std::vector<Command> getCommandsForAircraft();
+        std::vector<std::shared_ptr<Command>> getCommandsForAircraft();
 
     private:
         XPlaneDataRefSDK* xPlaneSDK;

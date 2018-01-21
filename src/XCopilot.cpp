@@ -13,7 +13,7 @@
 using namespace xcopilot;
 using boost::format;
 
-void XCopilot::configureForAircraft(const std::vector<Command*>& commands)
+void XCopilot::configureForAircraft(const std::vector<std::shared_ptr<Command>>& commands)
 {
     commandProcessor = std::move(commands);
     recognizer->connect([this] (const std::string& phrase) { recognizeCommand(phrase); });
@@ -23,7 +23,7 @@ void XCopilot::recognizeCommand(const std::string& phrase)
 {
     Logger::getInstance()->debug(format("Processing: %1%") % phrase);
     auto value = std::find_if(commandProcessor.begin(), commandProcessor.end(),
-                              [phrase] (const Command* command) -> bool { return command->isRecognized(phrase); });
+                              [phrase] (const std::shared_ptr<Command> command) -> bool { return command->isRecognized(phrase); });
     if (value != commandProcessor.end()) {
         Logger::getInstance()->debug(format("Command recognized: %1%") % (*value)->getName());
         pendingCommands.push_back((*value)->getExecutor(phrase));

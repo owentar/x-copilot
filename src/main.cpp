@@ -8,21 +8,20 @@
 #include "XPLMDataAccess.h"
 #include "XPLMProcessing.h"
 
-#include "StatusWindow.h"
-#include "XCopilot.h"
-#include "Recognizer.h"
+#include "CommandsConfigReader.h"
+#include "Logger.h"
 #include "Microphone.h"
 #include "PocketsphinxWrapper.h"
+#include "Recognizer.h"
+#include "StatusWindow.h"
+#include "XCopilot.h"
 #include "XPlaneDataRefSDK.h"
-#include "Logger.h"
 
 using namespace xcopilot;
 using boost::format;
 
 XPlaneDataRefSDK* xplaneSDK;
 XCopilot* xCopilot;
-Command* command1;
-Command* command2;
 void configureForAircraft();
 float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon);
 
@@ -57,8 +56,6 @@ PLUGIN_API int XPluginStart(
 
 PLUGIN_API void	XPluginStop(void)
 {
-    delete command1;
-    delete command2;
     delete xplaneSDK;
     delete xCopilot;
 }
@@ -96,10 +93,10 @@ void configureForAircraft()
     XPLMGetDatab(authorID, author, 0, 500);
     XPLMGetDatab(ICAOID, icao, 0, 40);
     XPLMGetDatab(descID, desc, 0, 260);
+    CommandsConfigReader configReader{xplaneSDK};
+    auto commands = configReader.getCommandsForAircraft();
     Logger::getInstance()->debug(format("Loading configuration for aircraft (%1%, %2%, %3%)") % author % desc % icao);
-    command1 = new Command("SET ALTITUDE", CommandType::FLOAT, "^set altitude ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){3,5})$", {"sim/cockpit2/autopilot/altitude_dial_ft"}, xplaneSDK);
-    command2 = new Command("SET ALTIMETER", CommandType::FLOAT, "^set altimeter ((?:(?:\\d|zero|one|two|three|four|five|six|seven|eight|nine)\\s?){4})", {"sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_copilot"}, xplaneSDK);
-    xCopilot->configureForAircraft({command1, command2});
+    xCopilot->configureForAircraft(commands);
 }
 
 float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon)

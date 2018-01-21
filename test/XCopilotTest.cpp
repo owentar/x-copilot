@@ -41,11 +41,11 @@ protected:
 
 TEST_F(XCopilotTest, ShouldQueueCommandWhenItIsRecognized)
 {
-    NiceMock<CommandMock> command(&xPlaneDatRefSDK);
-    EXPECT_CALL(command, isRecognized(_))
+    auto command = std::make_shared<NiceMock<CommandMock>>(&xPlaneDatRefSDK);
+    EXPECT_CALL(*command, isRecognized(_))
         .Times(1)
         .WillOnce(Return(true));
-    xcopilot.configureForAircraft({&command});
+    xcopilot.configureForAircraft({command});
 
     xcopilot.recognizeCommand("recognized command");
 
@@ -54,11 +54,11 @@ TEST_F(XCopilotTest, ShouldQueueCommandWhenItIsRecognized)
 
 TEST_F(XCopilotTest, ShouldNotQueueCommandWhenItIsNotRecognized)
 {
-    NiceMock<CommandMock> command(&xPlaneDatRefSDK);
-    EXPECT_CALL(command, isRecognized(_))
+    auto command = std::make_shared<NiceMock<CommandMock>>(&xPlaneDatRefSDK);
+    EXPECT_CALL(*command, isRecognized(_))
         .Times(1)
         .WillOnce(Return(false));
-    xcopilot.configureForAircraft({&command});
+    xcopilot.configureForAircraft({command});
 
     xcopilot.recognizeCommand("unrecognized command");
 
