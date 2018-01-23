@@ -16,7 +16,8 @@ namespace pt = boost::property_tree;
 static std::map<std::string, CommandType> commandTypeProvider = {
     { "int", CommandType::INT },
     { "float", CommandType::FLOAT },
-    { "double", CommandType::DOUBLE }
+    { "double", CommandType::DOUBLE },
+    { "boolean", CommandType::BOOLEAN }
 };
 
 std::vector<std::string> readDataRefs(const pt::ptree& node) {
