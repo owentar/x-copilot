@@ -10,12 +10,8 @@ namespace xcopilot {
     class Logger {
     public:
         enum Level {
-            TRACE = boost::log::trivial::severity_level::trace,
             DEBUG = boost::log::trivial::severity_level::debug,
-            INFO = boost::log::trivial::severity_level::info,
-            WARN = boost::log::trivial::severity_level::warning,
-            ERROR = boost::log::trivial::severity_level::error,
-            FATAL = boost::log::trivial::severity_level::fatal
+            INFO = boost::log::trivial::severity_level::info
         };
 
         static Logger* getInstance();
@@ -24,23 +20,23 @@ namespace xcopilot {
 
         static void configureConsoleLogger(Logger::Level level = Logger::Level::INFO);
 
-        void trace(const std::string &message) { log(message, Logger::Level::TRACE); };
-        void trace(const boost::format &message) { log(message.str(), Logger::Level::TRACE); };
+        void trace(const std::string &message) { log(message, boost::log::trivial::severity_level::trace); };
+        void trace(const boost::format &message) { log(message.str(), boost::log::trivial::severity_level::trace); };
 
-        void debug(const std::string &message) { log(message, Logger::Level::DEBUG); };
-        void debug(const boost::format &message) { log(message.str(), Logger::Level::DEBUG); };
+        void debug(const std::string &message) { log(message, boost::log::trivial::severity_level::debug); };
+        void debug(const boost::format &message) { log(message.str(), boost::log::trivial::severity_level::debug); };
 
-        void info(const std::string &message) { log(message, Logger::Level::INFO); };
-        void info(const boost::format &message) { log(message.str(), Logger::Level::INFO); };
+        void info(const std::string &message) { log(message, boost::log::trivial::severity_level::info); };
+        void info(const boost::format &message) { log(message.str(), boost::log::trivial::severity_level::info); };
 
-        void warn(const std::string &message) { log(message, Logger::Level::WARN); };
-        void warn(const boost::format &message) { log(message.str(), Logger::Level::WARN); };
+        void warn(const std::string &message) { log(message, boost::log::trivial::severity_level::warning); };
+        void warn(const boost::format &message) { log(message.str(), boost::log::trivial::severity_level::warning); };
 
-        void error(const std::string &message) { log(message, Logger::Level::ERROR); };
-        void error(const boost::format &message) { log(message.str(), Logger::Level::ERROR); };
+        void error(const std::string &message) { log(message, boost::log::trivial::severity_level::error); };
+        void error(const boost::format &message) { log(message.str(), boost::log::trivial::severity_level::error); };
 
-        void fatal(const std::string &message) { log(message, Logger::Level::FATAL); };
-        void fatal(const boost::format &message) { log(message.str(), Logger::Level::FATAL); };
+        void fatal(const std::string &message) { log(message, boost::log::trivial::severity_level::fatal); };
+        void fatal(const boost::format &message) { log(message.str(), boost::log::trivial::severity_level::fatal); };
 
     private:
         Logger();
@@ -55,7 +51,7 @@ namespace xcopilot {
 
         boost::log::sources::severity_logger<boost::log::trivial::severity_level> logger;
 
-        void log(const std::string &message, Logger::Level level);
+        void log(const std::string &message, boost::log::trivial::severity_level level);
     };
 }
 

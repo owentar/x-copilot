@@ -53,7 +53,7 @@ Logger::Logger() {
     logging::add_common_attributes();
 }
 
-void Logger::log(const std::string &message, Level level) {
+void Logger::log(const std::string &message, boost::log::trivial::severity_level level) {
     auto lvl = static_cast<logging::trivial::severity_level>(level);
     BOOST_LOG_SEV(logger, lvl) << message;
 }
