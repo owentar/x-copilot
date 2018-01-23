@@ -19,8 +19,11 @@ std::map<std::string, int> WORD_TO_NUMBER = {
         { "NINE", 9 }
 };
 
-std::vector<int> xcopilot::parseNumbers(const std::string& numbersAsWords)
-{
+bool xcopilot::parseToBoolean(const std::string& phrase) {
+    return phrase == "ON" || phrase == "DOWN";
+}
+
+std::vector<int> xcopilot::parseNumbers(const std::string& numbersAsWords) {
     std::vector<std::string> numbers;
     boost::split(numbers, numbersAsWords, boost::is_any_of(" "));
     std::vector<int> result(numbers.size());
@@ -28,8 +31,7 @@ std::vector<int> xcopilot::parseNumbers(const std::string& numbersAsWords)
     return result;
 }
 
-double xcopilot::parseToNumber(const std::string& numbersAsWords, unsigned short decimals)
-{
+double xcopilot::parseToNumber(const std::string& numbersAsWords, unsigned short decimals) {
     std::vector<int> numbers = xcopilot::parseNumbers(numbersAsWords);
     double exp = numbers.size() - 1.0 - decimals;
     double scale = std::pow(10.0, exp);
@@ -40,17 +42,14 @@ double xcopilot::parseToNumber(const std::string& numbersAsWords, unsigned short
     });
 }
 
-int xcopilot::parseToInt(const std::string& numbersAsWords)
-{
+int xcopilot::parseToInt(const std::string& numbersAsWords) {
     return xcopilot::parseToNumber(numbersAsWords);
 }
 
-double xcopilot::parseToDecimal(const std::string& numbersAsWords, unsigned short decimals)
-{
+double xcopilot::parseToDecimal(const std::string& numbersAsWords, unsigned short decimals) {
     return xcopilot::parseToNumber(numbersAsWords, decimals);
 }
 
-float xcopilot::parseToFloat(const std::string& numbersAsWords, unsigned short decimals)
-{
+float xcopilot::parseToFloat(const std::string& numbersAsWords, unsigned short decimals) {
     return static_cast<float>(xcopilot::parseToDecimal(numbersAsWords, decimals));
 }

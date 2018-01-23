@@ -5,6 +5,8 @@
 #include <vector>
 
 namespace xcopilot {
+    bool parseToBoolean(const std::string &phrase);
+
     std::vector<int> parseNumbers(const std::string &numbersAsWords);
 
     double parseToNumber(const std::string &numbersAsWords, unsigned short decimals = 0);
