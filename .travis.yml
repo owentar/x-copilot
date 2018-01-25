@@ -12,12 +12,12 @@ before_install:
   - sed -i .bk 's/git@github.com:/https:\/\/github.com\//' .gitmodules
   - git submodule update --init --recursive
 
-
 before_script:
   - cd ${TRAVIS_BUILD_DIR}
-  - (mkdir build && cd build && cmake .. ${CMAKE_OPTIONS})
+  - (mkdir -p Resources/plugins && cp -r src/lib/XPSDK/Libraries/Mac/. Resources/plugins/)
+  - (mkdir -p build/x-copilot && cd build/x-copilot && cmake ../.. ${CMAKE_OPTIONS})
 
 script:
-  - cd build
+  - cd build/x-copilot
   - make
   - test/x_copilot_test
