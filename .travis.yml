@@ -16,6 +16,7 @@ before_script:
   - cd ${TRAVIS_BUILD_DIR}
   - (mkdir -p Resources/plugins && cp -r src/lib/XPSDK/Libraries/Mac/. Resources/plugins/)
   - (mkdir -p build/x-copilot && cd build/x-copilot && cmake ../.. ${CMAKE_OPTIONS})
+  - cp -r config ./build/x-copilot/test
 
 script:
   - cd build/x-copilot
