@@ -7,7 +7,8 @@ set(SOURCE_FILES
         CommandTest.cpp
         RecognizerTest.cpp
         utilsTest.cpp
-        XCopilotTest.cpp)
+        XCopilotTest.cpp
+        integration/CommandsTest.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
