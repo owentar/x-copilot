@@ -21,4 +21,4 @@ before_script:
 script:
   - cd build/x-copilot
   - make
-  - test/x_copilot_test
+  - (cd test && ./x_copilot_test)
