@@ -1,0 +1,19 @@
+#JSGF V1.0;
+
+grammar com.owentar.xcopilot;
+
+public <SET_ALTIMETER> = SET ALTIMETER (<NUMBER>) (<NUMBER>) (<NUMBER>) (<NUMBER>);
+public <SET_ALTITUDE> = SET ALTITUDE (<NUMBER>) (<NUMBER>) (<NUMBER>) (<NUMBER>) [<NUMBER>];
+public <FLIGHT_LEVEL> = SET FLIGHT LEVEL (<NUMBER>) (<NUMBER>) (<NUMBER>);
+public <LANDING_GEAR> = [LANDING] GEAR (up | down);
+public <SET_HEADING> = SET HEADING (<NUMBER>) (<NUMBER>) (<NUMBER>);
+public <SET_SPEED> = SET SPEED (<NUMBER>) (<NUMBER>) (<NUMBER>);
+public <LANDING_LIGHT> = LANDING <LIGHTS> <ON_FF>;
+public <TAXI_LIGHT> = TAXI <LIGHTS> <ON_FF>;
+public <NAV_LIGHT> = NAVIGATION <LIGHTS> <ON_FF>;
+public <STROBE_LIGHT> = STROBE <LIGHTS> <ON_FF>;
+public <BEACON_LIGHT> = BEACON <LIGHTS> <ON_FF>;
+
+<NUMBER> = (ZERO {0} | ONE {1} | TWO {2} | THREE {3} | FOUR {4} | FIVE {5} | SIX {6} | SEVEN {7} | EIGHT {8} | NINE {9});
+<ON_OFF> = (ON | OFF);
+<LIGHTS> = (LIGHT | LIGHTS);
