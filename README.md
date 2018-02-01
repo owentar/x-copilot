@@ -2,7 +2,8 @@
 
 [![Build Status](https://travis-ci.org/owentar/x-copilot.svg?branch=master)](https://travis-ci.org/owentar/x-copilot)
 
-This is a plugin for [X-Plane] to support voice commands in the simulator.
+This is a plugin for [X-Plane] to support voice commands in the simulator. The main intention is to have a
+cross-platform plugin (Win, Mac and Linux) which allows the user to instruct voice commands to the simulator.
 
 ## Table of contents
 - [Goals](#goals)
