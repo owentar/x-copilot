@@ -24,6 +24,7 @@ set(SOURCE_FILES
         utils.cpp
         Logger.cpp
         Logger.h
+        CommandConfig.h
         CommandsConfigReader.cpp
         CommandsConfigReader.h)
 

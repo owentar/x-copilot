@@ -10,7 +10,7 @@ using boost::format;
 
 bool Command::isRecognized(const std::string& phrase) const
 {
-    bool result = std::regex_match(phrase, commandRegExp);
+    bool result = std::regex_match(phrase, config.getRegEx());
     Logger::getInstance()->trace(format("Phrase: %1% - Result: %2%") % phrase % result);
     return result;
 }
@@ -18,7 +18,7 @@ bool Command::isRecognized(const std::string& phrase) const
 CommandExecutor Command::getExecutor(const std::string& phrase)
 {
     std::smatch result;
-    std::regex_search(phrase, result, commandRegExp);
+    std::regex_search(phrase, result, config.getRegEx());
     std::string value = result[1];
-    return CommandExecutor{value, dataRefsIds, type};
+    return CommandExecutor{value, dataRefsIds, config.getType()};
 }
