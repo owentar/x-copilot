@@ -9,16 +9,12 @@
 #include <vector>
 
 #include "CommandExecutor.h"
-#include "XPlaneDataRefSDK.h"
 #include "CommandMetadata.h"
 
 namespace xcopilot {
     class Command {
     public:
-        explicit Command(const CommandMetadata metadata, XPlaneDataRefSDK *xPlaneDataRefSDK)
-                : metadata{metadata}, xPlaneDataRefSDK{xPlaneDataRefSDK} {
-            init(metadata.getDataRefs());
-        }
+        explicit Command(const CommandMetadata metadata) : metadata{metadata} {}
 
         explicit Command() = default;
 
@@ -31,14 +27,7 @@ namespace xcopilot {
         virtual CommandExecutor getExecutor(const std::string &);
 
     private:
-        std::vector<XPLMDataRef> dataRefsIds;
-        XPlaneDataRefSDK *xPlaneDataRefSDK;
         CommandMetadata metadata;
-
-        void init(const std::vector<std::string> &dataRefs) {
-            std::transform(dataRefs.begin(), dataRefs.end(), std::back_inserter(dataRefsIds),
-                           [this](const std::string &dataRef) { return xPlaneDataRefSDK->findDataRef(dataRef); });
-        }
     };
 }
 

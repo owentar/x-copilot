@@ -21,7 +21,7 @@ protected:
     NiceMock<XPlaneDataRefSDKMock> xPlaneDataRefSDKMock;
     Command command;
 
-    CommandTest() : xPlaneDataRefSDKMock{}, command(CommandMetadata("Test", CommandType::FLOAT, "^.*test$", {"dataRefId"}), &xPlaneDataRefSDKMock) {};
+    CommandTest() : xPlaneDataRefSDKMock{}, command(CommandMetadata("Test", CommandType::FLOAT, "^.*test$", {})) {};
 };
 
 TEST_F(CommandTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
@@ -32,11 +32,4 @@ TEST_F(CommandTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
 TEST_F(CommandTest, DoesNotRecognizeCommandWhenPhraseDoesNotMatchRegEx)
 {
     ASSERT_THAT(command.isRecognized("does not match"), Eq(false));
-}
-
-TEST_F(CommandTest, GetDataRefsIdsWhenCommandIsConstructed)
-{
-    EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId1"));
-    EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId2"));
-    command = Command(CommandMetadata("Test", CommandType::FLOAT, "regex", {"dataRefId1", "dataRefId2"}), &xPlaneDataRefSDKMock);
 }

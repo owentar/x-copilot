@@ -10,6 +10,7 @@
 
 #include "Command.h"
 #include "CommandMetadata.h"
+#include "XPLMDataAccess.h"
 
 using namespace xcopilot;
 namespace pt = boost::property_tree;
@@ -21,25 +22,29 @@ static std::map<std::string, CommandType> commandTypeProvider = {
     { "boolean", CommandType::BOOLEAN }
 };
 
-std::vector<std::string> readDataRefs(const pt::ptree& node) {
+std::vector<XPLMDataRef> readDataRefs(const pt::ptree& node, XPlaneDataRefSDK* xPlaneSDK) {
+    // TODO: make this iteration only once
     std::vector<std::string> dataRefs;
     std::transform(std::begin(node), std::end(node), std::back_inserter(dataRefs),
                    [](const pt::ptree::value_type& value) { return value.second.get<std::string>(""); });
-    return dataRefs;
+    std::vector<XPLMDataRef> dataRefsIds;
+    std::transform(dataRefs.begin(), dataRefs.end(), std::back_inserter(dataRefsIds),
+                   [xPlaneSDK](const std::string &dataRef) { return xPlaneSDK->findDataRef(dataRef); });
+    return dataRefsIds;
 }
 
-std::vector<std::shared_ptr<Command>> CommandsConfigReader::getCommandsForAircraft() {
+std::vector<std::shared_ptr<Command>> CommandsConfigReader::getCommandsForAircraft(const std::string configFilePath) {
     pt::ptree root;
-    pt::read_json("config/default-commands.json", root);
+    pt::read_json(configFilePath, root);
     std::vector<std::shared_ptr<Command>> commands;
 
     for (auto& node : root) {
         auto name = node.first;
         auto type = node.second.get<std::string>("type");
         auto regex = node.second.get<std::string>("regex");
-        auto dataRefs = readDataRefs(node.second.get_child("dataRefs"));
-        CommandMetadata commandConfig(name, commandTypeProvider[type], regex, dataRefs);
-        commands.push_back(std::make_shared<Command>(commandConfig, xPlaneSDK));
+        auto dataRefs = readDataRefs(node.second.get_child("dataRefs"), xPlaneSDK);
+        CommandMetadata commandMetadata(name, commandTypeProvider[type], regex, dataRefs);
+        commands.push_back(std::make_shared<Command>(commandMetadata));
         std::cout << "Command: " << name << " - Regex: " << regex << std::endl;
     }
 

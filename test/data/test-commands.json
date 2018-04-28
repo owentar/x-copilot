@@ -1,0 +1,7 @@
+{
+  "TEST": {
+    "regex": "test",
+    "type": "float",
+    "dataRefs": ["dataRefId1", "dataRefId2"]
+  }
+}

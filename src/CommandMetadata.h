@@ -5,11 +5,12 @@
 #include <string>
 
 #include "CommandType.h"
+#include "XPLMDataAccess.h"
 
 namespace xcopilot {
     class CommandMetadata {
     public:
-        CommandMetadata(const std::string& name, const CommandType type, const std::string& regex, const std::vector<std::string> dataRefs)
+        CommandMetadata(const std::string& name, const CommandType type, const std::string& regex, const std::vector<XPLMDataRef> dataRefs)
                 : name{name}, type{type}, regex{regex, std::regex::icase}, dataRefs{dataRefs} {};
 
         std::string getName() const { return name; };
@@ -18,13 +19,13 @@ namespace xcopilot {
 
         std::regex getRegEx() const { return regex; };
 
-        std::vector<std::string> getDataRefs() const { return dataRefs; };
+        std::vector<XPLMDataRef> getDataRefs() const { return dataRefs; };
 
     private:
         std::string name;
         CommandType type;
         std::regex regex;
-        std::vector<std::string> dataRefs;
+        std::vector<XPLMDataRef> dataRefs;
     };
 }
 

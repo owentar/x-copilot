@@ -20,5 +20,5 @@ CommandExecutor Command::getExecutor(const std::string& phrase)
     std::smatch result;
     std::regex_search(phrase, result, metadata.getRegEx());
     std::string value = result[1];
-    return CommandExecutor{value, dataRefsIds, metadata.getType()};
+    return CommandExecutor{value, metadata.getDataRefs(), metadata.getType()};
 }

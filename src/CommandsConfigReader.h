@@ -12,7 +12,7 @@ namespace xcopilot {
     public:
         CommandsConfigReader(XPlaneDataRefSDK* xPlaneSDK) : xPlaneSDK{xPlaneSDK} {};
 
-        std::vector<std::shared_ptr<Command>> getCommandsForAircraft();
+        std::vector<std::shared_ptr<Command>> getCommandsForAircraft(const std::string configFilePath = "config/default-commands.json");
 
     private:
         XPlaneDataRefSDK* xPlaneSDK;
