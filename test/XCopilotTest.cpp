@@ -26,7 +26,7 @@ public:
 class CommandMock : public Command
 {
 public:
-    explicit CommandMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : Command(CommandConfig("Test Command", CommandType::FLOAT, "test regex", {"dataRefId"}), xPLaneDatRefSDK) {};
+    explicit CommandMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : Command(CommandMetadata("Test Command", CommandType::FLOAT, "test regex", {"dataRefId"}), xPLaneDatRefSDK) {};
     MOCK_CONST_METHOD1(isRecognized, bool(const std::string&));
 };
 

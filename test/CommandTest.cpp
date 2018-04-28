@@ -1,7 +1,7 @@
 #include "gmock/gmock.h"
 
 #include "Command.h"
-#include "CommandConfig.h"
+#include "CommandMetadata.h"
 #include "XPlaneDataRefSDK.h"
 
 using namespace testing;
@@ -21,7 +21,7 @@ protected:
     NiceMock<XPlaneDataRefSDKMock> xPlaneDataRefSDKMock;
     Command command;
 
-    CommandTest() : xPlaneDataRefSDKMock{}, command(CommandConfig("Test", CommandType::FLOAT, "^.*test$", {"dataRefId"}), &xPlaneDataRefSDKMock) {};
+    CommandTest() : xPlaneDataRefSDKMock{}, command(CommandMetadata("Test", CommandType::FLOAT, "^.*test$", {"dataRefId"}), &xPlaneDataRefSDKMock) {};
 };
 
 TEST_F(CommandTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
@@ -38,5 +38,5 @@ TEST_F(CommandTest, GetDataRefsIdsWhenCommandIsConstructed)
 {
     EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId1"));
     EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId2"));
-    command = Command(CommandConfig("Test", CommandType::FLOAT, "regex", {"dataRefId1", "dataRefId2"}), &xPlaneDataRefSDKMock);
+    command = Command(CommandMetadata("Test", CommandType::FLOAT, "regex", {"dataRefId1", "dataRefId2"}), &xPlaneDataRefSDKMock);
 }

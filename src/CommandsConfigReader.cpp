@@ -9,7 +9,7 @@
 #include <boost/property_tree/json_parser.hpp>
 
 #include "Command.h"
-#include "CommandConfig.h"
+#include "CommandMetadata.h"
 
 using namespace xcopilot;
 namespace pt = boost::property_tree;
@@ -38,7 +38,7 @@ std::vector<std::shared_ptr<Command>> CommandsConfigReader::getCommandsForAircra
         auto type = node.second.get<std::string>("type");
         auto regex = node.second.get<std::string>("regex");
         auto dataRefs = readDataRefs(node.second.get_child("dataRefs"));
-        CommandConfig commandConfig(name, commandTypeProvider[type], regex, dataRefs);
+        CommandMetadata commandConfig(name, commandTypeProvider[type], regex, dataRefs);
         commands.push_back(std::make_shared<Command>(commandConfig, xPlaneSDK));
         std::cout << "Command: " << name << " - Regex: " << regex << std::endl;
     }

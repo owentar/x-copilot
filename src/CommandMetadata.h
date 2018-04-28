@@ -7,9 +7,9 @@
 #include "CommandType.h"
 
 namespace xcopilot {
-    class CommandConfig {
+    class CommandMetadata {
     public:
-        CommandConfig(const std::string& name, const CommandType type, const std::string& regex, const std::vector<std::string> dataRefs)
+        CommandMetadata(const std::string& name, const CommandType type, const std::string& regex, const std::vector<std::string> dataRefs)
                 : name{name}, type{type}, regex{regex, std::regex::icase}, dataRefs{dataRefs} {};
 
         std::string getName() const { return name; };
