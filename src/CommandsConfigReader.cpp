@@ -23,13 +23,12 @@ static std::map<std::string, CommandType> commandTypeProvider = {
 };
 
 std::vector<XPLMDataRef> readDataRefs(const pt::ptree& node, XPlaneDataRefSDK* xPlaneSDK) {
-    // TODO: make this iteration only once
-    std::vector<std::string> dataRefs;
-    std::transform(std::begin(node), std::end(node), std::back_inserter(dataRefs),
-                   [](const pt::ptree::value_type& value) { return value.second.get<std::string>(""); });
     std::vector<XPLMDataRef> dataRefsIds;
-    std::transform(dataRefs.begin(), dataRefs.end(), std::back_inserter(dataRefsIds),
-                   [xPlaneSDK](const std::string &dataRef) { return xPlaneSDK->findDataRef(dataRef); });
+    std::transform(std::begin(node), std::end(node), std::back_inserter(dataRefsIds),
+                   [xPlaneSDK](const pt::ptree::value_type& value) {
+        auto dataRef = value.second.get<std::string>("");
+        return xPlaneSDK->findDataRef(dataRef);
+    });
     return dataRefsIds;
 }
 
