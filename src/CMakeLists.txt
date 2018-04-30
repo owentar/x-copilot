@@ -3,8 +3,8 @@ project(x_copilot)
 
 set(SOURCE_FILES
         main.cpp
-        Command.cpp
-        Command.h
+        CommandRecognizer.cpp
+        CommandRecognizer.h
         Microphone.cpp
         Microphone.h
         MicrophoneHandler.h

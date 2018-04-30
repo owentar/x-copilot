@@ -1,4 +1,4 @@
-#include "Command.h"
+#include "CommandRecognizer.h"
 
 #include <boost/format.hpp>
 
@@ -8,14 +8,14 @@
 using namespace xcopilot;
 using boost::format;
 
-bool Command::isRecognized(const std::string& phrase) const
+bool CommandRecognizer::isRecognized(const std::string& phrase) const
 {
     bool result = std::regex_match(phrase, metadata.getRegEx());
     Logger::getInstance()->trace(format("Phrase: %1% - Result: %2%") % phrase % result);
     return result;
 }
 
-CommandExecutor Command::getExecutor(const std::string& phrase)
+CommandExecutor CommandRecognizer::getExecutor(const std::string& phrase)
 {
     std::smatch result;
     std::regex_search(phrase, result, metadata.getRegEx());

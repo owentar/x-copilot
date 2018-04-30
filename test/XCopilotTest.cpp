@@ -4,7 +4,7 @@
 #include <memory>
 
 #include "XCopilot.h"
-#include "Command.h"
+#include "CommandRecognizer.h"
 #include "Recognizer.h"
 #include "util/XPlaneDataRefSDKMock.h"
 
@@ -17,10 +17,10 @@ public:
     explicit RecognizerMock() : Recognizer() {};
 };
 
-class CommandMock : public Command
+class CommandMock : public CommandRecognizer
 {
 public:
-    explicit CommandMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : Command(CommandMetadata("Test Command", CommandType::FLOAT, "test regex", {})) {};
+    explicit CommandMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : CommandRecognizer(CommandMetadata("Test CommandRecognizer", CommandType::FLOAT, "test regex", {})) {};
     MOCK_CONST_METHOD1(isRecognized, bool(const std::string&));
 };
 

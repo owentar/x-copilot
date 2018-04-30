@@ -16,7 +16,7 @@ public:
 protected:
     XPlaneDataRefSDKMock xPlaneDatRefSDK;
     CommandsConfigReader configReader{&xPlaneDatRefSDK};
-    std::vector<std::shared_ptr<Command>> commands;
+    std::vector<std::shared_ptr<CommandRecognizer>> commands;
 
     virtual void SetUp() { commands = configReader.getCommandsForAircraft(); }
 
@@ -31,9 +31,9 @@ protected:
         ASSERT_THAT(command->getName(), name);
     }
 private:
-    std::shared_ptr<Command> findCommand(const std::string& phrase) {
+    std::shared_ptr<CommandRecognizer> findCommand(const std::string& phrase) {
         auto value = std::find_if(commands.begin(), commands.end(),
-                     [phrase] (const std::shared_ptr<Command> command) -> bool { return command->isRecognized(phrase); });
+                     [phrase] (const std::shared_ptr<CommandRecognizer> command) -> bool { return command->isRecognized(phrase); });
         return value != commands.end() ? *value : nullptr;
     }
 };

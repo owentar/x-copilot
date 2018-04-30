@@ -12,13 +12,13 @@
 #include "CommandMetadata.h"
 
 namespace xcopilot {
-    class Command {
+    class CommandRecognizer {
     public:
-        explicit Command(const CommandMetadata metadata) : metadata{metadata} {}
+        explicit CommandRecognizer(const CommandMetadata metadata) : metadata{metadata} {}
 
-        explicit Command() = default;
+        explicit CommandRecognizer() = default;
 
-        virtual ~Command() = default;
+        virtual ~CommandRecognizer() = default;
 
         virtual std::string getName() const { return metadata.getName(); }
 

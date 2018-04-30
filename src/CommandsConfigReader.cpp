@@ -8,7 +8,7 @@
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
 
-#include "Command.h"
+#include "CommandRecognizer.h"
 #include "CommandMetadata.h"
 #include "XPLMDataAccess.h"
 
@@ -32,10 +32,10 @@ std::vector<XPLMDataRef> readDataRefs(const pt::ptree& node, XPlaneDataRefSDK* x
     return dataRefsIds;
 }
 
-std::vector<std::shared_ptr<Command>> CommandsConfigReader::getCommandsForAircraft(const std::string configFilePath) {
+std::vector<std::shared_ptr<CommandRecognizer>> CommandsConfigReader::getCommandsForAircraft(const std::string configFilePath) {
     pt::ptree root;
     pt::read_json(configFilePath, root);
-    std::vector<std::shared_ptr<Command>> commands;
+    std::vector<std::shared_ptr<CommandRecognizer>> commands;
 
     for (auto& node : root) {
         auto name = node.first;
@@ -43,8 +43,8 @@ std::vector<std::shared_ptr<Command>> CommandsConfigReader::getCommandsForAircra
         auto regex = node.second.get<std::string>("regex");
         auto dataRefs = readDataRefs(node.second.get_child("dataRefs"), xPlaneSDK);
         CommandMetadata commandMetadata(name, commandTypeProvider[type], regex, dataRefs);
-        commands.push_back(std::make_shared<Command>(commandMetadata));
-        std::cout << "Command: " << name << " - Regex: " << regex << std::endl;
+        commands.push_back(std::make_shared<CommandRecognizer>(commandMetadata));
+        std::cout << "CommandRecognizer: " << name << " - Regex: " << regex << std::endl;
     }
 
     return commands;

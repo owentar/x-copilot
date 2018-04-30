@@ -4,7 +4,7 @@ add_subdirectory(lib/googletest)
 
 set(SOURCE_FILES
         main.cpp
-        CommandTest.cpp
+        CommandRecognizerTest.cpp
         RecognizerTest.cpp
         utilsTest.cpp
         XCopilotTest.cpp

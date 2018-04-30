@@ -4,7 +4,7 @@
 #include <memory>
 #include <vector>
 
-#include "Command.h"
+#include "CommandRecognizer.h"
 #include "XPlaneDataRefSDK.h"
 
 namespace xcopilot {
@@ -12,7 +12,7 @@ namespace xcopilot {
     public:
         CommandsConfigReader(XPlaneDataRefSDK* xPlaneSDK) : xPlaneSDK{xPlaneSDK} {};
 
-        std::vector<std::shared_ptr<Command>> getCommandsForAircraft(const std::string configFilePath = "config/default-commands.json");
+        std::vector<std::shared_ptr<CommandRecognizer>> getCommandsForAircraft(const std::string configFilePath = "config/default-commands.json");
 
     private:
         XPlaneDataRefSDK* xPlaneSDK;

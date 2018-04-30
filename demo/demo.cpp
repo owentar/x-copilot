@@ -2,7 +2,6 @@
 #include <memory>
 #include <utility>
 
-#include "Command.h"
 #include "CommandsConfigReader.h"
 #include "Logger.h"
 #include "Microphone.h"

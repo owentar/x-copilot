@@ -6,7 +6,7 @@
 #include <utility>
 #include <vector>
 
-#include "Command.h"
+#include "CommandRecognizer.h"
 #include "CommandExecutor.h"
 #include "Microphone.h"
 #include "PocketsphinxWrapper.h"
@@ -24,9 +24,9 @@ namespace xcopilot {
 
         void disable() { recognizer->stop(); };
 
-        void configureForAircraft(const std::vector<std::shared_ptr<Command>>& commands);
+        void configureForAircraft(const std::vector<std::shared_ptr<CommandRecognizer>>& commands);
 
-        void addCommand(std::shared_ptr<Command> command) { commandProcessor.push_back(command); };
+        void addCommand(std::shared_ptr<CommandRecognizer> command) { commandProcessor.push_back(command); };
 
         bool hasPendingCommands() const { return !pendingCommands.empty(); };
 
@@ -39,7 +39,7 @@ namespace xcopilot {
 
         std::unique_ptr<Recognizer> recognizer;
         std::vector<CommandExecutor> pendingCommands;
-        std::vector<std::shared_ptr<Command>> commandProcessor;
+        std::vector<std::shared_ptr<CommandRecognizer>> commandProcessor;
     };
 }
 
