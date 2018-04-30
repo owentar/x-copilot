@@ -6,7 +6,7 @@
 #include "XCopilot.h"
 #include "Command.h"
 #include "Recognizer.h"
-#include "XPlaneDataRefSDK.h"
+#include "util/XPlaneDataRefSDKMock.h"
 
 using namespace testing;
 using namespace xcopilot;
@@ -15,12 +15,6 @@ class RecognizerMock : public Recognizer
 {
 public:
     explicit RecognizerMock() : Recognizer() {};
-};
-
-class XPlaneDataRefSDKMock : public XPlaneDataRefSDK
-{
-public:
-//    MOCK_METHOD1(findDataRef, XPLMDataRef(const std::string&));
 };
 
 class CommandMock : public Command

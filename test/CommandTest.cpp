@@ -3,17 +3,10 @@
 #include "Command.h"
 #include "CommandMetadata.h"
 #include "XPlaneDataRefSDK.h"
+#include "util/XPlaneDataRefSDKMock.h"
 
 using namespace testing;
 using namespace xcopilot;
-
-class XPlaneDataRefSDKMock : public XPlaneDataRefSDK
-{
-public:
-    MOCK_METHOD1(findDataRef, XPLMDataRef(const std::string&));
-    MOCK_CONST_METHOD1(getValue, int(XPLMDataRef));
-    MOCK_CONST_METHOD2(setValue, void(XPLMDataRef, int));
-};
 
 class CommandTest : public Test
 {

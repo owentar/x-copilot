@@ -5,15 +5,10 @@
 #include <vector>
 
 #include "CommandsConfigReader.h"
-#include "XPlaneDataRefSDK.h"
+#include "../util/XPlaneDataRefSDKMock.h"
 
 using namespace testing;
 using namespace xcopilot;
-
-class XPlaneDataRefSDKMock : public XPlaneDataRefSDK {
-public:
-//    MOCK_METHOD1(findDataRef, XPLMDataRef(const std::string&));
-};
 
 class CommandsIntegrationTest : public Test {
 public:
