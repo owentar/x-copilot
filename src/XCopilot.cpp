@@ -23,7 +23,7 @@ void XCopilot::recognizeCommand(const std::string& phrase)
 {
     Logger::getInstance()->debug(format("Processing: %1%") % phrase);
     auto value = std::find_if(commandProcessor.begin(), commandProcessor.end(),
-                              [phrase] (const std::shared_ptr<CommandRecognizer> command) -> bool { return command->isRecognized(phrase); });
+                              [phrase] (const std::shared_ptr<CommandRecognizer> command) -> bool { return command->commandRecognized(phrase); });
     if (value != commandProcessor.end()) {
         Logger::getInstance()->debug(format("CommandRecognizer recognized: %1%") % (*value)->getName());
         pendingCommands.push_back((*value)->getExecutor(phrase));

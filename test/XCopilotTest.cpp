@@ -21,7 +21,7 @@ class CommandMock : public CommandRecognizer
 {
 public:
     explicit CommandMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : CommandRecognizer(CommandMetadata("Test CommandRecognizer", CommandType::FLOAT, "test regex", {})) {};
-    MOCK_CONST_METHOD1(isRecognized, bool(const std::string&));
+    MOCK_CONST_METHOD1(commandRecognized, bool(const std::string&));
 };
 
 class XCopilotTest : public Test
@@ -36,7 +36,7 @@ protected:
 TEST_F(XCopilotTest, ShouldQueueCommandWhenItIsRecognized)
 {
     auto command = std::make_shared<NiceMock<CommandMock>>(&xPlaneDatRefSDK);
-    EXPECT_CALL(*command, isRecognized(_))
+    EXPECT_CALL(*command, commandRecognized(_))
         .Times(1)
         .WillOnce(Return(true));
     xcopilot.configureForAircraft({command});
@@ -49,7 +49,7 @@ TEST_F(XCopilotTest, ShouldQueueCommandWhenItIsRecognized)
 TEST_F(XCopilotTest, ShouldNotQueueCommandWhenItIsNotRecognized)
 {
     auto command = std::make_shared<NiceMock<CommandMock>>(&xPlaneDatRefSDK);
-    EXPECT_CALL(*command, isRecognized(_))
+    EXPECT_CALL(*command, commandRecognized(_))
         .Times(1)
         .WillOnce(Return(false));
     xcopilot.configureForAircraft({command});

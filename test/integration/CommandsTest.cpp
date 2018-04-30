@@ -33,7 +33,7 @@ protected:
 private:
     std::shared_ptr<CommandRecognizer> findCommand(const std::string& phrase) {
         auto value = std::find_if(commands.begin(), commands.end(),
-                     [phrase] (const std::shared_ptr<CommandRecognizer> command) -> bool { return command->isRecognized(phrase); });
+                     [phrase] (const std::shared_ptr<CommandRecognizer> command) -> bool { return command->commandRecognized(phrase); });
         return value != commands.end() ? *value : nullptr;
     }
 };

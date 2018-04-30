@@ -18,10 +18,10 @@ protected:
 
 TEST_F(CommandRecognizerTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
 {
-    ASSERT_THAT(commandRecognizer.isRecognized("a test"), Eq(true));
+    ASSERT_THAT(commandRecognizer.commandRecognized("a test"), Eq(true));
 }
 
 TEST_F(CommandRecognizerTest, DoesNotRecognizeCommandWhenPhraseDoesNotMatchRegEx)
 {
-    ASSERT_THAT(commandRecognizer.isRecognized("does not match"), Eq(false));
+    ASSERT_THAT(commandRecognizer.commandRecognized("does not match"), Eq(false));
 }

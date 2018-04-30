@@ -22,7 +22,7 @@ namespace xcopilot {
 
         virtual std::string getName() const { return metadata.getName(); }
 
-        virtual bool isRecognized(const std::string &) const;
+        virtual bool commandRecognized(const std::string &) const;
 
         virtual CommandExecutor getExecutor(const std::string &);
 

@@ -8,7 +8,7 @@
 using namespace xcopilot;
 using boost::format;
 
-bool CommandRecognizer::isRecognized(const std::string& phrase) const
+bool CommandRecognizer::commandRecognized(const std::string& phrase) const
 {
     bool result = std::regex_match(phrase, metadata.getRegEx());
     Logger::getInstance()->trace(format("Phrase: %1% - Result: %2%") % phrase % result);
