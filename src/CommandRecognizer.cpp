@@ -20,5 +20,5 @@ CommandExecutor CommandRecognizer::getExecutor(const std::string& phrase)
     std::smatch result;
     std::regex_search(phrase, result, metadata.getRegEx());
     std::string value = result[1];
-    return CommandExecutor{value, metadata.getDataRefs(), metadata.getType()};
+    return CommandExecutor{metadata, value};
 }

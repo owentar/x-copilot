@@ -7,26 +7,23 @@
 
 #include "CommandType.h"
 #include "XPLMDataAccess.h"
+#include "CommandMetadata.h"
 
 namespace xcopilot {
     typedef std::function<void(const std::string &, const std::vector<XPLMDataRef> &)> ExecutorFn;
 
     class CommandExecutor {
     public:
-        explicit CommandExecutor(const std::string value, const XPLMDataRef dataRef, const xcopilot::CommandType type)
-                : dataRefs{dataRef}, valueAsWords{value}, doExecute{resolveExecutor(type)} {};
-
-        explicit CommandExecutor(const std::string value, const std::vector<XPLMDataRef> dataRefs,
-                                 const xcopilot::CommandType type)
-                : dataRefs{dataRefs}, valueAsWords{value}, doExecute{resolveExecutor(type)} {};
+        explicit CommandExecutor(const CommandMetadata metadata, const std::string value)
+                : metadata{metadata}, valueAsWords{value}, doExecute{resolveExecutor(metadata.getType())} {};
 
         virtual ~CommandExecutor() = default;
 
-        virtual void execute() const { doExecute(valueAsWords, dataRefs); };
+        virtual void execute() const { doExecute(valueAsWords, metadata.getDataRefs()); };
 
     protected:
         std::string valueAsWords;
-        std::vector<XPLMDataRef> dataRefs;
+        CommandMetadata metadata;
         ExecutorFn doExecute;
 
     private:
