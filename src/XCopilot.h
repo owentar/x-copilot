@@ -26,8 +26,6 @@ namespace xcopilot {
 
         void configureForAircraft(const std::vector<std::shared_ptr<CommandRecognizer>>& commands);
 
-        void addCommand(std::shared_ptr<CommandRecognizer> command) { commandProcessor.push_back(command); };
-
         bool hasPendingCommands() const { return !pendingCommands.empty(); };
 
         void recognizeCommand(const std::string &command);
