@@ -49,3 +49,9 @@ std::vector<std::shared_ptr<CommandRecognizer>> CommandsConfigReader::getCommand
 
     return commands;
 }
+
+std::vector<std::shared_ptr<CommandRecognizer>>
+CommandsConfigReader::getCommandsForAircraft(const std::string author, const std::string icao, const std::string desc,
+                                             const std::string configFilePath) {
+    return getCommandsForAircraft(configFilePath);
+}

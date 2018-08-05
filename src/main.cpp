@@ -94,7 +94,7 @@ void configureForAircraft()
     XPLMGetDatab(ICAOID, icao, 0, 40);
     XPLMGetDatab(descID, desc, 0, 260);
     CommandsConfigReader configReader{xplaneSDK};
-    auto commands = configReader.getCommandsForAircraft();
+    auto commands = configReader.getCommandsForAircraft(author, icao, desc);
     Logger::getInstance()->debug(format("Loading configuration for aircraft (%1%, %2%, %3%)") % author % desc % icao);
     xCopilot->configureForAircraft(commands);
 }
