@@ -25,5 +25,6 @@ TEST_F(CommandsConfigReaderTest, GetDataRefsIdsWhenCommandIsConstructed)
 {
     EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId1"));
     EXPECT_CALL(xPlaneDataRefSDKMock, findDataRef("dataRefId2"));
-    commandsConfigReader.getCommandsForAircraft("data/test-commands.json");
+
+    commandsConfigReader.getCommandsFromFile("data/test-commands.json");
 }
