@@ -26,7 +26,9 @@ set(SOURCE_FILES
         Logger.h
         CommandMetadata.h
         CommandsConfigReader.cpp
-        CommandsConfigReader.h)
+        CommandsConfigReader.h
+        CommandsProvider.cpp
+        CommandsProvider.h)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 

@@ -10,6 +10,7 @@ set(SOURCE_FILES
         XCopilotTest.cpp
         integration/CommandsConfigReaderTest.cpp
         integration/CommandsTest.cpp
+        CommandsProviderTest.cpp
         util/XPlaneDataRefSDKMock.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
