@@ -16,28 +16,47 @@ using namespace xcopilot;
 namespace pt = boost::property_tree;
 
 static std::map<std::string, CommandType> commandTypeProvider = {
-    { "int", CommandType::INT },
-    { "float", CommandType::FLOAT },
-    { "double", CommandType::DOUBLE },
-    { "boolean", CommandType::BOOLEAN }
+        {"int",     CommandType::INT},
+        {"float",   CommandType::FLOAT},
+        {"double",  CommandType::DOUBLE},
+        {"boolean", CommandType::BOOLEAN}
 };
 
-std::vector<XPLMDataRef> readDataRefs(const pt::ptree& node, XPlaneDataRefSDK* xPlaneSDK) {
+std::vector<XPLMDataRef> readDataRefs(const pt::ptree &node, XPlaneDataRefSDK *xPlaneSDK) {
     std::vector<XPLMDataRef> dataRefsIds;
     std::transform(std::begin(node), std::end(node), std::back_inserter(dataRefsIds),
-                   [xPlaneSDK](const pt::ptree::value_type& value) {
-        auto dataRef = value.second.get<std::string>("");
-        return xPlaneSDK->findDataRef(dataRef);
-    });
+                   [xPlaneSDK](const pt::ptree::value_type &value) {
+                       auto dataRef = value.second.get<std::string>("");
+                       return xPlaneSDK->findDataRef(dataRef);
+                   });
     return dataRefsIds;
 }
 
-std::vector<std::shared_ptr<CommandRecognizer>> CommandsConfigReader::getCommandsForAircraft(const std::string configFilePath) {
+std::vector<AircraftCommandsMatcher>
+CommandsConfigReader::getAircraftCommandsMatchers(const std::string& indexFilePath) {
     pt::ptree root;
-    pt::read_json(configFilePath, root);
+    pt::read_json(indexFilePath, root);
+    std::vector<AircraftCommandsMatcher> matchers;
+
+    for (auto &node : root) {
+        auto id = node.first;
+        auto author = node.second.get<std::string>("author");
+        auto icao = node.second.get<std::string>("icao");
+        auto description = node.second.get<std::string>("description");
+        auto commandsFilePath = node.second.get<std::string>("commandsFilePath");
+        matchers.push_back(AircraftCommandsMatcher{id, author, icao, description, commandsFilePath});
+    }
+
+    return matchers;
+}
+
+std::vector<std::shared_ptr<CommandRecognizer>> CommandsConfigReader::getCommandsFromFile(
+        const std::string& commandsFilePath) {
+    pt::ptree root;
+    pt::read_json(commandsFilePath, root);
     std::vector<std::shared_ptr<CommandRecognizer>> commands;
 
-    for (auto& node : root) {
+    for (auto &node : root) {
         auto name = node.first;
         auto type = node.second.get<std::string>("type");
         auto regex = node.second.get<std::string>("regex");
@@ -48,10 +67,4 @@ std::vector<std::shared_ptr<CommandRecognizer>> CommandsConfigReader::getCommand
     }
 
     return commands;
-}
-
-std::vector<std::shared_ptr<CommandRecognizer>>
-CommandsConfigReader::getCommandsForAircraft(const std::string author, const std::string icao, const std::string desc,
-                                             const std::string configFilePath) {
-    return getCommandsForAircraft(configFilePath);
 }
