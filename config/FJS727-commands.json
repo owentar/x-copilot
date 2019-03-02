@@ -1,0 +1,27 @@
+{
+  "LANDING_LIGHTS": {
+    "type": "float",
+    "dataRefs": [
+      "FJS/727/lights/OutboundLLSwitch_L",
+      "FJS/727/lights/OutboundLLSwitch_R",
+      "FJS/727/lights/InboundLLSwitch_L",
+      "FJS/727/lights/InboundLLSwitch_R"
+    ]
+  },
+  "TAXI_LIGHTS": {
+    "type": "float",
+    "dataRefs": ["FJS/727/lights/TaxiLightSwitch"]
+  },
+  "NAV_LIGHTS": {
+    "type": "float",
+    "dataRefs": ["FJS/727/lights/NavLightSwitch"]
+  },
+  "STROBE_LIGHTS": {
+    "type": "float",
+    "dataRefs": ["FJS/727/lights/StrobeLightSwitch"]
+  },
+  "BEACON_LIGHTS": {
+    "type": "float",
+    "dataRefs": ["FJS/727/lights/BeaconLightSwitch"]
+  }
+}
