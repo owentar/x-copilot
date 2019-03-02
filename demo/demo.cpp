@@ -20,7 +20,7 @@ int main(int argc, char *argv[]) {
 
     XPlaneDataRefSDKStub xplaneSDK;
     CommandsConfigReader commandsConfigReader(&xplaneSDK);
-    auto commands = commandsConfigReader.getCommandsForAircraft();
+    auto commands = commandsConfigReader.getCommandsFromFile();
     std::unique_ptr<Microphone> microphone = std::make_unique<Microphone>();
     std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
     std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
