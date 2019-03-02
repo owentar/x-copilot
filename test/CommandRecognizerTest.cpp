@@ -2,18 +2,16 @@
 
 #include "CommandRecognizer.h"
 #include "CommandMetadata.h"
-#include "util/XPlaneDataRefSDKMock.h"
 
 using namespace testing;
 using namespace xcopilot;
 
 class CommandRecognizerTest : public Test
 {
+public:
+    CommandRecognizerTest() : commandRecognizer(CommandMetadata("Test", CommandType::FLOAT, "^.*test$", {})) {};
 protected:
-    NiceMock<XPlaneDataRefSDKMock> xPlaneDataRefSDKMock;
     CommandRecognizer commandRecognizer;
-
-    CommandRecognizerTest() : xPlaneDataRefSDKMock{}, commandRecognizer(CommandMetadata("Test", CommandType::FLOAT, "^.*test$", {})) {};
 };
 
 TEST_F(CommandRecognizerTest, RecognizeCommandWhenPhraseDoesMatchRegEx)
