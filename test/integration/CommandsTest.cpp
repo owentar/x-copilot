@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "CommandsConfigReader.h"
+#include "CommandsProvider.h"
 #include "../util/XPlaneDataRefSDKMock.h"
 
 using namespace testing;
@@ -12,13 +12,13 @@ using namespace xcopilot;
 
 class CommandsIntegrationTest : public Test {
 public:
-    CommandsIntegrationTest() : xPlaneDatRefSDK{}, configReader{&xPlaneDatRefSDK} {};
+    CommandsIntegrationTest() : xPlaneDatRefSDK{}, commandsProvider{&xPlaneDatRefSDK} {};
 protected:
     XPlaneDataRefSDKMock xPlaneDatRefSDK;
-    CommandsConfigReader configReader{&xPlaneDatRefSDK};
+    CommandsProvider commandsProvider{&xPlaneDatRefSDK};
     std::vector<std::shared_ptr<CommandRecognizer>> commands;
 
-    virtual void SetUp() { commands = configReader.getCommandsForAircraft(); }
+    virtual void SetUp() { commands = commandsProvider.getCommandsForAircraft("test", "test", "test"); }
 
     void assertCommandIsNotRecognized(const std::string& name, const std::string& phrase) { assertCommand(name, phrase, false); }
 
