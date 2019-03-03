@@ -20,7 +20,7 @@ namespace xcopilot {
         std::string description;
         std::string commandsFilePath;
 
-        bool match(const std::string author, const std::string icao, const std::string desc) {
+        bool match(const std::string& author, const std::string& icao, const std::string& desc) {
             std::regex authorRegex(this->author, std::regex_constants::icase);
             std::regex icaoRegex(this->icao, std::regex_constants::icase);
             std::regex descRegex(this->description, std::regex_constants::icase);

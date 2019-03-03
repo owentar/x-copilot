@@ -8,7 +8,7 @@
 using namespace xcopilot;
 
 std::optional<AircraftCommandsMatcher>
-CommandsProvider::getAircraftCommandsMatcher(const std::string author, const std::string icao, const std::string desc) {
+CommandsProvider::getAircraftCommandsMatcher(const std::string& author, const std::string& icao, const std::string& desc) {
     auto matcher = std::find_if(aircraftCommandsMatchers.begin(), aircraftCommandsMatchers.end(),
                  [author, icao, desc](AircraftCommandsMatcher matcher) -> bool { return matcher.match(author, icao, desc); });
     if (matcher != aircraftCommandsMatchers.end()) {
@@ -18,7 +18,7 @@ CommandsProvider::getAircraftCommandsMatcher(const std::string author, const std
 }
 
 std::vector<std::shared_ptr<CommandRecognizer>>
-CommandsProvider::getCommandsForAircraft(const std::string author, const std::string icao, const std::string desc) {
+CommandsProvider::getCommandsForAircraft(const std::string& author, const std::string& icao, const std::string& desc) {
     auto defaultCommands = commandsConfigReader->getCommandsFromFile();
     auto matcher = getAircraftCommandsMatcher(author, icao, desc);
 

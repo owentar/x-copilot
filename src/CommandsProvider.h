@@ -16,7 +16,7 @@ namespace xcopilot {
 
         explicit CommandsProvider(std::unique_ptr<xcopilot::CommandsConfigReader> commandsConfigReader) : commandsConfigReader{std::move(commandsConfigReader)} { onInit(); };
 
-        virtual std::vector<std::shared_ptr<xcopilot::CommandRecognizer>> getCommandsForAircraft(const std::string author, const std::string icao, const std::string desc);
+        virtual std::vector<std::shared_ptr<xcopilot::CommandRecognizer>> getCommandsForAircraft(const std::string& author, const std::string& icao, const std::string& desc);
 
         virtual ~CommandsProvider() = default;
 
@@ -25,7 +25,7 @@ namespace xcopilot {
         std::unique_ptr<xcopilot::CommandsConfigReader> commandsConfigReader;
 
         void onInit() { aircraftCommandsMatchers = commandsConfigReader->getAircraftCommandsMatchers(); }
-        std::optional<xcopilot::AircraftCommandsMatcher> getAircraftCommandsMatcher(const std::string, const std::string, const std::string);
+        std::optional<xcopilot::AircraftCommandsMatcher> getAircraftCommandsMatcher(const std::string&, const std::string&, const std::string&);
     };
 }
 
