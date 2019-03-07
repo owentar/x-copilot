@@ -1,0 +1,8 @@
+{
+  "FJS727": {
+    "author": "Jack Skieczius",
+    "icao": "B727",
+    "description": "727 Series by FlyJSim",
+    "commandsFilePath": "FJS727-commands.json"
+  }
+}

@@ -16,6 +16,7 @@
 #include "StatusWindow.h"
 #include "XCopilot.h"
 #include "XPlaneDataRefSDK.h"
+#include "CommandsProvider.h"
 
 using namespace xcopilot;
 using boost::format;
@@ -93,8 +94,8 @@ void configureForAircraft()
     XPLMGetDatab(authorID, author, 0, 500);
     XPLMGetDatab(ICAOID, icao, 0, 40);
     XPLMGetDatab(descID, desc, 0, 260);
-    CommandsConfigReader configReader{xplaneSDK};
-    auto commands = configReader.getCommandsForAircraft();
+    CommandsProvider commandsProvider{xplaneSDK};
+    auto commands = commandsProvider.getCommandsForAircraft(author, icao, desc);
     Logger::getInstance()->debug(format("Loading configuration for aircraft (%1%, %2%, %3%)") % author % desc % icao);
     xCopilot->configureForAircraft(commands);
 }

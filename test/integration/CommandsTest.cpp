@@ -4,26 +4,21 @@
 #include <string>
 #include <vector>
 
-#include "CommandsConfigReader.h"
-#include "XPlaneDataRefSDK.h"
+#include "CommandsProvider.h"
+#include "../util/XPlaneDataRefSDKMock.h"
 
 using namespace testing;
 using namespace xcopilot;
 
-class XPlaneDataRefSDKMock : public XPlaneDataRefSDK {
-public:
-//    MOCK_METHOD1(findDataRef, XPLMDataRef(const std::string&));
-};
-
 class CommandsIntegrationTest : public Test {
 public:
-    CommandsIntegrationTest() : xPlaneDatRefSDK{}, configReader{&xPlaneDatRefSDK} {};
+    CommandsIntegrationTest() : xPlaneDatRefSDK{}, commandsProvider{&xPlaneDatRefSDK} {};
 protected:
     XPlaneDataRefSDKMock xPlaneDatRefSDK;
-    CommandsConfigReader configReader{&xPlaneDatRefSDK};
-    std::vector<std::shared_ptr<Command>> commands;
+    CommandsProvider commandsProvider{&xPlaneDatRefSDK};
+    std::vector<std::shared_ptr<CommandRecognizer>> commands;
 
-    virtual void SetUp() { commands = configReader.getCommandsForAircraft(); }
+    virtual void SetUp() { commands = commandsProvider.getCommandsForAircraft("test", "test", "test"); }
 
     void assertCommandIsNotRecognized(const std::string& name, const std::string& phrase) { assertCommand(name, phrase, false); }
 
@@ -36,9 +31,9 @@ protected:
         ASSERT_THAT(command->getName(), name);
     }
 private:
-    std::shared_ptr<Command> findCommand(const std::string& phrase) {
+    std::shared_ptr<CommandRecognizer> findCommand(const std::string& phrase) {
         auto value = std::find_if(commands.begin(), commands.end(),
-                     [phrase] (const std::shared_ptr<Command> command) -> bool { return command->isRecognized(phrase); });
+                     [phrase] (const std::shared_ptr<CommandRecognizer> command) -> bool { return command->commandRecognized(phrase); });
         return value != commands.end() ? *value : nullptr;
     }
 };

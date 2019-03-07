@@ -3,8 +3,8 @@ project(x_copilot)
 
 set(SOURCE_FILES
         main.cpp
-        Command.cpp
-        Command.h
+        CommandRecognizer.cpp
+        CommandRecognizer.h
         Microphone.cpp
         Microphone.h
         MicrophoneHandler.h
@@ -24,8 +24,11 @@ set(SOURCE_FILES
         utils.cpp
         Logger.cpp
         Logger.h
+        CommandMetadata.h
         CommandsConfigReader.cpp
-        CommandsConfigReader.h)
+        CommandsConfigReader.h
+        CommandsProvider.cpp
+        CommandsProvider.h)
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 

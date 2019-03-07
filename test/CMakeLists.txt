@@ -4,11 +4,14 @@ add_subdirectory(lib/googletest)
 
 set(SOURCE_FILES
         main.cpp
-        CommandTest.cpp
+        CommandRecognizerTest.cpp
         RecognizerTest.cpp
         utilsTest.cpp
         XCopilotTest.cpp
-        integration/CommandsTest.cpp)
+        integration/CommandsConfigReaderTest.cpp
+        integration/CommandsTest.cpp
+        CommandsProviderTest.cpp
+        util/XPlaneDataRefSDKMock.h)
 
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 
@@ -21,3 +24,4 @@ target_link_libraries(${PROJECT_NAME} gmock gmock_main x_copilot)
 
 file(COPY ${POCKETSPHINX_DATA_DIR} DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CONFIG_DATA_DIR} DESTINATION ${PROJECT_BINARY_DIR})
+file(COPY data DESTINATION ${PROJECT_BINARY_DIR})
