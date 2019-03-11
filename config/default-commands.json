@@ -1,57 +1,68 @@
 {
   "SET_ALTIMETER": {
+    "id":  1,
     "regex": "set altimeter ((?:\\s?(?:zero|one|two|three|four|five|six|seven|eight|nine)){4})",
     "type": "float",
-    "dataRefs": ["sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_copilot"]
+    "dataRefs": [ "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_copilot" ]
   },
   "SET_ALTITUDE": {
+    "id": 2,
     "regex": "set altitude ((?:\\s?(?:zero|one|two|three|four|five|six|seven|eight|nine)){3,5})",
     "type": "float",
-    "dataRefs": ["sim/cockpit2/autopilot/altitude_dial_ft"]
+    "dataRefs": [ "sim/cockpit2/autopilot/altitude_dial_ft" ]
   },
   "FLIGHT_LEVEL": {
+    "id": 3,
     "regex": "set flight level ((?:\\s?(?:zero|one|two|three|four|five|six|seven|eight|nine)){3})",
     "type": "float",
-    "dataRefs": ["sim/cockpit2/autopilot/altitude_dial_ft"]
+    "dataRefs": [ "sim/cockpit2/autopilot/altitude_dial_ft" ]
   },
   "LANDING_GEAR": {
+    "id": 4,
     "regex": "gear (?:up|down)",
     "type": "boolean",
-    "dataRefs": ["sim/cockpit2/controls/gear_handle_down"]
+    "dataRefs": [ "sim/cockpit2/controls/gear_handle_down" ]
   },
   "SET_HEADING": {
+    "id": 5,
     "regex": "set heading ((?:(zero|one|two) (zero|one|two|three|four|five|six|seven|eight|nine) (zero|one|two|three|four|five|six|seven|eight|nine))|(three (zero|one|two|three|four|five) (zero|one|two|three|four|five|six|seven|eight|nine))|three six zero)",
     "type": "float",
-    "dataRefs": ["sim/cockpit2/autopilot/heading_dial_deg_mag_pilot"]
+    "dataRefs": [ "sim/cockpit2/autopilot/heading_dial_deg_mag_pilot" ]
   },
   "SET_SPEED": {
+    "id": 6,
     "regex": "set speed ((?:(zero|one|two|three) (\\s?(zero|one|two|three|four|five|six|seven|eight|nine)){2}))",
     "type": "float",
-    "dataRefs": ["sim/cockpit2/autopilot/airspeed_dial_kts_mach"]
+    "dataRefs": [ "sim/cockpit2/autopilot/airspeed_dial_kts_mach" ]
   },
   "LANDING_LIGHTS": {
+    "id": 7,
     "regex": "landing light[s]? (?:on|off)",
     "type": "boolean",
-    "dataRefs": ["sim/cockpit2/switches/landing_lights_on"]
+    "dataRefs": [ "sim/cockpit2/switches/landing_lights_on" ]
   },
   "TAXI_LIGHTS": {
+    "id": 8,
     "regex": "taxi light[s]? (?:on|off)",
     "type": "boolean",
-    "dataRefs": ["sim/cockpit2/switches/taxi_light_on"]
+    "dataRefs": [ "sim/cockpit2/switches/taxi_light_on" ]
   },
   "NAV_LIGHTS": {
+    "id": 9,
     "regex": "navigation light[s]? (?:on|off)",
     "type": "boolean",
-    "dataRefs": ["sim/cockpit2/switches/navigation_lights_on"]
+    "dataRefs": [ "sim/cockpit2/switches/navigation_lights_on" ]
   },
   "STROBE_LIGHTS": {
+    "id": 10,
     "regex": "strobe light[s]? (?:on|off)",
     "type": "boolean",
-    "dataRefs": ["sim/cockpit2/switches/strobe_lights_on"]
+    "dataRefs": [ "sim/cockpit2/switches/strobe_lights_on" ]
   },
   "BEACON_LIGHTS": {
+    "id": 11,
     "regex": "beacon light[s]? (?:on|off)",
     "type": "boolean",
-    "dataRefs": ["sim/cockpit2/switches/beacon_on"]
+    "dataRefs": [ "sim/cockpit2/switches/beacon_on" ]
   }
 }

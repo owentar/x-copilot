@@ -2,6 +2,7 @@
 #include <memory>
 #include <utility>
 
+#include <boost/filesystem.hpp>
 #include <boost/format.hpp>
 
 #include "XPLMPlugin.h"
@@ -9,10 +10,9 @@
 #include "XPLMProcessing.h"
 
 #include "CommandsConfigReader.h"
+#include "WinRecognizer.h"
 #include "Logger.h"
-#include "Microphone.h"
-#include "PocketsphinxWrapper.h"
-#include "Recognizer.h"
+
 #include "StatusWindow.h"
 #include "XCopilot.h"
 #include "XPlaneDataRefSDK.h"
@@ -26,7 +26,7 @@ void configureForAircraft();
 float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon);
 
 void setupLogging() {
-    Logger::configureFileLogger(Logger::Level::DEBUG);
+    Logger::configureFileLogger(Logger::level::debug);
 }
 
 bool isUserAirplane(const long planeNum) {
@@ -45,9 +45,7 @@ PLUGIN_API int XPluginStart(
     setupLogging();
 
     xplaneSDK = new XPlaneDataRefSDK();
-    std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
-    std::unique_ptr<Microphone> microphone = std::make_unique<Microphone>();
-    std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
+	std::unique_ptr<Recognizer> recognizer = std::make_unique<WinRecognizer>();
     xCopilot = new XCopilot(std::move(recognizer));
     XPLMRegisterFlightLoopCallback(flightLoopCallback, 1, 0);
 
@@ -94,13 +92,19 @@ void configureForAircraft()
     XPLMGetDatab(ICAOID, icao, 0, 40);
     XPLMGetDatab(descID, desc, 0, 260);
     CommandsConfigReader configReader{xplaneSDK};
-    auto commands = configReader.getCommandsForAircraft();
+    auto commands = configReader.getCommandsForAircraft(author, icao, desc);
     Logger::getInstance()->debug(format("Loading configuration for aircraft (%1%, %2%, %3%)") % author % desc % icao);
     xCopilot->configureForAircraft(commands);
 }
 
 float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon)
 {
-    xCopilot->executePendingCommands();
+	auto pendingCommands = xCopilot->getPendingCommands();
+	Logger::getInstance()->debug(format("Executing %1% pending commands") % pendingCommands.size());
+	std::for_each(pendingCommands.begin(), pendingCommands.end(), [](const CommandExecutor& commandExecutor)
+	{
+		StatusWindow::getInstance()->show("Command recognized");
+		commandExecutor.execute();
+	});
     return 2;
 }

@@ -22,3 +22,8 @@ CommandExecutor Command::getExecutor(const std::string& phrase)
     std::string value = result[1];
     return CommandExecutor{value, dataRefsIds, type};
 }
+
+CommandExecutor Command::getExecutor(const std::vector<int>& values)
+{
+	return CommandExecutor{values, dataRefsIds, type};
+}

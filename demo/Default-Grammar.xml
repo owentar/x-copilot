@@ -1,0 +1,128 @@
+<GRAMMAR LANGID="409">
+  <RULE NAME="hello" TOPLEVEL="ACTIVE">
+    <P>hello</P>
+    <O>world</O>
+  </RULE>
+
+  <RULE NAME="quit" TOPLEVEL="ACTIVE">
+    <P>quit</P>
+  </RULE>
+
+  <RULE ID="1" NAME="set_altimeter" TOPLEVEL="ACTIVE">
+    <P>set altimeter</P>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+  </RULE>
+
+  <RULE ID="2" NAME="set_altitude" TOPLEVEL="ACTIVE">
+    <P>set altitude</P>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+    <O>
+      <RULEREF NAME="number"/>
+    </O>
+    <O>
+      <RULEREF NAME="number"/>
+    </O>
+  </RULE>
+
+  <RULE ID="3" NAME="set_flight_level" TOPLEVEL="ACTIVE">
+    <P>set flight level</P>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+  </RULE>
+
+  <RULE ID="4" NAME="landing_gear" TOPLEVEL="ACTIVE">
+    <O>landing</O>
+    <P>gear</P>
+    <L PROPNAME="gear">
+      <P VAL="0">up</P>
+      <P VAL="1">down</P>
+    </L>
+  </RULE>
+
+  <RULE ID="5" NAME="set_heading" TOPLEVEL="ACTIVE">
+    <P>set heading</P>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+  </RULE>
+
+  <RULE ID="6" NAME="set_speed" TOPLEVEL="ACTIVE">
+    <P>set speed</P>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+    <RULEREF NAME="number"/>
+  </RULE>
+
+  <RULE ID="7" NAME="landing_lights" TOPLEVEL="ACTIVE">
+    <P>landing</P>
+    <L>
+      <P>light</P>
+      <P>lights</P>
+    </L>
+    <RULEREF NAME="onoff"/>
+  </RULE>
+
+  <RULE ID="8" NAME="taxi_lights" TOPLEVEL="ACTIVE">
+    <P>taxi</P>
+    <L>
+      <P>light</P>
+      <P>lights</P>
+    </L>
+    <RULEREF NAME="onoff"/>
+  </RULE>
+
+  <RULE ID="9" NAME="nav_lights" TOPLEVEL="ACTIVE">
+    <P>navigation</P>
+    <L>
+      <P>light</P>
+      <P>lights</P>
+    </L>
+    <RULEREF NAME="onoff"/>
+  </RULE>
+
+  <RULE ID="10" NAME="strobe_lights" TOPLEVEL="ACTIVE">
+    <P>strobe</P>
+    <L>
+      <P>light</P>
+      <P>lights</P>
+    </L>
+    <RULEREF NAME="onoff"/>
+  </RULE>
+
+  <RULE ID="11" NAME="beacon_lights" TOPLEVEL="ACTIVE">
+    <P>beacon</P>
+    <L>
+      <P>light</P>
+      <P>lights</P>
+    </L>
+    <RULEREF NAME="onoff"/>
+  </RULE>
+
+  <RULE NAME="number">
+    <L PROPNAME="number">
+      <P VAL="0">zero</P>
+      <P VAL="1">one</P>
+      <P VAL="2">two</P>
+      <P VAL="3">three</P>
+      <P VAL="4">four</P>
+      <P VAL="5">five</P>
+      <P VAL="6">six</P>
+      <P VAL="7">seven</P>
+      <P VAL="8">eight</P>
+      <P VAL="9">nine</P>
+    </L>
+  </RULE>
+
+  <RULE NAME="onoff">
+    <L PROPNAME="onoff">
+      <P VAL="1">on</P>
+      <P VAL="0">off</P>
+    </L>
+  </RULE>
+</GRAMMAR>

@@ -6,8 +6,6 @@
 
 #include "Logger.h"
 #include "Recognizer.h"
-#include "PocketsphinxWrapper.h"
-#include "Microphone.h"
 #include "Command.h"
 
 using namespace xcopilot;
@@ -15,24 +13,10 @@ using boost::format;
 
 void XCopilot::configureForAircraft(const std::vector<std::shared_ptr<Command>>& commands)
 {
-    commandProcessor = std::move(commands);
-    recognizer->connect([this] (const std::string& phrase) { recognizeCommand(phrase); });
+	recognizer->configure(std::move(commands));
 }
 
-void XCopilot::recognizeCommand(const std::string& phrase)
+std::vector<CommandExecutor> XCopilot::getPendingCommands()
 {
-    Logger::getInstance()->debug(format("Processing: %1%") % phrase);
-    auto value = std::find_if(commandProcessor.begin(), commandProcessor.end(),
-                              [phrase] (const std::shared_ptr<Command> command) -> bool { return command->isRecognized(phrase); });
-    if (value != commandProcessor.end()) {
-        Logger::getInstance()->debug(format("Command recognized: %1%") % (*value)->getName());
-        pendingCommands.push_back((*value)->getExecutor(phrase));
-    }
-}
-
-void XCopilot::executePendingCommands()
-{
-    Logger::getInstance()->debug(format("Executing %1% pending commands") % pendingCommands.size());
-    std::for_each(pendingCommands.begin(), pendingCommands.end(), [](const CommandExecutor& commandExecutor) { commandExecutor.execute(); });
-    pendingCommands.clear();
+	return recognizer->getRecognizedCommands();
 }

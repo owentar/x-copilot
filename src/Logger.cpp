@@ -34,12 +34,12 @@ Logger* Logger::getInstance() {
     return instance;
 }
 
-void Logger::configureConsoleLogger(Level level) {
+void Logger::configureConsoleLogger(level level) {
     auto lvl = static_cast<logging::trivial::severity_level>(level);
     auto consoleSink = logging::add_console_log(std::cout, keywords::format = getLogFormatter(), keywords::filter = logging::trivial::severity >= lvl);
 }
 
-void Logger::configureFileLogger(Level level, const std::string& fileName) {
+void Logger::configureFileLogger(level level, const std::string& fileName) {
     auto lvl = static_cast<logging::trivial::severity_level>(level);
     logging::add_file_log(
             keywords::file_name = fileName,

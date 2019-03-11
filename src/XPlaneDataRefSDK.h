@@ -6,7 +6,7 @@
 #include "XPLMDataAccess.h"
 
 namespace xcopilot {
-    class XPlaneDataRefSDK {
+    class __declspec(dllexport) XPlaneDataRefSDK {
     public:
         virtual XPLMDataRef findDataRef(const std::string &name) { return XPLMFindDataRef(name.c_str()); };
 
