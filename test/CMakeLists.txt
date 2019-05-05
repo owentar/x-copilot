@@ -6,7 +6,6 @@ file(GLOB COMMON_SRC
         main.cpp
         CommandRecognizerTest.cpp
         utilsTest.cpp
-        XCopilotTest.cpp
         integration/CommandsConfigReaderTest.cpp
         integration/CommandsTest.cpp
         CommandsProviderTest.cpp

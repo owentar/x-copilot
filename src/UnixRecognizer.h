@@ -2,7 +2,6 @@
 #define X_COPILOT_UNIXRECOGNIZER_H
 
 #include <memory>
-#include <boost/signals2.hpp>
 
 #include "Microphone.h"
 #include "MicrophoneHandler.h"
@@ -12,26 +11,24 @@
 namespace xcopilot {
     class UnixRecognizer : public Recognizer, public MicrophoneHandler<short> {
     public:
-        typedef boost::signals2::signal<void(const std::string &)> signal_t;
-
         explicit UnixRecognizer()
                 : pocketsphinx{std::make_unique<Pocketsphinx>()}, microphone{std::make_unique<Microphone>()},
-                    shouldDecode{false} {}
+                    shouldDecode{false}, commandsRecognized{} {}
         explicit UnixRecognizer(std::unique_ptr<Pocketsphinx> p, std::unique_ptr<Microphone> m)
-                : pocketsphinx{std::move(p)}, microphone{std::move(m)}, shouldDecode{false} {}
+                : pocketsphinx{std::move(p)}, microphone{std::move(m)}, shouldDecode{false}, commandsRecognized{} {}
 
-        void start();
-        void stop();
-        void handleAudio(const short *rawData, unsigned long frameCount);
+        virtual std::vector<CommandExecutor> getRecognizedCommands() { return commandsRecognized; }
 
-        boost::signals2::connection connect(const signal_t::slot_type &subscriber) {
-            return onRecognition.connect(subscriber);
-        };
+        virtual void start();
+        virtual void stop();
+        virtual void handleAudio(const short *rawData, unsigned long frameCount);
     private:
         std::unique_ptr<Pocketsphinx> pocketsphinx;
         std::unique_ptr<Microphone> microphone;
         bool shouldDecode;
-        signal_t onRecognition;
+        std::vector<CommandExecutor> commandsRecognized;
+
+        void recognizeCommand(const std::string& phrase);
     };
 }
 

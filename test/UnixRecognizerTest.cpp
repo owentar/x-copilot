@@ -7,6 +7,7 @@
 #include "UnixRecognizer.h"
 #include "Microphone.h"
 #include "MicrophoneHandler.h"
+#include "util/XPlaneDataRefSDKMock.h"
 
 using namespace testing;
 using namespace xcopilot;
@@ -31,10 +32,18 @@ public:
     MOCK_METHOD0(isListening, bool());
 };
 
+class CommandRecognizerMock : public CommandRecognizer
+{
+public:
+    explicit CommandRecognizerMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : CommandRecognizer(CommandMetadata("Test CommandRecognizer", CommandType::FLOAT, "test regex", {})) {};
+    MOCK_CONST_METHOD1(commandRecognized, bool(const std::string&));
+};
+
 class UnixRecognizerTest : public Test
 {
 protected:
     short micData[10]{};
+    XPlaneDataRefSDKMock xPlaneDatRefSDK;
     std::unique_ptr<NiceMock<MicrophoneMock>> microphone;
     std::unique_ptr<NiceMock<PocketsphinxMock>> pocketsphinx;
 
@@ -73,7 +82,6 @@ TEST_F(UnixRecognizerTest, WhenSpeechIsNotRecognizedNoRecognitionIsNotified)
     EXPECT_CALL(*pocketsphinx, decode())
         .WillOnce(Return("test"));
     UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
-    recognizer.connect([] (const std::string& msg) { ASSERT_THAT(msg, Eq("test")); });
     recognizer.start();
 
     recognizer.handleAudio(micData, 10);
@@ -96,4 +104,42 @@ TEST_F(UnixRecognizerTest, WhenRecognizerIsStoppedTerminatesPocketsphinx)
     UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
     recognizer.start();
     recognizer.stop();
+}
+
+TEST_F(UnixRecognizerTest, ShouldNotQueueCommandWhenItIsNotRecognized)
+{
+    auto command = std::make_shared<NiceMock<CommandRecognizerMock>>(&xPlaneDatRefSDK);
+    EXPECT_CALL(*pocketsphinx, isSpeaking())
+            .WillOnce(Return(true))
+            .WillOnce(Return(false));
+    EXPECT_CALL(*pocketsphinx, decode())
+            .WillOnce(Return("test"));
+    EXPECT_CALL(*command, commandRecognized("test"))
+            .Times(1)
+            .WillOnce(Return(false));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    recognizer.configure({command});
+    recognizer.handleAudio(micData, 10);
+    recognizer.handleAudio(micData, 10);
+
+    ASSERT_TRUE(recognizer.getRecognizedCommands().empty());
+}
+
+TEST_F(UnixRecognizerTest, ShouldQueueRecognizedCommands)
+{
+    auto command = std::make_shared<NiceMock<CommandRecognizerMock>>(&xPlaneDatRefSDK);
+    EXPECT_CALL(*pocketsphinx, isSpeaking())
+            .WillOnce(Return(true))
+            .WillOnce(Return(false));
+    EXPECT_CALL(*pocketsphinx, decode())
+            .WillOnce(Return("test"));
+    EXPECT_CALL(*command, commandRecognized("test"))
+            .Times(1)
+            .WillOnce(Return(true));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    recognizer.configure({command});
+    recognizer.handleAudio(micData, 10);
+    recognizer.handleAudio(micData, 10);
+
+    ASSERT_FALSE(recognizer.getRecognizedCommands().empty());
 }

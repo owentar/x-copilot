@@ -3,13 +3,23 @@
 
 #include <memory>
 #include <utility>
+#include <vector>
+
+#include "CommandExecutor.h"
+#include "CommandRecognizer.h"
 
 namespace xcopilot {
     class Recognizer {
     public:
         virtual ~Recognizer() = default;
+
+        virtual void configure(const std::vector<std::shared_ptr<CommandRecognizer>>& commands) { this->commands = commands; }
         virtual void start() = 0;
         virtual void stop() = 0;
+        virtual std::vector<CommandExecutor> getRecognizedCommands() = 0;
+
+    protected:
+        std::vector<std::shared_ptr<CommandRecognizer>> commands;
     };
 }
 

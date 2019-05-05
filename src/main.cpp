@@ -107,6 +107,12 @@ void configureForAircraft()
 
 float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon)
 {
-    xCopilot->executePendingCommands();
+    auto pendingCommands = xCopilot->getPendingCommands();
+    Logger::getInstance()->debug(format("Executing %1% pending commands") % pendingCommands.size());
+    std::for_each(pendingCommands.begin(), pendingCommands.end(), [](const CommandExecutor& commandExecutor)
+    {
+        StatusWindow::getInstance()->show("Command recognized");
+        commandExecutor.execute();
+    });
     return 2;
 }

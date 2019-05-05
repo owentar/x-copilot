@@ -1,6 +1,11 @@
 #include "UnixRecognizer.h"
 
+#include <boost/format.hpp>
+
+#include "Logger.h"
+
 using namespace xcopilot;
+using boost::format;
 
 void UnixRecognizer::start()
 {
@@ -27,7 +32,18 @@ void UnixRecognizer::handleAudio(const short* rawData, unsigned long frameCount)
         if (shouldDecode)
         {
             shouldDecode = false;
-            onRecognition(pocketsphinx->decode());
+            recognizeCommand(pocketsphinx->decode());
         }
+    }
+}
+
+void UnixRecognizer::recognizeCommand(const std::string& phrase)
+{
+    Logger::getInstance()->debug(format("Processing: %1%") % phrase);
+    auto value = std::find_if(commands.begin(), commands.end(),
+                              [phrase] (const std::shared_ptr<CommandRecognizer> command) -> bool { return command->commandRecognized(phrase); });
+    if (value != commands.end()) {
+        Logger::getInstance()->debug(format("CommandRecognizer recognized: %1%") % (*value)->getName());
+        commandsRecognized.push_back((*value)->getExecutor(phrase));
     }
 }
