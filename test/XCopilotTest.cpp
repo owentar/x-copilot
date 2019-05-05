@@ -8,19 +8,37 @@
 #include "Recognizer.h"
 #include "util/XPlaneDataRefSDKMock.h"
 
+#ifdef IBM
+#include "WinRecognizer.h"
+#else
+#include "UnixRecognizer.h"
+#endif
+
 using namespace testing;
 using namespace xcopilot;
 
-class RecognizerMock : public Recognizer
+#ifdef IBM
+class RecognizerMock : public WinRecognizer
 {
 public:
-    explicit RecognizerMock() : Recognizer() {};
+    explicit RecognizerMock() : UnixRecognizer() {};
+    MOCK_METHOD0(start, void());
+    MOCK_METHOD0(stop, void());
 };
-
-class CommandMock : public CommandRecognizer
+#else
+class RecognizerMock : public UnixRecognizer
 {
 public:
-    explicit CommandMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : CommandRecognizer(CommandMetadata("Test CommandRecognizer", CommandType::FLOAT, "test regex", {})) {};
+    explicit RecognizerMock() : UnixRecognizer() {};
+    MOCK_METHOD0(start, void());
+    MOCK_METHOD0(stop, void());
+};
+#endif
+
+class CommandRecognizerMock : public CommandRecognizer
+{
+public:
+    explicit CommandRecognizerMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : CommandRecognizer(CommandMetadata("Test CommandRecognizer", CommandType::FLOAT, "test regex", {})) {};
     MOCK_CONST_METHOD1(commandRecognized, bool(const std::string&));
 };
 
@@ -35,7 +53,7 @@ protected:
 
 TEST_F(XCopilotTest, ShouldQueueCommandWhenItIsRecognized)
 {
-    auto command = std::make_shared<NiceMock<CommandMock>>(&xPlaneDatRefSDK);
+    auto command = std::make_shared<NiceMock<CommandRecognizerMock>>(&xPlaneDatRefSDK);
     EXPECT_CALL(*command, commandRecognized(_))
         .Times(1)
         .WillOnce(Return(true));
@@ -48,7 +66,7 @@ TEST_F(XCopilotTest, ShouldQueueCommandWhenItIsRecognized)
 
 TEST_F(XCopilotTest, ShouldNotQueueCommandWhenItIsNotRecognized)
 {
-    auto command = std::make_shared<NiceMock<CommandMock>>(&xPlaneDatRefSDK);
+    auto command = std::make_shared<NiceMock<CommandRecognizerMock>>(&xPlaneDatRefSDK);
     EXPECT_CALL(*command, commandRecognized(_))
         .Times(1)
         .WillOnce(Return(false));

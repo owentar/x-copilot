@@ -10,13 +10,16 @@
 
 #include "CommandsConfigReader.h"
 #include "Logger.h"
-#include "Microphone.h"
-#include "PocketsphinxWrapper.h"
 #include "Recognizer.h"
 #include "StatusWindow.h"
 #include "XCopilot.h"
 #include "XPlaneDataRefSDK.h"
 #include "CommandsProvider.h"
+#if IBM
+#include "WinRecognizer.h"
+#else
+#include "UnixRecognizer.h"
+#endif
 
 using namespace xcopilot;
 using boost::format;
@@ -46,9 +49,11 @@ PLUGIN_API int XPluginStart(
     setupLogging();
 
     xplaneSDK = new XPlaneDataRefSDK();
-    std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
-    std::unique_ptr<Microphone> microphone = std::make_unique<Microphone>();
-    std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
+#ifdef IBM
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<WinRecognizer>();
+#else
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<UnixRecognizer>();
+#endif
     xCopilot = new XCopilot(std::move(recognizer));
     XPLMRegisterFlightLoopCallback(flightLoopCallback, 1, 0);
 

@@ -8,15 +8,13 @@
 
 #include "CommandRecognizer.h"
 #include "CommandExecutor.h"
-#include "Microphone.h"
-#include "PocketsphinxWrapper.h"
 #include "Recognizer.h"
 
 namespace xcopilot {
     class XCopilot {
     public:
-        XCopilot(std::unique_ptr<xcopilot::Recognizer> recognizer) : recognizer{std::move(recognizer)}, pendingCommands{},
-                                                                     commandProcessor{} {};
+        XCopilot(std::unique_ptr<xcopilot::Recognizer> recognizer)
+            : recognizer{std::move(recognizer)}, pendingCommands{}, commandProcessor{} {};
 
         virtual ~XCopilot() = default;
 

@@ -1,16 +1,10 @@
 cmake_minimum_required(VERSION 3.8)
 project(x_copilot)
 
-set(SOURCE_FILES
+file(GLOB COMMON_SRC
         main.cpp
         CommandRecognizer.cpp
         CommandRecognizer.h
-        Microphone.cpp
-        Microphone.h
-        MicrophoneHandler.h
-        PocketsphinxWrapper.cpp
-        PocketsphinxWrapper.h
-        Recognizer.cpp
         Recognizer.h
         StatusWindow.cpp
         StatusWindow.h
@@ -29,6 +23,21 @@ set(SOURCE_FILES
         CommandsConfigReader.h
         CommandsProvider.cpp
         CommandsProvider.h)
+file(GLOB WIN_SRC
+        WinRecognizer.cpp)
+file(GLOB UNIX_SRC
+        Microphone.cpp
+        Microphone.h
+        MicrophoneHandler.h
+        PocketsphinxWrapper.cpp
+        PocketsphinxWrapper.h
+        UnixRecognizer.cpp)
+
+if(WIN32)
+    set(SOURCE_FILES ${COMMON_SRC} ${WIN_SRC})
+else()
+    set(SOURCE_FILES ${COMMON_SRC} ${UNIX_SRC})
+endif()
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 

@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "PocketsphinxWrapper.h"
-#include "Recognizer.h"
+#include "UnixRecognizer.h"
 #include "Microphone.h"
 #include "MicrophoneHandler.h"
 
@@ -31,48 +31,48 @@ public:
     MOCK_METHOD0(isListening, bool());
 };
 
-class RecognizerTest : public Test
+class UnixRecognizerTest : public Test
 {
 protected:
     short micData[10]{};
     std::unique_ptr<NiceMock<MicrophoneMock>> microphone;
     std::unique_ptr<NiceMock<PocketsphinxMock>> pocketsphinx;
 
-    RecognizerTest() : pocketsphinx{std::make_unique<NiceMock<PocketsphinxMock>>()}, microphone{std::make_unique<NiceMock<MicrophoneMock>>()} {};
+    UnixRecognizerTest() : pocketsphinx{std::make_unique<NiceMock<PocketsphinxMock>>()}, microphone{std::make_unique<NiceMock<MicrophoneMock>>()} {};
 };
 
-TEST_F(RecognizerTest, InConstructionIsNotListening)
+TEST_F(UnixRecognizerTest, InConstructionIsNotListening)
 {
     EXPECT_CALL(*microphone, start(_)).Times(0);
     EXPECT_CALL(*pocketsphinx, start()).Times(0);
 
-    Recognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
 }
 
-TEST_F(RecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
+TEST_F(UnixRecognizerTest, WhenRecognizerIsStartedPocketsphinxIsInitialized)
 {
     EXPECT_CALL(*pocketsphinx, start());
-    Recognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
 
     recognizer.start();
 }
 
-TEST_F(RecognizerTest, WhenRecognizerIsStartedMicrophoneStartsListening)
+TEST_F(UnixRecognizerTest, WhenRecognizerIsStartedMicrophoneStartsListening)
 {
     EXPECT_CALL(*microphone, start(testing::_));
-    Recognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
 
     recognizer.start();
 }
 
-TEST_F(RecognizerTest, WhenSpeechIsNotRecognizedNoRecognitionIsNotified)
+TEST_F(UnixRecognizerTest, WhenSpeechIsNotRecognizedNoRecognitionIsNotified)
 {
     EXPECT_CALL(*pocketsphinx, isSpeaking())
         .WillOnce(Return(true))
         .WillOnce(Return(false));
     EXPECT_CALL(*pocketsphinx, decode())
         .WillOnce(Return("test"));
-    Recognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
     recognizer.connect([] (const std::string& msg) { ASSERT_THAT(msg, Eq("test")); });
     recognizer.start();
 
@@ -80,20 +80,20 @@ TEST_F(RecognizerTest, WhenSpeechIsNotRecognizedNoRecognitionIsNotified)
     recognizer.handleAudio(micData, 10);
 }
 
-TEST_F(RecognizerTest, WhenRecognizerIsStoppedTerminatesMicrophone)
+TEST_F(UnixRecognizerTest, WhenRecognizerIsStoppedTerminatesMicrophone)
 {
     EXPECT_CALL(*microphone, stop());
 
-    Recognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
     recognizer.start();
     recognizer.stop();
 }
 
-TEST_F(RecognizerTest, WhenRecognizerIsStoppedTerminatesPocketsphinx)
+TEST_F(UnixRecognizerTest, WhenRecognizerIsStoppedTerminatesPocketsphinx)
 {
     EXPECT_CALL(*pocketsphinx, stop());
 
-    Recognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
     recognizer.start();
     recognizer.stop();
 }

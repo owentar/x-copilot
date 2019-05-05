@@ -1,20 +1,20 @@
-#include "Recognizer.h"
+#include "UnixRecognizer.h"
 
 using namespace xcopilot;
 
-void Recognizer::start()
+void UnixRecognizer::start()
 {
     pocketsphinx->start();
     microphone->start(this);
 }
 
-void Recognizer::stop()
+void UnixRecognizer::stop()
 {
     pocketsphinx->stop();
     microphone->stop();
 }
 
-void Recognizer::handleAudio(const short* rawData, unsigned long frameCount)
+void UnixRecognizer::handleAudio(const short* rawData, unsigned long frameCount)
 {
     pocketsphinx->process(rawData, frameCount);
 

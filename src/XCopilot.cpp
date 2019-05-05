@@ -10,13 +10,20 @@
 #include "Microphone.h"
 #include "CommandRecognizer.h"
 
+#ifndef IBM
+#include "UnixRecognizer.h"
+#endif
+
 using namespace xcopilot;
 using boost::format;
 
 void XCopilot::configureForAircraft(const std::vector<std::shared_ptr<CommandRecognizer>>& commands)
 {
     commandProcessor = std::move(commands);
-    recognizer->connect([this] (const std::string& phrase) { recognizeCommand(phrase); });
+#ifndef IBM
+    auto r = static_cast<UnixRecognizer*>(recognizer.get());
+    r->connect([this] (const std::string& phrase) { recognizeCommand(phrase); });
+#endif
 }
 
 void XCopilot::recognizeCommand(const std::string& phrase)
