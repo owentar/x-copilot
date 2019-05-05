@@ -4,9 +4,12 @@
 
 #include "CommandsConfigReader.h"
 #include "Logger.h"
-#include "Microphone.h"
-#include "PocketsphinxWrapper.h"
 #include "Recognizer.h"
+#ifdef IBM
+#include "WinRecognizer.h"
+#else
+#include "UnixRecognizer.h"
+#endif
 #include "XCopilot.h"
 #include "XPlaneDataRefSDKStub.h"
 
@@ -21,9 +24,11 @@ int main(int argc, char *argv[]) {
     XPlaneDataRefSDKStub xplaneSDK;
     CommandsConfigReader commandsConfigReader(&xplaneSDK);
     auto commands = commandsConfigReader.getCommandsFromFile();
-    std::unique_ptr<Microphone> microphone = std::make_unique<Microphone>();
-    std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
-    std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
+#ifdef IBM
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<WinRecognizer>();
+#else
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<UnixRecognizer>();
+#endif
     XCopilot xcopilot(std::move(recognizer));
 
     xcopilot.enable();
