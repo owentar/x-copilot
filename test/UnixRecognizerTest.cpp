@@ -143,3 +143,23 @@ TEST_F(UnixRecognizerTest, ShouldQueueRecognizedCommands)
 
     ASSERT_FALSE(recognizer.getRecognizedCommands().empty());
 }
+
+TEST_F(UnixRecognizerTest, ShouldCleanQueueWhenCommandsAreRequested)
+{
+    auto command = std::make_shared<NiceMock<CommandRecognizerMock>>(&xPlaneDatRefSDK);
+    EXPECT_CALL(*pocketsphinx, isSpeaking())
+            .WillOnce(Return(true))
+            .WillOnce(Return(false));
+    EXPECT_CALL(*pocketsphinx, decode())
+            .WillOnce(Return("test"));
+    EXPECT_CALL(*command, commandRecognized("test"))
+            .Times(1)
+            .WillOnce(Return(true));
+    UnixRecognizer recognizer(std::move(pocketsphinx), std::move(microphone));
+    recognizer.configure({command});
+    recognizer.handleAudio(micData, 10);
+    recognizer.handleAudio(micData, 10);
+
+    ASSERT_FALSE(recognizer.getRecognizedCommands().empty());
+    ASSERT_TRUE(recognizer.getRecognizedCommands().empty());
+}

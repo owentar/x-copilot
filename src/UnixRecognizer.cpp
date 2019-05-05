@@ -47,3 +47,10 @@ void UnixRecognizer::recognizeCommand(const std::string& phrase)
         commandsRecognized.push_back((*value)->getExecutor(phrase));
     }
 }
+
+std::vector<CommandExecutor> UnixRecognizer::getRecognizedCommands()
+{
+    auto commands = commandsRecognized;
+    commandsRecognized.clear();
+    return commands;
+}

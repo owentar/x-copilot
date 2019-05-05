@@ -17,7 +17,7 @@ namespace xcopilot {
         explicit UnixRecognizer(std::unique_ptr<Pocketsphinx> p, std::unique_ptr<Microphone> m)
                 : pocketsphinx{std::move(p)}, microphone{std::move(m)}, shouldDecode{false}, commandsRecognized{} {}
 
-        virtual std::vector<CommandExecutor> getRecognizedCommands() { return commandsRecognized; }
+        virtual std::vector<CommandExecutor> getRecognizedCommands();
 
         virtual void start();
         virtual void stop();
