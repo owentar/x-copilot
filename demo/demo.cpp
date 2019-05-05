@@ -1,5 +1,7 @@
 #include <algorithm>
+#include <chrono>
 #include <memory>
+#include <thread>
 #include <utility>
 
 #include "CommandsConfigReader.h"
@@ -34,11 +36,19 @@ int main(int argc, char *argv[]) {
     xcopilot.enable();
     xcopilot.configureForAircraft(commands);
 
-    Logger::getInstance()->debug("Listening...");
-    while(!xcopilot.hasPendingCommands()) {}
+    std::vector<CommandExecutor> recognizedCommands;
 
-    xcopilot.executePendingCommands();
+    Logger::getInstance()->debug("Listening...");
+    do
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        recognizedCommands = xcopilot.getPendingCommands();
+    } while (recognizedCommands.empty());
+
+    logger->info("Command recognized");
+
     xcopilot.disable();
+    logger->info("We're done");
 
     return 0;
 }
