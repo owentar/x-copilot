@@ -9,8 +9,14 @@
 #include "CommandRecognizer.h"
 #include "XPlaneDataRefSDK.h"
 
-#define DEFAULT_INDEX_FILE_PATH "config/commands-index.json"
+
+#ifdef RELEASE
+#define DEFAULT_COMMANDS_FILE_PATH "Resources/plugins/x-copilot/config/default-commands.json"
+#define DEFAULT_INDEX_FILE_PATH "Resources/plugins/x-copilot/config/commands-index.json"
+#else
 #define DEFAULT_COMMANDS_FILE_PATH "config/default-commands.json"
+#define DEFAULT_INDEX_FILE_PATH "config/commands-index.json"
+#endif
 
 namespace xcopilot {
     struct AircraftCommandsMatcher {
