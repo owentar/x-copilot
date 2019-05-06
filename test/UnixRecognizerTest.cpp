@@ -35,7 +35,7 @@ public:
 class CommandRecognizerMock : public CommandRecognizer
 {
 public:
-    explicit CommandRecognizerMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : CommandRecognizer(CommandMetadata("Test CommandRecognizer", CommandType::FLOAT, "test regex", {})) {};
+    explicit CommandRecognizerMock(XPlaneDataRefSDK* xPLaneDatRefSDK) : CommandRecognizer(CommandMetadata(1, "Test CommandRecognizer", CommandType::FLOAT, "test regex", {})) {};
     MOCK_CONST_METHOD1(commandRecognized, bool(const std::string&));
 };
 

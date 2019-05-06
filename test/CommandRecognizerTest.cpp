@@ -9,7 +9,7 @@ using namespace xcopilot;
 class CommandRecognizerTest : public Test
 {
 public:
-    CommandRecognizerTest() : commandRecognizer(CommandMetadata("Test", CommandType::FLOAT, "^.*test$", {})) {};
+    CommandRecognizerTest() : commandRecognizer(CommandMetadata(1, "Test", CommandType::FLOAT, "^.*test$", {})) {};
 protected:
     CommandRecognizer commandRecognizer;
 };

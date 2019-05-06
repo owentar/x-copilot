@@ -10,8 +10,10 @@
 namespace xcopilot {
     class CommandMetadata {
     public:
-        CommandMetadata(const std::string& name, const CommandType type, const std::string& regex, const std::vector<XPLMDataRef> dataRefs)
-                : name{name}, type{type}, regex{regex, std::regex::icase}, dataRefs{dataRefs} {};
+        CommandMetadata(const int id, const std::string& name, const CommandType type, const std::string& regex, const std::vector<XPLMDataRef> dataRefs)
+                : id{id}, name{name}, type{type}, regex{regex, std::regex::icase}, dataRefs{dataRefs} {};
+
+        int getId() const { return id; }
 
         std::string getName() const { return name; };
 
@@ -22,6 +24,7 @@ namespace xcopilot {
         std::vector<XPLMDataRef> getDataRefs() const { return dataRefs; };
 
     private:
+        int id;
         std::string name;
         CommandType type;
         std::regex regex;
