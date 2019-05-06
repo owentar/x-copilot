@@ -1,6 +1,6 @@
 {
   "SET_ALTIMETER": {
-    "id":  1,
+    "id": 1,
     "regex": "set altimeter ((?:\\s?(?:zero|one|two|three|four|five|six|seven|eight|nine)){4})",
     "type": "float",
     "dataRefs": ["sim/cockpit2/gauges/actuators/barometer_setting_in_hg_pilot", "sim/cockpit2/gauges/actuators/barometer_setting_in_hg_copilot"]
