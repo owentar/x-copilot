@@ -42,9 +42,9 @@ protected:
                 .WillOnce(Return(aircraftMatchers));
 
         defaultCommand1 = std::make_shared<CommandRecognizer>(
-                CommandMetadata("command-1", CommandType::FLOAT, "command-1", {}));
+                CommandMetadata(1, "command-1", CommandType::FLOAT, "command-1", {}));
         defaultCommand2 = std::make_shared<CommandRecognizer>(
-                CommandMetadata("command-2", CommandType::FLOAT, "command-2", {}));
+                CommandMetadata(2, "command-2", CommandType::FLOAT, "command-2", {}));
         std::vector<CommandRecognizerPtr> defaultCommands = {defaultCommand1, defaultCommand2};
         EXPECT_CALL(*commandsConfigReaderMock, getCommandsFromFile(DEFAULT_COMMANDS_FILE_PATH))
                 .WillOnce(Return(defaultCommands));
@@ -59,9 +59,9 @@ TEST_F(CommandsProviderTest, LoadDefaultCommandsWhenNoMatchIsFoundOnIndex) {
 
 TEST_F(CommandsProviderTest, MergeCommandsWhenMatchIsFoundOnIndex) {
     auto aircraftCommand1 = std::make_shared<CommandRecognizer>(
-            CommandMetadata("command-1", CommandType::INT, "command-1", {}));
+            CommandMetadata(1, "command-1", CommandType::INT, "command-1", {}));
     auto aircraftCommand2 = std::make_shared<CommandRecognizer>(
-            CommandMetadata("command-3", CommandType::INT, "command-3", {}));
+            CommandMetadata(2, "command-3", CommandType::INT, "command-3", {}));
     std::vector<CommandRecognizerPtr> aircraftCommands = {aircraftCommand1, aircraftCommand2};
     EXPECT_CALL(*commandsConfigReaderMock, getCommandsFromFile("test"))
             .WillOnce(Return(aircraftCommands));

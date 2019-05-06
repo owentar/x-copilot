@@ -1,5 +1,6 @@
 {
   "TEST": {
+    "id": 1,
     "regex": "test",
     "type": "float",
     "dataRefs": ["dataRefId1", "dataRefId2"]

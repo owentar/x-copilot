@@ -12,11 +12,17 @@
 #define POCKETSPHINX_LOGFN "/dev/null"
 #endif
 
+#ifdef RELEASE
+#define POCKETSPHINX_PATH "Resources/plugins/xcopilot/pocketsphinx-data/xp-XP/"
+#else
+#define POCKETSPHINX_PATH "pocketsphinx-data/xp-XP/"
+#endif
+
 using namespace xcopilot;
 
 boost::filesystem::path getPocketsphinxDataPathForResource(const std::string& resource)
 {
-    return boost::filesystem::absolute("pocketsphinx-data/xp-XP/" + resource);
+    return boost::filesystem::absolute(POCKETSPHINX_PATH + resource);
 }
 
 void Pocketsphinx::start()
@@ -28,7 +34,7 @@ void Pocketsphinx::start()
     auto dict = getPocketsphinxDataPathForResource("pronounciation-dictionary.dic").generic_string();
     cmd_ln_t* config = cmd_ln_init(NULL, ps_args(), TRUE,       // Load the configuration structure - ps_args() passes the default values
     "-hmm", hmm.c_str(),  // path to the standard english language model
-//    "-lm", lm.c_str(),
+    "-lm", lm.c_str(),
     "-jsgf", jsgf.c_str(),
     "-dict", dict.c_str(),
     "-logfn", POCKETSPHINX_LOGFN,                                      // suppress log info from being sent to screen

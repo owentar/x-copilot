@@ -58,10 +58,11 @@ std::vector<std::shared_ptr<CommandRecognizer>> CommandsConfigReader::getCommand
 
     for (auto &node : root) {
         auto name = node.first;
+        auto id = node.second.get<int>("id");
         auto type = node.second.get<std::string>("type");
         auto regex = node.second.get<std::string>("regex");
         auto dataRefs = readDataRefs(node.second.get_child("dataRefs"), xPlaneSDK);
-        CommandMetadata commandMetadata(name, commandTypeProvider[type], regex, dataRefs);
+        CommandMetadata commandMetadata(id, name, commandTypeProvider[type], regex, dataRefs);
         commands.push_back(std::make_shared<CommandRecognizer>(commandMetadata));
         std::cout << "CommandRecognizer: " << name << " - Regex: " << regex << std::endl;
     }

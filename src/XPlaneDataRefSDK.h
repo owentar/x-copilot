@@ -3,10 +3,11 @@
 
 #include <string>
 
+#include "XPLMDefs.h"
 #include "XPLMDataAccess.h"
 
 namespace xcopilot {
-    class XPlaneDataRefSDK {
+    class XPLM_API XPlaneDataRefSDK {
     public:
         virtual XPLMDataRef findDataRef(const std::string &name) { return XPLMFindDataRef(name.c_str()); };
 

@@ -1,12 +1,17 @@
 #include <algorithm>
+#include <chrono>
 #include <memory>
+#include <thread>
 #include <utility>
 
 #include "CommandsConfigReader.h"
 #include "Logger.h"
-#include "Microphone.h"
-#include "PocketsphinxWrapper.h"
 #include "Recognizer.h"
+#ifdef IBM
+#include "WinRecognizer.h"
+#else
+#include "UnixRecognizer.h"
+#endif
 #include "XCopilot.h"
 #include "XPlaneDataRefSDKStub.h"
 
@@ -21,19 +26,29 @@ int main(int argc, char *argv[]) {
     XPlaneDataRefSDKStub xplaneSDK;
     CommandsConfigReader commandsConfigReader(&xplaneSDK);
     auto commands = commandsConfigReader.getCommandsFromFile();
-    std::unique_ptr<Microphone> microphone = std::make_unique<Microphone>();
-    std::unique_ptr<Pocketsphinx> pocketsphinx = std::make_unique<Pocketsphinx>();
-    std::unique_ptr<Recognizer> recognizer = std::make_unique<Recognizer>(std::move(pocketsphinx), std::move(microphone));
+#ifdef IBM
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<WinRecognizer>();
+#else
+    std::unique_ptr<Recognizer> recognizer = std::make_unique<UnixRecognizer>();
+#endif
     XCopilot xcopilot(std::move(recognizer));
 
     xcopilot.enable();
     xcopilot.configureForAircraft(commands);
 
-    Logger::getInstance()->debug("Listening...");
-    while(!xcopilot.hasPendingCommands()) {}
+    std::vector<CommandExecutor> recognizedCommands;
 
-    xcopilot.executePendingCommands();
+    Logger::getInstance()->debug("Listening...");
+    do
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        recognizedCommands = xcopilot.getPendingCommands();
+    } while (recognizedCommands.empty());
+
+    logger->info("Command recognized");
+
     xcopilot.disable();
+    logger->info("We're done");
 
     return 0;
 }
