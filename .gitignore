@@ -9,9 +9,14 @@ cmake_install.cmake
 Makefile
 CMakeFiles/
 
+.vs/
 .idea/
 bin/
 obj/
 3rdparty/
 build/
+x64/
+Debug/
+Release/
 cmake-build-debug/
+*.user
