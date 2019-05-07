@@ -7,11 +7,12 @@
 
 #include <atlbase.h>
 
+#include "defs.h"
 #include "CommandExecutor.h"
 #include "Recognizer.h"
 
 namespace xcopilot {
-    class __declspec(dllexport) WinRecognizer : public Recognizer {
+    class EXPORT WinRecognizer : public Recognizer {
     public:
         virtual void start();
         virtual void stop();

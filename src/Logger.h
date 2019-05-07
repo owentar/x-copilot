@@ -6,10 +6,10 @@
 #include <boost/format.hpp>
 #include <boost/log/trivial.hpp>
 
-#include "XPLMDefs.h"
+#include "defs.h"
 
 namespace xcopilot {
-    class XPLM_API Logger {
+    class EXPORT Logger {
     public:
         enum class level {
             debug = boost::log::trivial::severity_level::debug,

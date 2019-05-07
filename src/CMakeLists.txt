@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.8)
 project(x_copilot)
 
 file(GLOB COMMON_SRC
+        defs.h
         main.cpp
         CommandRecognizer.cpp
         CommandRecognizer.h
