@@ -6,19 +6,21 @@
 #include <boost/format.hpp>
 #include <boost/log/trivial.hpp>
 
+#include "XPLMDefs.h"
+
 namespace xcopilot {
-    class Logger {
+    class XPLM_API Logger {
     public:
-        enum Level {
-            DEBUG = boost::log::trivial::severity_level::debug,
-            INFO = boost::log::trivial::severity_level::info
+        enum class level {
+            debug = boost::log::trivial::severity_level::debug,
+            info = boost::log::trivial::severity_level::info
         };
 
         static Logger* getInstance();
 
-        static void configureFileLogger(Logger::Level level = Logger::Level::INFO, const std::string& fileName = "xcopilot.log");
+        static void configureFileLogger(level level = level::info, const std::string& fileName = "xcopilot.log");
 
-        static void configureConsoleLogger(Logger::Level level = Logger::Level::INFO);
+        static void configureConsoleLogger(level level = level::info);
 
         void trace(const std::string &message) { log(message, boost::log::trivial::severity_level::trace); };
         void trace(const boost::format &message) { log(message.str(), boost::log::trivial::severity_level::trace); };

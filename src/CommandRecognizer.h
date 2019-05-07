@@ -20,6 +20,8 @@ namespace xcopilot {
 
         virtual ~CommandRecognizer() = default;
 
+        virtual int getId() const { return metadata.getId(); }
+
         virtual std::string getName() const { return metadata.getName(); }
 
         virtual bool commandRecognized(const std::string &) const;

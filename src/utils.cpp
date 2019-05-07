@@ -6,6 +6,8 @@
 
 #include "boost/algorithm/string.hpp"
 
+#include "Logger.h"
+
 std::map<std::string, int> WORD_TO_NUMBER = {
         { "ZERO", 0 },
         { "ONE", 1 },
@@ -23,6 +25,13 @@ bool xcopilot::parseToBoolean(const std::string& phrase) {
     return phrase == "ON" || phrase == "DOWN";
 }
 
+bool xcopilot::parseToBoolean(const std::vector<int>& values) {
+    if (values.size() > 1) {
+        Logger::getInstance()->warn("Found many values for an expected boolean value. Taking the first value as valid.");
+    }
+    return values[0] == 1;
+}
+
 std::vector<int> xcopilot::parseNumbers(const std::string& numbersAsWords) {
     std::vector<std::string> numbers;
     boost::split(numbers, numbersAsWords, boost::is_any_of(" "));
@@ -33,6 +42,10 @@ std::vector<int> xcopilot::parseNumbers(const std::string& numbersAsWords) {
 
 double xcopilot::parseToNumber(const std::string& numbersAsWords, unsigned short decimals) {
     std::vector<int> numbers = xcopilot::parseNumbers(numbersAsWords);
+    return parseToNumber(numbers, decimals);
+}
+
+double xcopilot::parseToNumber(const std::vector<int>& numbers, unsigned short decimals) {
     double exp = numbers.size() - 1.0 - decimals;
     double scale = std::pow(10.0, exp);
     return std::accumulate(numbers.begin(), numbers.end(), 0.0, [&scale](double result, double number) {
@@ -46,10 +59,22 @@ int xcopilot::parseToInt(const std::string& numbersAsWords) {
     return xcopilot::parseToNumber(numbersAsWords);
 }
 
+int xcopilot::parseToInt(const std::vector<int>& numbers) {
+    return xcopilot::parseToNumber(numbers);
+}
+
 double xcopilot::parseToDecimal(const std::string& numbersAsWords, unsigned short decimals) {
     return xcopilot::parseToNumber(numbersAsWords, decimals);
 }
 
+double xcopilot::parseToDecimal(const std::vector<int>& numbers, unsigned short decimals) {
+    return xcopilot::parseToNumber(numbers, decimals);
+}
+
 float xcopilot::parseToFloat(const std::string& numbersAsWords, unsigned short decimals) {
     return static_cast<float>(xcopilot::parseToDecimal(numbersAsWords, decimals));
+}
+
+float xcopilot::parseToFloat(const std::vector<int>& numbers, unsigned short decimals) {
+    return static_cast<float>(xcopilot::parseToDecimal(numbers, decimals));
 }

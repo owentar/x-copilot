@@ -30,7 +30,7 @@ void configureForAircraft();
 float flightLoopCallback(float inElapsedSinceLastCall, float inElapsedTimeSinceLastFlightLoop, int inCounter, void* inRefcon);
 
 void setupLogging() {
-    Logger::configureFileLogger(Logger::Level::DEBUG);
+    Logger::configureFileLogger(Logger::level::debug);
 }
 
 bool isUserAirplane(const long planeNum) {
