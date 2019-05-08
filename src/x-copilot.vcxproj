@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{E5345BBB-79AC-4EF2-858F-2A27CC65E7F2}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>IBM;WIN32;_DEBUG;_WINDOWS;_USRDLL;XCOPILOT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>E:\boost_1_67_0\include\boost-1_67;E:\Documents\VS2017\x-copilot\src\lib\XPSDK\CHeaders\XPLM;E:\Documents\VS2017\x-copilot\src\lib\XPSDK\CHeaders\Widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <AdditionalLibraryDirectories>E:\boost_1_67_0\lib;E:\Documents\VS2017\x-copilot\src\lib\XPSDK\Libraries\Win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;XCOPILOT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <TargetMachine>MachineX86</TargetMachine>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\boost_1_67_0\include\boost-1_67;E:\Documents\VS2017\x-copilot\src\lib\XPSDK\CHeaders\XPLM;E:\Documents\VS2017\x-copilot\src\lib\XPSDK\CHeaders\Widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>IBM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>E:\boost_1_67_0\lib;$(SolutionDir)src\lib\XPSDK\Libraries\Win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XPLM_64.lib;XPWidgets_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>E:\boost_1_67_0\include\boost-1_67;E:\Documents\VS2017\x-copilot\src\lib\XPSDK\CHeaders\XPLM;E:\Documents\VS2017\x-copilot\src\lib\XPSDK\CHeaders\Widgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>RELEASE;IBM;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>E:\boost_1_67_0\lib;$(SolutionDir)src\lib\XPSDK\Libraries\Win;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>XPLM_64.lib;XPWidgets_64.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="CommandExecutor.cpp" />
+    <ClCompile Include="CommandRecognizer.cpp" />
+    <ClCompile Include="CommandsConfigReader.cpp" />
+    <ClCompile Include="CommandsProvider.cpp" />
+    <ClCompile Include="lib\xpsdk\cheaders\wrappers\XPCBroadcaster.cpp" />
+    <ClCompile Include="lib\xpsdk\cheaders\wrappers\XPCDisplay.cpp" />
+    <ClCompile Include="lib\xpsdk\cheaders\wrappers\XPCListener.cpp" />
+    <ClCompile Include="lib\xpsdk\cheaders\wrappers\XPCProcessing.cpp" />
+    <ClCompile Include="lib\xpsdk\cheaders\wrappers\XPCWidget.cpp" />
+    <ClCompile Include="lib\xpsdk\cheaders\wrappers\XPCWidgetAttachments.cpp" />
+    <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="StatusWindow.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="WinRecognizer.cpp" />
+    <ClCompile Include="XCopilot.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CommandExecutor.h" />
+    <ClInclude Include="CommandMetadata.h" />
+    <ClInclude Include="CommandRecognizer.h" />
+    <ClInclude Include="CommandsConfigReader.h" />
+    <ClInclude Include="CommandsProvider.h" />
+    <ClInclude Include="CommandType.h" />
+    <ClInclude Include="defs.h" />
+    <ClInclude Include="lib\pocketsphinx\includes\pocketsphinx\cmdln_macro.h" />
+    <ClInclude Include="lib\pocketsphinx\includes\pocketsphinx\pocketsphinx.h" />
+    <ClInclude Include="lib\pocketsphinx\includes\pocketsphinx\pocketsphinx_export.h" />
+    <ClInclude Include="lib\pocketsphinx\includes\pocketsphinx\ps_lattice.h" />
+    <ClInclude Include="lib\pocketsphinx\includes\pocketsphinx\ps_mllr.h" />
+    <ClInclude Include="lib\pocketsphinx\includes\pocketsphinx\ps_search.h" />
+    <ClInclude Include="lib\portaudio\includes\pa_mac_core.h" />
+    <ClInclude Include="lib\portaudio\includes\portaudio.h" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\AutoSystem.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\BlockingStream.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\CallbackInterface.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\CallbackStream.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\CFunCallbackStream.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\CppFunCallbackStream.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\Device.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\DirectionSpecificStreamParameters.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\Exception.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\HostApi.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\InterfaceCallbackStream.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\MemFunCallbackStream.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\PortAudioCpp.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\SampleDataFormat.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\Stream.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\StreamParameters.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\System.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\SystemDeviceIterator.hxx" />
+    <ClInclude Include="lib\portaudio\includes\portaudiocpp\SystemHostApiIterator.hxx" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\ad.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\agc.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\bio.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\bitarr.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\bitvec.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\byteorder.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\case.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\ckd_alloc.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\clapack_lite.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\cmd_ln.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\cmn.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\err.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\f2c.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\fe.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\feat.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\filename.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\fixpoint.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\fsg_model.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\genrand.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\glist.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\hash_table.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\heap.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\jsgf.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\listelem_alloc.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\logmath.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\matrix.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\mmio.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\ngram_model.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\pio.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\prim_type.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\priority_queue.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\profile.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\sbthread.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\sphinxbase_export.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\sphinx_config.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\strfuncs.h" />
+    <ClInclude Include="lib\sphinxbase\includes\sphinxbase\yin.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\widgets\XPStandardWidgets.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\widgets\XPUIGraphics.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\widgets\XPWidgetDefs.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\widgets\XPWidgets.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\widgets\XPWidgetUtils.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\wrappers\XPCBroadcaster.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\wrappers\XPCDisplay.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\wrappers\XPCListener.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\wrappers\XPCProcessing.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\wrappers\XPCWidget.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\wrappers\XPCWidgetAttachments.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMCamera.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMDataAccess.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMDefs.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMDisplay.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMGraphics.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMMenus.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMNavigation.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMPlanes.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMPlugin.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMProcessing.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMScenery.h" />
+    <ClInclude Include="lib\xpsdk\cheaders\xplm\XPLMUtilities.h" />
+    <ClInclude Include="Logger.h" />
+    <ClInclude Include="Recognizer.h" />
+    <ClInclude Include="StatusWindow.h" />
+    <ClInclude Include="utils.h" />
+    <ClInclude Include="WinRecognizer.h" />
+    <ClInclude Include="XCopilot.h" />
+    <ClInclude Include="XPlaneDataRefSDK.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\config\default-commands.json">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\config\Default-Grammar.xml">
+      <DeploymentContent>true</DeploymentContent>
+    </Xml>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\portaudio.redist.0.19.1\build\native\portaudio.redist.targets" Condition="Exists('..\packages\portaudio.redist.0.19.1\build\native\portaudio.redist.targets')" />
+    <Import Project="..\packages\portaudio.0.19.1\build\native\portaudio.targets" Condition="Exists('..\packages\portaudio.0.19.1\build\native\portaudio.targets')" />
+    <Import Project="..\packages\boost.1.67.0.0\build\boost.targets" Condition="Exists('..\packages\boost.1.67.0.0\build\boost.targets')" />
+  </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\portaudio.redist.0.19.1\build\native\portaudio.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\portaudio.redist.0.19.1\build\native\portaudio.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\portaudio.0.19.1\build\native\portaudio.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\portaudio.0.19.1\build\native\portaudio.targets'))" />
+    <Error Condition="!Exists('..\packages\boost.1.67.0.0\build\boost.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\boost.1.67.0.0\build\boost.targets'))" />
+  </Target>
+</Project>
