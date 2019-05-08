@@ -42,6 +42,10 @@ endif()
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
+if(WIN32)
+set(BOOST_ROOT "E:/boost_1_67_0")
+endif()
+
 set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost REQUIRED COMPONENTS filesystem log system)
 
@@ -59,12 +63,18 @@ target_include_directories(${PROJECT_NAME}
             ${PROJECT_SOURCE_DIR}
             ${PROJECT_SOURCE_DIR}/lib/XPSDK/CHeaders/XPLM
             ${PROJECT_SOURCE_DIR}/lib/XPSDK/CHeaders/Widgets
+        )
+
+if(UNIX)
+    target_include_directories(${PROJECT_NAME}
+        PUBLIC
             ${PROJECT_SOURCE_DIR}/lib/portaudio/includes
             ${PROJECT_SOURCE_DIR}/lib/sphinxbase/includes
             ${PROJECT_SOURCE_DIR}/lib/sphinxbase/includes/sphinxbase
             ${PROJECT_SOURCE_DIR}/lib/pocketsphinx/includes
             ${PROJECT_SOURCE_DIR}/lib/pocketsphinx/includes/pocketsphinx
         )
+endif()
 
 file(COPY ${POCKETSPHINX_DATA_DIR} DESTINATION ${PROJECT_BINARY_DIR})
 file(COPY ${CONFIG_DATA_DIR} DESTINATION ${PROJECT_BINARY_DIR})
@@ -116,6 +126,6 @@ elseif(WIN32)
             PUBLIC
                 ${Boost_LIBRARIES}
                 ${XPLM_LIBRARY}
-                ${PROJECT_SOURCE_DIR}/lib/XPSDK/Libraries/Win
+                ${XPWIDGETS_LIBRARY}
             )
 endif()
