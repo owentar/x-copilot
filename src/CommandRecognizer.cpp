@@ -22,3 +22,8 @@ CommandExecutor CommandRecognizer::getExecutor(const std::string& phrase)
     std::string value = result[1];
     return CommandExecutor{metadata, value};
 }
+
+CommandExecutor CommandRecognizer::getExecutor(const std::vector<int>& values)
+{
+    return CommandExecutor{ metadata, values };
+}

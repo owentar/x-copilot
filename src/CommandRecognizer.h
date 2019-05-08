@@ -28,6 +28,8 @@ namespace xcopilot {
 
         virtual CommandExecutor getExecutor(const std::string &);
 
+        virtual CommandExecutor getExecutor(const std::vector<int>&);
+
     private:
         CommandMetadata metadata;
     };
