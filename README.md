@@ -54,6 +54,14 @@ by the developer.
 - [Sphinx] (binaries uploaded in the this repo)
 - [Boost] v1.69 **(manually installed by the developer)**
 
+Note: to create Visual Studio files in windows. Try executing the following commands
+
+```bash
+$ mkdir _build
+$ cd _build
+$ cmake .. -G "Visual Studio 15 2017"
+```
+
 ### How it works
 The process is quite simple:
 
