@@ -6,12 +6,13 @@
 #include <utility>
 #include <vector>
 
+#include "defs.h"
 #include "CommandRecognizer.h"
 #include "CommandExecutor.h"
 #include "Recognizer.h"
 
 namespace xcopilot {
-    class XCopilot {
+    class EXPORT XCopilot {
     public:
         XCopilot(std::unique_ptr<xcopilot::Recognizer> recognizer)
             : recognizer{std::move(recognizer)} {};

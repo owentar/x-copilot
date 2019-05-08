@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "defs.h"
 #include "CommandType.h"
 #include "XPLMDataAccess.h"
 #include "CommandMetadata.h"
@@ -17,7 +18,7 @@ namespace xcopilot {
 #endif
     
 
-    class CommandExecutor {
+    class EXPORT CommandExecutor {
     public:
         explicit CommandExecutor(const CommandMetadata metadata, const std::string value)
                 : metadata{metadata}, valueAsWords{value}, doExecute{resolveExecutor(metadata.getType())} {};

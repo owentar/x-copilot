@@ -5,11 +5,12 @@
 #include <utility>
 #include <vector>
 
+#include "defs.h"
 #include "CommandExecutor.h"
 #include "CommandRecognizer.h"
 
 namespace xcopilot {
-    class Recognizer {
+    class EXPORT Recognizer {
     public:
         virtual ~Recognizer() = default;
 

@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 
+#include "defs.h"
 #include "CommandRecognizer.h"
 #include "XPlaneDataRefSDK.h"
 
@@ -19,7 +20,7 @@
 #endif
 
 namespace xcopilot {
-    struct AircraftCommandsMatcher {
+    struct EXPORT AircraftCommandsMatcher {
         std::string id;
         std::string author;
         std::string icao;
@@ -35,7 +36,7 @@ namespace xcopilot {
         }
     };
 
-    class CommandsConfigReader {
+    class EXPORT CommandsConfigReader {
     public:
         explicit CommandsConfigReader(xcopilot::XPlaneDataRefSDK *xPlaneSDK) : xPlaneSDK{xPlaneSDK} {};
 
