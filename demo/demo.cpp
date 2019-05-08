@@ -1,3 +1,7 @@
+#ifdef IBM
+#pragma warning(disable : 4996)
+#endif
+
 #include <algorithm>
 #include <chrono>
 #include <memory>
@@ -19,7 +23,7 @@ using namespace xcopilot;
 
 int main(int argc, char *argv[]) {
     Logger::configureFileLogger();
-    Logger::configureConsoleLogger(Logger::Level::DEBUG);
+    Logger::configureConsoleLogger(Logger::level::debug);
     Logger* logger = Logger::getInstance();
     logger->info("Starting demo");
 
