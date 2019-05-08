@@ -43,7 +43,10 @@ endif()
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
 if(WIN32)
-set(BOOST_ROOT "E:/boost_1_67_0")
+set(BOOST_ROOT "E:/boost_1_69_0")
+set(BOOST_INCLUDEDIR "E:/boost_1_69_0")
+set(BOOST_LIBRARYDIR "E:/boost_1_69_0/lib64-msvc-14.1")
+set(Boost_ARCHITECTURE "-x64")
 endif()
 
 set(Boost_USE_STATIC_LIBS ON)

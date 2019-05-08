@@ -53,6 +53,7 @@ by the developer.
 - [Pocketsphinx] (binaries uploaded in the this repo)
 - [Sphinx] (binaries uploaded in the this repo)
 - [Boost] v1.69 **(manually installed by the developer)**
+  - For Windows, download binaries [here](https://sourceforge.net/projects/boost/)
 
 Note: to create Visual Studio files in windows. Try executing the following commands
 
